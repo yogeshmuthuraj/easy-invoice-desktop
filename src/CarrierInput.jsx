@@ -108,11 +108,11 @@ export default function CarrierInput(props) {
     console.log(selectedOrderRows);
 
     selectedOrderRows.map((selectedOrderRow, index) => {
-      const tempDetails = [];
+      const lineItemDetails = [];
 
       compareClonedRows.map((compareClonedRow) => {
         if (selectedOrderRows[index].Name == compareClonedRow.Name) {
-          tempDetails.push({
+          lineItemDetails.push({
             'Lineitem name': compareClonedRow['Lineitem name'],
             'Lineitem price': compareClonedRow['Lineitem price'],
             'Lineitem sku': compareClonedRow['Lineitem sku'],
@@ -120,7 +120,7 @@ export default function CarrierInput(props) {
             'Tax 1 Value': compareClonedRow['Tax 1 Value'],
             'Tax 2 Name': compareClonedRow['Tax 2 Name'],
             'Tax 2 Value': compareClonedRow['Tax 2 Value'],
-            Currency: compareClonedRow.Currency,
+            'Currency': compareClonedRow['Currency'],
           });
         }
       });
@@ -138,8 +138,9 @@ export default function CarrierInput(props) {
         'Shipping City': selectedOrderRow['Shipping City'],
         'Shipping Zip': selectedOrderRow['Shipping Zip'],
         'Shipping Province': selectedOrderRow['Shipping Province'],
+        'Shipping Country': selectedOrderRow['Shipping Country'],
         'Payment Method': selectedOrderRow['Payment Method'],
-        'More Details': tempDetails,
+        'More Details': lineItemDetails,
       });
     });
 
