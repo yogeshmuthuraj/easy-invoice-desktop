@@ -16,9 +16,7 @@
     "test": "jest"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-
-    ],
+    "*.{js,jsx,ts,tsx}": [],
     "{*.json,.{babelrc,eslintrc,prettierrc}}": [
       "prettier --ignore-path .eslintignore --parser json --write"
     ],
@@ -263,6 +261,7 @@
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
+    "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-barcode": "^1.4.0",
