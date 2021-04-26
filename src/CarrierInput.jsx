@@ -194,7 +194,7 @@ export default function CarrierInput(props) {
 
   return (
     <div>
-      <div className="pad-bottom-20">Choose carriers</div>
+      <div style={{ paddingBottom: 20 }} className="pad-bottom-20">Carriers</div>
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={6}>

@@ -14,7 +14,6 @@ function toTitleCase(str) {
 }
 
 export default function OrderDisplay(props) {
-  console.log('in order display');
   const location = useLocation();
   const columns = [];
   let rows;
@@ -86,9 +85,9 @@ export default function OrderDisplay(props) {
   return (
     <div>
       <div style={{ paddingBottom: 20 }} className="pad-bottom-20">
-        Choose orders
+        Select orders
       </div>
-      <div style={{ height: 500, width: '100%' }}>
+      <div style={{ height: 500, width: '100%', fontSize: 30 }}>
         <DataGrid
           autoPageSize
           className="font-size-14"

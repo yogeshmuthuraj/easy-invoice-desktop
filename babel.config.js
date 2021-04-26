@@ -24,8 +24,6 @@ module.exports = (api) => {
       require('@babel/preset-env'),
       require('@babel/preset-typescript'),
       [require('@babel/preset-react'), { development }],
-      "env",
-      "react"
     ],
     plugins: [
       // Stage 0
