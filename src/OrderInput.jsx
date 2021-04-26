@@ -1,0 +1,100 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import { useHistory } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  input: {
+    display: 'none',
+  },
+}));
+
+export default function OrderInput(props) {
+  const classes = useStyles();
+  const uploadButton = (
+    <div>
+      <input
+        className={classes.input}
+        id="contained-button-file"
+        type="file"
+        accept=".csv"
+        onChange={(e) => handleFileChosen(e.target.files[0])}
+      />
+      <label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span">
+          Upload
+        </Button>
+      </label>
+    </div>
+  );
+  const fetchButton = (
+    <Button variant="contained" color="primary" onClick={handleFetch}>
+      Fetch
+    </Button>
+  );
+
+  let fileReader;
+
+  const handleFileChosen = (file) => {
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(file);
+  };
+
+  const handleFileRead = (e) => {
+    const content = fileReader.result;
+
+    const csv = require('csvtojson');
+
+    (async () => {
+      const jsonObj = await csv().fromString(content);
+
+      handleUpload(jsonObj);
+    })();
+  };
+
+  const history = useHistory();
+
+  function handleFetch() {
+    history.push('/fetchOrders');
+  }
+
+  function handleUpload(csvJson) {
+    console.log('csvJson', csvJson);
+    history.push({
+      pathname: '/orderDisplay',
+      state: {
+        rows: csvJson,
+      },
+    });
+  }
+
+  return (
+    <div>
+      <div className="pad-bottom-20">Choose orders</div>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <Paper className={classes.paper}>{uploadButton}</Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper className={classes.paper}>{fetchButton}</Paper>
+          </Grid>
+        </Grid>
+      </div>
+    </div>
+  );
+}
