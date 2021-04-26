@@ -15,8 +15,11 @@ import {
   Document,
   StyleSheet,
   PDFDownloadLink,
-  Image
+  Image,
+  Canvas
 } from '@react-pdf/renderer';
+
+import { useBarcode } from '@createnextapp/react-barcode';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,150 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// Create styles
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'row',
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1
-  },
-  gst: {
-    textAlign: 'right',
-    fontSize: 5,
-  },
-  header: {
-    textAlign: 'center',
-    fontSize: 6,
-  },
-
-  body: {
-    paddingTop: 10,
-    paddingBottom: 0,
-    paddingHorizontal: 10,
-  },
-  logo: {
-    height: 30,
-    width: 34,
-    fontSiz5: 8,
-  },
-  senderName: {
-    paddingTop: 5,
-    fontSize: 5,
-    textAlign: 'left',
-    float: 'left',
-  },
-  senderAddress: {
-    fontSize: 5,
-    textAlign: 'left',
-  },
-  shippingName: {
-    fontSize: 5,
-    textAlign: 'right',
-
-  },
-  shippingAddress: {
-    fontSize: 5,
-    textAlign: 'right',
-  },
-  gstin: {
-    fontSize: 24,
-    textAlign: 'center',
-  },
-  date: {
-    fontSize: 12,
-    textAlign: 'center',
-    marginBottom: 40,
-  },
-  orderNumber: {
-    fontSize: 12,
-    textAlign: 'center',
-    marginBottom: 40,
-  },
-  carrierName: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  awb: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  barcode: {
-    fontSize: 18,
-    margin: 12,
-    fontFamily: 'Oswald'
-  },
-  signature: {
-    margin: 12,
-    fontSize: 14,
-    textAlign: 'justify',
-    fontFamily: 'Times-Roman'
-  },
-  rupees: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  rupeesInWords: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  tableHeader: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  items: {
-    fontSize: 12,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  aboveSignature: {
-    marginVertical: 15,
-    marginHorizontal: 100,
-  },
-  declarationMessage: {
-    marginVertical: 15,
-    marginHorizontal: 100,
-  },
-  goodsMessage: {
-    marginVertical: 15,
-    marginHorizontal: 100,
-  },
-  jurisdictionMessage: {
-    marginVertical: 15,
-    marginHorizontal: 100,
-  },
-  pageNumber: {
-    position: 'absolute',
-    fontSize: 5,
-    bottom: 10,
-    left: 0,
-    right: 10,
-    textAlign: 'right',
-    color: 'lightgrey',
-  },
-});
-
 function pdfReturn(orderRows, uniqueCarriers) {
+  const taxInvoiceText = 'TAX INVOICE';
+  const gstText = 'GST : ';
   const gstin = '33AAHCP7548N1ZT';
   const invoiceText = 'Invoice : ';
   const dateText = 'Date : '
-  const senderLogoPath = '';
+  const senderLogoPath = '../app/img/crazy_punch_logo.png';
 
   const serailNumberText = 'S.No';
   const itemDescriptionText = 'Item Description';
@@ -207,54 +73,59 @@ function pdfReturn(orderRows, uniqueCarriers) {
   const authorisedSignatoryText = 'Authorized Signatory';
   const amountInWordsText = 'Amount in Words : ';
 
+  const paperSize = 'A6';
+
+  const developer = "https://github.com/yogeshmuthuraj"
+
   return (
-    <Document>
+    <Document author={developer} creator={developer} producer={developer}>
       {orderRows.map((orderRow, index) => {
+
         return(
-          <Page key={index} size="A6" style={styles.body}><Text style={styles.header} fixed>{orderRow.Name}</Text></Page>
+          <Page key={index} size={paperSize}
+            style={{
+              paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: 6 }}>
+            <Text style={{ textAlign: 'center' }}>
+              {taxInvoiceText}
+            </Text>
+            <div style={{ marginLeft: '50%' }}>
+              <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
+                {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
+              </Text>
+              <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
+                {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
+              </Text>
+              <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
+                {dateText}<Text style={{ fontWeight: 'normal' }}>{orderRow.['Created at']}</Text>
+              </Text>
+            </div>
+            <div style={{ float: 'left' }}>
+              <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
+              <Text style={{ textAlign: 'left' }}>{senderName}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
+            </div>
+            <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
+            <Text style={{
+              position: 'absolute',
+              fontSize: 5,
+              bottom: 10,
+              left: 0,
+              right: 10,
+              textAlign: 'right',
+              color: 'lightgrey'
+            }}
+              render={({ pageNumber, totalPages }) => (
+                `Page ${pageNumber} of ${totalPages}`
+              )} fixed
+            />
+          </Page>
         )
       })}
     </Document>
   );
-
-
-  // return (
-  //   <Document>
-  //     <Page size="A6" style={styles.body}>
-  //       <Text style={styles.header} fixed>
-  //         TAX INVOICE
-  //       </Text>
-  //       <Text style={styles.gst} fixed>
-  //         GSTIN: {gstin}
-  //       </Text>
-  //       <Image
-  //         style={styles.logo}
-  //         src="../app/img/crazy_punch_logo.png"
-  //       />
-  //       <div style={{ paddingTop: 5, fontSize: 5, textAlign: 'left', float: 'left' }}>
-  //         <Text>Pasway</Text>
-  //         <Text>Plot No:10,</Text>
-  //         <Text>Mahatma Gandhi Street,</Text>
-  //         <Text>Thoraipakkam</Text>
-  //         <Text>Chennai - 600097</Text>
-  //         <Text>Mob: 9894171779</Text>
-  //         <Text>email: warehouse@pasway.in</Text>
-  //       </div>
-  //       <Text style={styles.shippingName} fixed>
-  //         Customer 1
-  //       </Text>
-  //       <Text style={styles.shippingAddress}>Plot No:10,</Text>
-  //       <Text style={styles.shippingAddress}>Mahatma Gandhi Street,</Text>
-  //       <Text style={styles.shippingAddress}>Thoraipakkam</Text>
-  //       <Text style={styles.shippingAddress}>Chennai - 600097</Text>
-  //       <Text style={styles.shippingAddress}>Mob: 9894171779</Text>
-  //       <Text style={styles.shippingAddress}>email: warehouse@pasway.in</Text>
-  //       <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
-  //         `Page ${pageNumber} of ${totalPages}`
-  //       )} fixed />
-  //     </Page>
-  //   </Document>
-  // );
 }
 
 function generatePdfLink(pdfContent, fileName) {

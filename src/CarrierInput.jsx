@@ -8,8 +8,6 @@ import Grid from '@material-ui/core/Grid';
 
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Barcode from 'react-barcode';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

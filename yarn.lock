@@ -1090,6 +1090,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@createnextapp/react-barcode@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@createnextapp/react-barcode/-/react-barcode-1.1.1.tgz#2427669812e8fbe64173667460762d331f2263e4"
+  integrity sha512-W0zoKCnkNGCMpDgzczFKpUPGXGvg4IMB4dm/gOT9q5ZexdjDg0fFcLNWJtqwgk+FWc6JurDZyQt9rDlyI54EpQ==
+  dependencies:
+    jsbarcode "^3.11.0"
+
 "@develar/schema-utils@~2.6.5":
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/@develar/schema-utils/-/schema-utils-2.6.5.tgz#3ece22c5838402419a6e0425f85742b961d9b6c6"
@@ -7890,7 +7897,7 @@ js-yaml@^4.0.0:
   dependencies:
     argparse "^2.0.1"
 
-jsbarcode@^3.8.0:
+jsbarcode@^3.11.0:
   version "3.11.4"
   resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-3.11.4.tgz#00dfe90329af94269ac0808b0858206aa3a71416"
   integrity sha512-PHtad17lOl6LOLGK20k5I6P7MabiyHaJY5u5N5TlzC6ZunOR+yFnFnRUoqqOefrYPqO2nuJ1weHzG8B7YYEnHg==
@@ -10338,14 +10345,6 @@ rc@^1.2.7, rc@^1.2.8:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
-
-react-barcode@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-barcode/-/react-barcode-1.4.0.tgz#ebc85ff1b8b49ac4b947b7f3745d684c6c363902"
-  integrity sha512-xDxIc9WUTQPMcwc3kbCVsjh03WiPyynms9OSdsNSh2AAgB6XqMiy9hYWkCNHgdNdvurkvKB6hm25AZHXyQfvlQ==
-  dependencies:
-    jsbarcode "^3.8.0"
-    prop-types "^15.6.2"
 
 react-dom@^17.0.2:
   version "17.0.2"
