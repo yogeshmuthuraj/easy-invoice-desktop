@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function pdfReturn() {
+function pdfReturn(orderRows, uniqueCarriers) {
   const gstin = '123456';
 
   return (
@@ -212,14 +212,14 @@ function pdfReturn() {
   );
 }
 
-function generatePdfLinks(pdfContent, fileName) {
+function generatePdfLink(pdfContent, fileName) {
   return (
     <div  style={{ paddingBottom: 30, paddingTop: 30 }}>
-    <PDFDownloadLink document={pdfContent} fileName={fileName + '.pdf'}>
-      {({ blob, url, loading, error }) =>
-        loading ? 'Loading document...' : fileName
-      }
-    </PDFDownloadLink>
+      <PDFDownloadLink document={pdfContent} fileName={fileName + '.pdf'}>
+        {({ blob, url, loading, error }) =>
+          loading ? 'Loading document...' : fileName
+        }
+      </PDFDownloadLink>
     </div>
   );
 }
@@ -238,7 +238,7 @@ export default function PrintPreview() {
 
   const pdfContent = pdfReturn(orderRows, uniqueCarriers);
 
-  let pdfLinkList = generatePdfLinks(pdfContent);
+  let pdfLinkList = generatePdfLink(pdfContent);
 
   console.log('uniqueCarriers');
   console.log(uniqueCarriers);

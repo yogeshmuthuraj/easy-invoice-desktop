@@ -14,8 +14,6 @@ import PrintPreview from './PrintPreview';
 
 import '../assets/orders.css';
 
-const ordersd = () => <OrderDisplay />;
-
 export default function App() {
   return (
     <Router>
