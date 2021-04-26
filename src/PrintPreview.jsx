@@ -19,6 +19,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    paddingLeft: 20
   },
   paper: {
     padding: theme.spacing(2),
@@ -169,45 +170,57 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyDocument = () => (
-  <Document>
-    <Page size="A6" style={styles.body}>
-      <Text style={styles.header} fixed>
-        TAX INVOICE
-      </Text>
-      <Text style={styles.gst} fixed>
-        GSTIN:
-      </Text>
-      <Image
-        style={styles.logo}
-        src="../app/img/crazy_punch_logo.png"
-      />
-      <Text style={styles.senderName} fixed>
-        Pasway
-      </Text>
-      <Text style={styles.senderAddress}>Plot No:10,</Text>
-      <Text style={styles.senderAddress}>Mahatma Gandhi Street,</Text>
-      <Text style={styles.senderAddress}>Thoraipakkam</Text>
-      <Text style={styles.senderAddress}>Chennai - 600097</Text>
-      <Text style={styles.senderAddress}>Mob: 9894171779</Text>
-      <Text style={styles.senderAddress}>email: warehouse@pasway.in</Text>
+function pdfReturn() {
+  const gstin = '123456';
 
+  return (
+    <Document>
+      <Page size="A6" style={styles.body}>
+        <Text style={styles.header} fixed>
+          TAX INVOICE
+        </Text>
+        <Text style={styles.gst} fixed>
+          GSTIN: {gstin}
+        </Text>
+        <Image
+          style={styles.logo}
+          src="../app/img/crazy_punch_logo.png"
+        />
+        <div style={{ paddingTop: 5, fontSize: 5, textAlign: 'left', float: 'left' }}>
+          <Text>Pasway</Text>
+          <Text>Plot No:10,</Text>
+          <Text>Mahatma Gandhi Street,</Text>
+          <Text>Thoraipakkam</Text>
+          <Text>Chennai - 600097</Text>
+          <Text>Mob: 9894171779</Text>
+          <Text>email: warehouse@pasway.in</Text>
+        </div>
+        <Text style={styles.shippingName} fixed>
+          Customer 1
+        </Text>
+        <Text style={styles.shippingAddress}>Plot No:10,</Text>
+        <Text style={styles.shippingAddress}>Mahatma Gandhi Street,</Text>
+        <Text style={styles.shippingAddress}>Thoraipakkam</Text>
+        <Text style={styles.shippingAddress}>Chennai - 600097</Text>
+        <Text style={styles.shippingAddress}>Mob: 9894171779</Text>
+        <Text style={styles.shippingAddress}>email: warehouse@pasway.in</Text>
+        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+          `Page ${pageNumber} of ${totalPages}`
+        )} fixed />
+      </Page>
+    </Document>
+  );
+}
 
-      <Text style={styles.shippingName} fixed>
-        Customer 1
-      </Text>
-      <Text style={styles.shippingAddress}>Plot No:10,</Text>
-      <Text style={styles.shippingAddress}>Mahatma Gandhi Street,</Text>
-      <Text style={styles.shippingAddress}>Thoraipakkam</Text>
-      <Text style={styles.shippingAddress}>Chennai - 600097</Text>
-      <Text style={styles.shippingAddress}>Mob: 9894171779</Text>
-      <Text style={styles.shippingAddress}>email: warehouse@pasway.in</Text>
-      <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
-        `Page ${pageNumber} of ${totalPages}`
-      )} fixed />
-    </Page>
-  </Document>
-);
+function pdfLink(pdfContent, fileName) {
+  return (
+    <PDFDownloadLink document={pdfContent} fileName={fileName + '.pdf'}>
+      {({ blob, url, loading, error }) =>
+        loading ? 'Loading document...' : fileName
+      }
+    </PDFDownloadLink>
+  );
+}
 
 export default function PrintPreview() {
   const classes = useStyles();
@@ -225,17 +238,17 @@ export default function PrintPreview() {
     history.goBack();
   }
 
+  const pdfContent = pdfReturn();
+
+
+
   return (
     <div>
       <div style={{ paddingBottom: 20 }} className="pad-bottom-20">PDF</div>
       <div className={classes.root}>
         <Grid container spacing={3}>
           <div>
-            <PDFDownloadLink document={<MyDocument />} fileName="somename.pdf">
-              {({ blob, url, loading, error }) =>
-                loading ? 'Loading document...' : 'Download now!'
-              }
-            </PDFDownloadLink>
+            {pdfLink(pdfContent, 'test')}
           </div>
         </Grid>
       </div>
