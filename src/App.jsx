@@ -12,6 +12,8 @@ import Carrier from './CarrierInput';
 import CarrierInput from './CarrierInput';
 import PrintPreview from './PrintPreview';
 
+import '../assets/orders.css';
+
 const ordersd = () => <OrderDisplay />;
 
 export default function App() {

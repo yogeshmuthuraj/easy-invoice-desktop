@@ -212,13 +212,15 @@ function pdfReturn() {
   );
 }
 
-function pdfLink(pdfContent, fileName) {
+function generatePdfLinks(pdfContent, fileName) {
   return (
+    <div  style={{ paddingBottom: 30, paddingTop: 30 }}>
     <PDFDownloadLink document={pdfContent} fileName={fileName + '.pdf'}>
       {({ blob, url, loading, error }) =>
         loading ? 'Loading document...' : fileName
       }
     </PDFDownloadLink>
+    </div>
   );
 }
 
@@ -230,6 +232,17 @@ export default function PrintPreview() {
 
   const { orderRows } = location.state;
 
+  const uniqueCarriers = orderRows.filter(
+    (v, i, a) => a.findIndex((t) => t.Carrier === v.Carrier) === i
+  ).map(orderRow => orderRow.Carrier);
+
+  const pdfContent = pdfReturn(orderRows, uniqueCarriers);
+
+  let pdfLinkList = generatePdfLinks(pdfContent);
+
+  console.log('uniqueCarriers');
+  console.log(uniqueCarriers);
+
   function handleCancel() {
     history.push('/');
   }
@@ -238,18 +251,12 @@ export default function PrintPreview() {
     history.goBack();
   }
 
-  const pdfContent = pdfReturn();
-
-
-
   return (
     <div>
       <div style={{ paddingBottom: 20 }} className="pad-bottom-20">PDF</div>
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <div>
-            {pdfLink(pdfContent, 'test')}
-          </div>
+          {pdfLinkList}
         </Grid>
       </div>
       <Button
