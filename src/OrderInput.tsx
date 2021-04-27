@@ -73,7 +73,6 @@ export default function OrderInput(props) {
   }
 
   function handleUpload(csvJson) {
-    console.log('csvJson', csvJson);
     history.push({
       pathname: '/orderDisplay',
       state: {
@@ -84,7 +83,7 @@ export default function OrderInput(props) {
 
   return (
     <div>
-      <div style={{ paddingBottom: 20 }} className="pad-bottom-20">Orders</div>
+      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Orders</div>
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={6}>

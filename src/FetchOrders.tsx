@@ -69,7 +69,6 @@ class FetchOrders extends React.PureComponent {
   }
 
   render() {
-    console.log('in render');
     const { shopOrigin } = this.props;
     const { error, isLoaded, items } = this.state;
 

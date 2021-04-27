@@ -57,9 +57,6 @@ export default function OrderDisplay(props) {
 
   const [selectionModel, setSelectionModel] = React.useState([]);
 
-  console.log('selectionModel');
-  console.log(selectionModel);
-
   const nextDisabled = !(selectionModel.length > 0);
 
   const history = useHistory();
@@ -84,7 +81,7 @@ export default function OrderDisplay(props) {
 
   return (
     <div>
-      <div style={{ paddingBottom: 20 }} className="pad-bottom-20">
+      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">
         Select orders
       </div>
       <div style={{ height: 500, width: '100%', fontSize: 30 }}>

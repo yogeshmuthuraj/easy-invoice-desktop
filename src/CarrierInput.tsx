@@ -87,9 +87,6 @@ export default function CarrierInput(props) {
 
     const sortedOrders = sortingBasedOnCarrier(filteredUniqueOrders);
 
-    console.log('sortedOrders');
-    console.log(sortedOrders);
-
     history.push({
       pathname: '/printPreview',
       state: {
@@ -101,9 +98,6 @@ export default function CarrierInput(props) {
   function groupSameOrders(selectedOrderRows) {
     const compareClonedRows = Object.assign(selectedOrderRows);
     const groupedOrders = [];
-
-    console.log('selectedOrderRows');
-    console.log(selectedOrderRows);
 
     selectedOrderRows.map((selectedOrderRow, index) => {
       const lineItemDetails = [];
@@ -188,12 +182,12 @@ export default function CarrierInput(props) {
   }
 
   function handleBack() {
-    history.goBack();
+    history.push('/');
   }
 
   return (
     <div>
-      <div style={{ paddingBottom: 20 }} className="pad-bottom-20">Carriers</div>
+      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Carriers</div>
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={6}>

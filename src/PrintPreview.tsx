@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import moment from 'moment';
 
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function pdfReturn(orderRows, uniqueCarriers) {
+function pdfReturn(orderRows, uniqueCarrier) {
   const taxInvoiceText = 'TAX INVOICE';
   const gstText = 'GST : ';
   const gstin = '33AAHCP7548N1ZT';
@@ -75,69 +76,73 @@ function pdfReturn(orderRows, uniqueCarriers) {
 
   const paperSize = 'A6';
 
-  const developer = "https://github.com/yogeshmuthuraj"
+  const developer = "https://github.com/yogeshmuthuraj";
 
-  return (
+  let filteredRows = [];
+
+  orderRows.forEach((orderRow) => {
+    if (orderRow.Carrier == uniqueCarrier) {
+      filteredRows.push(orderRow);
+    }
+  });
+
+  const document = (
     <Document author={developer} creator={developer} producer={developer}>
-      {orderRows.map((orderRow, index) => {
-        return(
-            <Page key={index} size={paperSize}
-              style={{
-              paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: 6 }}>
-              <Text style={{ textAlign: 'center' }}>
-              {taxInvoiceText}
-              </Text>
-              <div style={{ marginLeft: '50%' }}>
-              <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-              {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
-              </Text>
-              <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-              {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
-              </Text>
-              <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-              {dateText}<Text style={{ fontWeight: 'normal' }}>{orderRow.['Created at']}</Text>
-              </Text>
-              </div>
-              <div style={{ float: 'left' }}>
-              <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
-              <Text style={{ textAlign: 'left' }}>{senderName}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
-              </div>
-              <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
-              <Text style={{
-                position: 'absolute',
-                fontSize: 5,
-                bottom: 10,
-                left: 0,
-                right: 10,
-                textAlign: 'right',
-                color: 'lightgrey'
-              }}
-              render={({ pageNumber, totalPages }) => (
-                `Page ${pageNumber} of ${totalPages}`
-              )} fixed
-              />
-            </Page>
-          )
+      {filteredRows.map((orderRow, index) => {
+        return (
+          <Page key={index} size={paperSize}
+            style={{
+            paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: 6 }}>
+            <Text style={{ textAlign: 'center' }}>
+            {taxInvoiceText}
+            </Text>
+            <div style={{ marginLeft: '50%' }}>
+            <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
+            {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
+            </Text>
+            <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
+            {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
+            </Text>
+            <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
+            {dateText}<Text style={{ fontWeight: 'normal' }}>{orderRow.['Created at']}</Text>
+            </Text>
+            </div>
+            <div style={{ float: 'left' }}>
+            <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
+            <Text style={{ textAlign: 'left' }}>{senderName}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
+            </div>
+            <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
+            <Text style={{
+              position: 'absolute',
+              fontSize: 5,
+              bottom: 10,
+              left: 0,
+              right: 10,
+              textAlign: 'right',
+              color: 'lightgrey'
+            }}
+            render={({ pageNumber, totalPages }) => (
+              `Page ${pageNumber} of ${totalPages}`
+            )} fixed
+            />
+          </Page>
+        )
       })}
     </Document>
-  );
-}
+  )
 
-function generatePdfLink(pdfContent, uniqueCarrier) {
-  console.log('in generatePdfLink');
-  console.log(pdfContent);
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
 
   return (
     <Grid container spacing={3}>
-      <div style={{ paddingBottom: 30, paddingTop: 30 }}>
-        <PDFDownloadLink document={pdfContent} fileName={fileName + '.pdf'}>
+      <div style={{ paddingBottom: 30, paddingTop: 30 }} key={fileName} >
+        <PDFDownloadLink document={document} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) =>
-            loading ? 'Loading document...' : fileName
+            loading ? <CircularProgress color="secondary" /> : fileName
           }
         </PDFDownloadLink>
       </div>
@@ -157,15 +162,13 @@ export default function PrintPreview() {
     (v, i, a) => a.findIndex((t) => t.Carrier === v.Carrier) === i
   ).map(orderRow => orderRow.Carrier);
 
-  const pdfContent = pdfReturn(orderRows, uniqueCarriers);
-
   let pdfLinkList = uniqueCarriers.map((uniqueCarrier) => {
-    return generatePdfLink(pdfContent, uniqueCarrier);
+    return pdfReturn(orderRows, uniqueCarrier)
   });
 
 
   console.log('pdfLinkList');
-  console.log(pdfLinkList);
+  console.log(pdfLinkList.length);
 
   function handleCancel() {
     history.push('/');
@@ -177,7 +180,7 @@ export default function PrintPreview() {
 
   return (
     <div>
-      <div style={{ paddingBottom: 20 }} className="pad-bottom-20">PDF</div>
+      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
       <div className={classes.root}>
         {pdfLinkList}
       </div>
