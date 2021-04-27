@@ -41,7 +41,7 @@ export default function OrderInput(props) {
     </div>
   );
   const fetchButton = (
-    <Button variant="contained" color="primary" onClick={handleFetch}>
+    <Button variant="contained" color="primary" onClick={handleFetch} disabled>
       Fetch
     </Button>
   );

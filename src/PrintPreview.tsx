@@ -66,7 +66,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   const shippingAddressText = 'Shipping Address :'
 
-  const declarationText = 'Declaration: We Declare that this Invoice shows the actual price of the goods described and that all particulars are true and correct';
+  const declarationText1 = 'Declaration: We Declare that this Invoice shows the actual price of the goods described';
+  const declarationText2 = 'and that all particulars are true and correct';
   const goodsText = 'Goods once sold cannot be Returned';
   const jurisdictionText = 'All disputes are Subject to Chennai Jurisdiction';
   const forSignatureText = 'For PASWAY CLOTHING PVT LTD';
@@ -92,11 +93,19 @@ function pdfReturn(orderRows, uniqueCarrier) {
         return (
           <Page key={index} size={paperSize}
             style={{
-            paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: 6 }}>
+            paddingTop: 10, paddingLeft: 12, paddingRight: 10, fontSize: 6 }}>
             <Text style={{ textAlign: 'center' }}>
             {taxInvoiceText}
             </Text>
-            <div style={{ marginLeft: '50%' }}>
+
+
+            <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
+            <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
+
             <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
             {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
             </Text>
@@ -104,31 +113,76 @@ function pdfReturn(orderRows, uniqueCarrier) {
             {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
             </Text>
             <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-            {dateText}<Text style={{ fontWeight: 'normal' }}>{orderRow.['Created at']}</Text>
+              {dateText}<Text style={{ fontWeight: 'normal' }}>{moment(orderRow.['Created at']).format('ll')}</Text>
             </Text>
-            </div>
-            <div style={{ float: 'left' }}>
-            <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
-            <Text style={{ textAlign: 'left' }}>{senderName}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
-            </div>
+
             <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
+
             <Text style={{
+                position: 'absolute',
+                fontSize: 5,
+                bottom: 70,
+                textAlign: 'right',
+              }}
+            >
+              {forSignatureText}
+            </Text>
+
+            <Text style={{
+                position: 'absolute',
+                fontSize: 5,
+                bottom: 50,
+                textAlign: 'right',
+              }}
+            >
+              {authorisedSignatoryText}
+            </Text>
+
+            <Text style={{
+                marginLeft: 30,
+                position: 'absolute',
+                fontSize: 5,
+                bottom: 30,
+                textAlign: 'center',
+              }}
+            >
+              {declarationText1}
+            </Text>
+
+            <Text style={{
+                marginLeft: 30,
+                position: 'absolute',
+                fontSize: 5,
+                bottom: 25,
+                textAlign: 'center',
+              }}
+            >
+              {declarationText2}
+            </Text>
+
+            <Text style={{
+              marginLeft: 30,
               position: 'absolute',
               fontSize: 5,
-              bottom: 10,
-              left: 0,
-              right: 10,
-              textAlign: 'right',
-              color: 'lightgrey'
-            }}
-            render={({ pageNumber, totalPages }) => (
-              `Page ${pageNumber} of ${totalPages}`
-            )} fixed
-            />
+              bottom: 20,
+              textAlign: 'center',
+              color: 'grey'
+              }}
+            >
+              {goodsText}
+            </Text>
+
+            <Text style={{
+              marginLeft: 30,
+              position: 'absolute',
+              fontSize: 5,
+              bottom: 15,
+              textAlign: 'center',
+              color: 'grey'
+              }}
+            >
+              {jurisdictionText}
+            </Text>
           </Page>
         )
       })}
@@ -139,7 +193,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   return (
     <Grid container spacing={3}>
-      <div style={{ paddingBottom: 30, paddingTop: 30 }} key={fileName} >
+      <div style={{ paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
         <PDFDownloadLink document={document} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) =>
             loading ? <CircularProgress color="secondary" /> : fileName
@@ -165,10 +219,6 @@ export default function PrintPreview() {
   let pdfLinkList = uniqueCarriers.map((uniqueCarrier) => {
     return pdfReturn(orderRows, uniqueCarrier)
   });
-
-
-  console.log('pdfLinkList');
-  console.log(pdfLinkList.length);
 
   function handleCancel() {
     history.push('/');
