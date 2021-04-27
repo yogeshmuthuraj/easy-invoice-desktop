@@ -76,9 +76,6 @@ const createWindow = async () => {
     icon: getAssetPath('icon.icns'),
     webPreferences: {
       nodeIntegration: true,
-      devTools: true,
-      frame: false,
-      titleBarStyle: 'hidden',
     },
   });
 
@@ -95,7 +92,6 @@ const createWindow = async () => {
     } else {
       mainWindow.show();
       mainWindow.focus();
-      mainWindow.maximize();
     }
   });
 
