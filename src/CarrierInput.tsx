@@ -106,8 +106,9 @@ export default function CarrierInput(props) {
         if (selectedOrderRows[index].Name == compareClonedRow.Name) {
           lineItemDetails.push({
             'Lineitem name': compareClonedRow['Lineitem name'],
-            'Lineitem price': compareClonedRow['Lineitem price'],
             'Lineitem sku': compareClonedRow['Lineitem sku'],
+            'Lineitem quantity': compareClonedRow['Lineitem quantity'],
+            'Lineitem price': compareClonedRow['Lineitem price'],
             'Tax 1 Name': compareClonedRow['Tax 1 Name'],
             'Tax 1 Value': compareClonedRow['Tax 1 Value'],
             'Tax 2 Name': compareClonedRow['Tax 2 Name'],

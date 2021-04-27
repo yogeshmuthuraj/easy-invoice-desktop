@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const borderColor = 'grey';
 const borderStyle = 'normal';
-const col1Width = 40;
+const col1Width = 10;
 const COLN_WIDTH = (100 - col1Width) / 3;
 
 const styles = StyleSheet.create({
@@ -47,58 +47,63 @@ const styles = StyleSheet.create({
     width: "auto",
     borderStyle: borderStyle,
     borderColor: borderColor,
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
+    borderTopWidth: 0.5,
+    borderLeftWidth: 0.5,
     marginTop: 15,
     marginRight: 10,
   },
+  colSno: {
+    width: 10,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colItemDes: {
+    width: 70,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colSku: {
+    width: 50,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colQty: {
+    width: 10,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colUnitPrice: {
+    width: 15,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colNetPrice: {
+    width: 15,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colTaxType: {
+    width: 15,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colTaxAmount: {
+    width: 15,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
+  colTotalAmount: {
+    width: 30,
+    borderBottomWidth: 0.5,
+    borderRightWidth: 0.5,
+  },
   tableRow: {
     margin: "auto",
-    flexDirection: "row"
-  },
-  tableCol1Header: {
-    width: col1Width + '%',
-    borderStyle: borderStyle,
-    borderColor: borderColor,
-    borderBottomColor: 'grey',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0
-  },
-  tableColHeader: {
-    width: COLN_WIDTH + "%",
-    borderStyle: borderStyle,
-    borderColor: borderColor,
-    borderBottomColor: '#000',
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0
-  },
-  tableCol1: {
-    width: col1Width + '%',
-    borderStyle: borderStyle,
-    borderColor: borderColor,
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0
-  },
-  tableCol: {
-    width: COLN_WIDTH + "%",
-    borderStyle: borderStyle,
-    borderColor: borderColor,
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0
-  },
-  tableCellHeader: {
-    margin: 5,
-    fontSize: 5,
-    fontWeight: 500
+    flexDirection: "row",
   },
   tableCell: {
-    margin: 5,
-    fontSize: 5
+    // margin: 5,
+    fontSize: 7
   }
 });
 
@@ -117,6 +122,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const unitPriceText = 'Unit Price';
   const taxTypeText = 'Tax Type';
   const taxAmountText = 'Tax Amount';
+  const netAmountText = 'Net Amount';
   const totalAmountText = 'Total Amount';
   const totalText = 'Total';
 
@@ -215,63 +221,82 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
             <View style={styles.table}>
               <View style={styles.tableRow}>
-                <View style={styles.tableCol1Header}>
-                  <Text style={styles.tableCellHeader}>{serailNumberText}</Text>
+                <View>
+                  <Text style={styles.colSno}>{serailNumberText}</Text>
                 </View>
 
-                <View style={styles.tableColHeader}>
-                  <Text style={styles.tableCellHeader}>{itemDescriptionText}</Text>
+                <View>
+                  <Text style={styles.colItemDes}>{itemDescriptionText}</Text>
                 </View>
 
-                <View style={styles.tableColHeader}>
-                  <Text style={styles.tableCellHeader}>{skuText}</Text>
+                <View>
+                  <Text style={styles.colSku}>{skuText}</Text>
                 </View>
 
-                <View style={styles.tableColHeader}>
-                  <Text style={styles.tableCellHeader}>{quantityText}</Text>
+                <View>
+                  <Text style={styles.colQty}>{quantityText}</Text>
                 </View>
 
-                <View style={styles.tableColHeader}>
-                  <Text style={styles.tableCellHeader}>{unitPriceText}</Text>
+                <View>
+                  <Text style={styles.colUnitPrice}>{unitPriceText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colNetPrice}>{netAmountText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colTaxType}>{taxTypeText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colTaxAmount}>{taxAmountText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colTotalAmount}>{totalAmountText}</Text>
                 </View>
               </View>
 
               <View style={styles.tableRow}>
-                <View style={styles.tableCol1}>
-                  <Text style={styles.tableCell}>React-PDF</Text>
+                <View>
+                  <Text style={styles.colSno}>{serailNumberText}</Text>
                 </View>
 
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>3</Text>
+                <View>
+                  <Text style={styles.colItemDes}>{itemDescriptionText}</Text>
                 </View>
 
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>2019-02-20 - 2020-02-19</Text>
+                <View>
+                  <Text style={styles.colSku}>{skuText}</Text>
                 </View>
 
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>5€</Text>
+                <View>
+                  <Text style={styles.colQty}>{quantityText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colUnitPrice}>{unitPriceText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colNetPrice}>{netAmountText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colTaxType}>{taxTypeText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colTaxAmount}>{taxAmountText}</Text>
+                </View>
+
+                <View>
+                  <Text style={styles.colTotalAmount}>{totalAmountText}</Text>
                 </View>
               </View>
 
-              <View style={styles.tableRow}>
-                <View style={styles.tableCol1}>
-                  <Text style={styles.tableCell}>Another row</Text>
-                </View>
 
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo D.
-              Quijote de la Mancha</Text>
-                </View>
-
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>2019-05-20 - 2020-07-19</Text>
-                </View>
-
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>25€</Text>
-                </View>
-              </View>
             </View>
 
 
