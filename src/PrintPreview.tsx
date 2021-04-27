@@ -43,7 +43,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const gstin = '33AAHCP7548N1ZT';
   const invoiceText = 'Invoice : ';
   const dateText = 'Date : '
-  const senderLogoPath = '../app/img/crazy_punch_logo.png';
+  const senderLogoPath = '../assets/crazy_punch_logo.png';
 
   const serailNumberText = 'S.No';
   const itemDescriptionText = 'Item Description';
