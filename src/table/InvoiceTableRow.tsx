@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         borderBottomColor: 'grey',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         alignItems: 'center',
         height: 15,
         fontStyle: 'bold',
@@ -24,24 +24,25 @@ const styles = StyleSheet.create({
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
         paddingLeft: 8,
+        paddingRight: 8,
     },
     qty: {
-        width: '10%',
+        width: '5%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        textAlign: 'right',
+        textAlign: 'center',
         paddingRight: 8,
     },
     rate: {
         width: '15%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        textAlign: 'right',
+        textAlign: 'center',
         paddingRight: 8,
     },
     amount: {
         width: '15%',
-        textAlign: 'right',
+        textAlign: 'center',
         paddingRight: 8,
     },
   });

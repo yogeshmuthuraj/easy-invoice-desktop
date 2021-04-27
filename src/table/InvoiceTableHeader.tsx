@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         <Text style={styles.sno}>S.No</Text>
         <Text style={styles.description}>Item Description</Text>
         <Text style={styles.qty}>Qty</Text>
-        <Text style={styles.rate}>@</Text>
+        <Text style={styles.rate}>Unit Price</Text>
         <Text style={styles.amount}>Amount</Text>
     </View>
   );
