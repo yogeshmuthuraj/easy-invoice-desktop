@@ -163,6 +163,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
         const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
+
         return (
           <Page key={index} size={paperSize}
             style={{
@@ -257,46 +258,45 @@ function pdfReturn(orderRows, uniqueCarrier) {
                   <Text style={styles.colTotalAmount}>{totalAmountText}</Text>
                 </View>
               </View>
+              {orderRow['More Details'].map((lineItem, index) => {
+                return(<View style={styles.tableRow}>
+                  <View>
+                    <Text style={styles.colSno}>{index + 1}</Text>
+                  </View>
 
-              <View style={styles.tableRow}>
-                <View>
-                  <Text style={styles.colSno}>{serailNumberText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colItemDes}>{lineItem['Lineitem name']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colItemDes}>{itemDescriptionText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colSku}>{lineItem['Lineitem sku']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colSku}>{skuText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colQty}>{lineItem['Lineitem quantity']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colQty}>{quantityText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colUnitPrice}>{lineItem['Lineitem price']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colUnitPrice}>{unitPriceText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colNetPrice}>{lineItem['Lineitem price']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colNetPrice}>{netAmountText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colTaxType}>{lineItem['Lineitem Tax 1 Name']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colTaxType}>{taxTypeText}</Text>
-                </View>
+                  <View>
+                    <Text style={styles.colTaxAmount}>{lineItem['Lineitem price']}</Text>
+                  </View>
 
-                <View>
-                  <Text style={styles.colTaxAmount}>{taxAmountText}</Text>
-                </View>
-
-                <View>
-                  <Text style={styles.colTotalAmount}>{totalAmountText}</Text>
-                </View>
-              </View>
-
-
+                  <View>
+                    <Text style={styles.colTotalAmount}>{lineItem['Lineitem price']}</Text>
+                  </View>
+                </View>);
+              })}
             </View>
 
 
