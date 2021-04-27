@@ -132,9 +132,12 @@ export default function CarrierInput(props) {
         'Shipping Province': selectedOrderRow['Shipping Province'],
         'Shipping Country': selectedOrderRow['Shipping Country'],
         'Payment Method': selectedOrderRow['Payment Method'],
+        'Currency': selectedOrderRow['Currency'],
         'More Details': lineItemDetails,
       });
     });
+
+    console.log(groupedOrders);
 
     return groupedOrders;
   }

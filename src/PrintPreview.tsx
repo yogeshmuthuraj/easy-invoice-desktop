@@ -16,8 +16,7 @@ import {
   Document,
   StyleSheet,
   PDFDownloadLink,
-  Image,
-  Canvas
+  Image
 } from '@react-pdf/renderer';
 
 import { useBarcode } from '@createnextapp/react-barcode';
@@ -100,16 +99,17 @@ function pdfReturn(orderRows, uniqueCarrier) {
             {taxInvoiceText}
             </Text>
 
+            <View className="sender-details">
+              <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
+              <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
+              <Text style={{ textAlign: 'left' }}>{senderEmail}</Text>
+            </View>
 
-            <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
-            <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderEmail}</Text>
-
-            <View style={{
+            <View className="invoice-details" style={{
               position: 'absolute',
               fontSize: 5,
               top: 20,
@@ -126,6 +126,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text style={{ fontSize: 8, paddingTop: 5 }}>
                 {invoiceText}
               </Text>
+
               <Text style={{ fontSize: 18 }}>{orderRow.Name}</Text>
 
               <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow.Carrier}</Text>
@@ -133,7 +134,19 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text style={{ fontSize: 10 }}>{orderRow.AWB}</Text>
 
               <Text style={{ fontSize: 19, paddingTop: 15 }}>{paymentMethod}</Text>
+
+              <Text style={{ fontSize: 8, paddingTop: 10 }}>{orderRow.Currency} <Text style={{ fontSize: 19, paddingTop: 15 }}>{orderRow.Total}</Text></Text>
             </View>
+
+            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 15, width: 150 }} className="shipping-details">
+              <Text style={{ fontSize: 7 }}>{shippingAddressText}</Text>
+              <Text>{orderRow['Shipping Name']}</Text>
+              <Text>{orderRow['Shipping Address1']}</Text>
+              <Text>{orderRow['Shipping Address2']}</Text>
+              <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip']}</Text>
+              <Text>{orderRow['Shipping Province']}</Text>
+            </View>
+
 
             <Text style={{
                 position: 'absolute',
@@ -209,7 +222,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} key={fileName}>
       <div style={{ paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
         <PDFDownloadLink document={document} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) =>
