@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
     },
 });
 
-  const InvoiceItemsTable = ({invoice}) => (
+  const InvoiceItemsTable = ({items}) => (
     <View style={styles.tableContainer}>
-        <InvoiceTableHeader />
-        <InvoiceTableRow items={invoice.items} />
-        <InvoiceTableFooter items={invoice.items} />
+      <InvoiceTableHeader />
+      <InvoiceTableRow items={items} />
+      <InvoiceTableFooter items={items} />
     </View>
   );
 
