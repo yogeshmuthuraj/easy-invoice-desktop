@@ -13,6 +13,7 @@ import CarrierInput from './CarrierInput';
 import PrintPreview from './PrintPreview';
 
 import '../assets/orders.css';
+import './App.global.css';
 
 export default function App() {
   return (

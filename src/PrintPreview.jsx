@@ -80,63 +80,64 @@ function pdfReturn(orderRows, uniqueCarriers) {
   return (
     <Document author={developer} creator={developer} producer={developer}>
       {orderRows.map((orderRow, index) => {
-
         return(
-          <Page key={index} size={paperSize}
-            style={{
+            <Page key={index} size={paperSize}
+              style={{
               paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: 6 }}>
-            <Text style={{ textAlign: 'center' }}>
+              <Text style={{ textAlign: 'center' }}>
               {taxInvoiceText}
-            </Text>
-            <div style={{ marginLeft: '50%' }}>
+              </Text>
+              <div style={{ marginLeft: '50%' }}>
               <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-                {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
+              {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
               </Text>
               <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-                {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
+              {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
               </Text>
               <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-                {dateText}<Text style={{ fontWeight: 'normal' }}>{orderRow.['Created at']}</Text>
+              {dateText}<Text style={{ fontWeight: 'normal' }}>{orderRow.['Created at']}</Text>
               </Text>
-            </div>
-            <div style={{ float: 'left' }}>
+              </div>
+              <div style={{ float: 'left' }}>
               <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
               <Text style={{ textAlign: 'left' }}>{senderName}</Text>
               <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
               <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
               <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
               <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
-            </div>
-            <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
-            <Text style={{
-              position: 'absolute',
-              fontSize: 5,
-              bottom: 10,
-              left: 0,
-              right: 10,
-              textAlign: 'right',
-              color: 'lightgrey'
-            }}
+              </div>
+              <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
+              <Text style={{
+                position: 'absolute',
+                fontSize: 5,
+                bottom: 10,
+                left: 0,
+                right: 10,
+                textAlign: 'right',
+                color: 'lightgrey'
+              }}
               render={({ pageNumber, totalPages }) => (
                 `Page ${pageNumber} of ${totalPages}`
               )} fixed
-            />
-          </Page>
-        )
+              />
+            </Page>
+          )
       })}
     </Document>
   );
 }
 
-function generatePdfLink(pdfContent, fileName) {
+function generatePdfLink(pdfContent, uniqueCarrier) {
   console.log('in generatePdfLink');
   console.log(pdfContent);
+  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
+
   return (
     <Grid container spacing={3}>
       <div style={{ paddingBottom: 30, paddingTop: 30 }}>
         <PDFDownloadLink document={pdfContent} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) =>
-            loading ? 'Loading document...' : fileName + '_' + (moment().format('llll')).replace(/ /g, '_')
+            loading ? 'Loading document...' : fileName
           }
         </PDFDownloadLink>
       </div>
