@@ -63,6 +63,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const senderZip = '600097';
   const senderProvince = 'TN';
   const senderCountry = 'IN';
+  const senderEmail = 'email: warehouse@pasway.in';
 
   const shippingAddressText = 'Shipping Address :'
 
@@ -90,10 +91,11 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const document = (
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
+        const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
         return (
           <Page key={index} size={paperSize}
             style={{
-            paddingTop: 10, paddingLeft: 12, paddingRight: 10, fontSize: 6 }}>
+            paddingTop: 10, paddingLeft: 12, fontSize: 6 }}>
             <Text style={{ textAlign: 'center' }}>
             {taxInvoiceText}
             </Text>
@@ -105,18 +107,33 @@ function pdfReturn(orderRows, uniqueCarrier) {
             <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
             <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
             <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderEmail}</Text>
 
-            <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-            {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
-            </Text>
-            <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-            {invoiceText}<Text style={{ fontWeight: 'normal' }}>{orderRow.Name}</Text>
-            </Text>
-            <Text style={{ textAlign: 'right', fontWeight: 'bold', fontSize: 8 }}>
-              {dateText}<Text style={{ fontWeight: 'normal' }}>{moment(orderRow.['Created at']).format('ll')}</Text>
-            </Text>
+            <View style={{
+              position: 'absolute',
+              fontSize: 5,
+              top: 20,
+              textAlign: 'right',
+              }}
+            >
+              <Text style={{ fontSize: 7 }}>
+              {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
+              </Text>
+              <Text style={{ fontSize: 8, paddingTop: 5 }}>
+                {dateText}<Text style={{ fontWeight: 'normal' }}>{moment(orderRow.['Created at']).format('ll')}</Text>
+              </Text>
 
-            <Text style={{ textAlign: 'right', fontSize: 10 }}>{orderRow.Carrier}</Text>
+              <Text style={{ fontSize: 8, paddingTop: 5 }}>
+                {invoiceText}
+              </Text>
+              <Text style={{ fontSize: 18 }}>{orderRow.Name}</Text>
+
+              <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow.Carrier}</Text>
+
+              <Text style={{ fontSize: 10 }}>{orderRow.AWB}</Text>
+
+              <Text style={{ fontSize: 19, paddingTop: 15 }}>{paymentMethod}</Text>
+            </View>
 
             <Text style={{
                 position: 'absolute',
@@ -131,7 +148,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
             <Text style={{
                 position: 'absolute',
                 fontSize: 5,
-                bottom: 50,
+                bottom: 45,
                 textAlign: 'right',
               }}
             >
