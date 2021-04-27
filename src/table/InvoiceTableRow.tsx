@@ -1,34 +1,41 @@
 import React, {Fragment} from 'react';
 import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
-const borderColor = '#90e5fc'
+const borderColor = 'grey'
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        borderBottomColor: '#bff0fd',
+        borderBottomColor: 'grey',
         borderBottomWidth: 1,
         alignItems: 'center',
-        height: 24,
+        height: 15,
         fontStyle: 'bold',
+    },
+    sno: {
+        width: '5%',
+        textAlign: 'left',
+        borderRightColor: borderColor,
+        borderRightWidth: 0.5,
+        paddingLeft: 8,
     },
     description: {
         width: '60%',
         textAlign: 'left',
         borderRightColor: borderColor,
-        borderRightWidth: 1,
+        borderRightWidth: 0.5,
         paddingLeft: 8,
     },
     qty: {
         width: '10%',
         borderRightColor: borderColor,
-        borderRightWidth: 1,
+        borderRightWidth: 0.5,
         textAlign: 'right',
         paddingRight: 8,
     },
     rate: {
         width: '15%',
         borderRightColor: borderColor,
-        borderRightWidth: 1,
+        borderRightWidth: 0.5,
         textAlign: 'right',
         paddingRight: 8,
     },
@@ -43,6 +50,7 @@ const styles = StyleSheet.create({
 const InvoiceTableRow = ({items}) => {
     const rows = items.map( (item, index) =>
         <View style={styles.row} key={index}>
+            <Text style={styles.sno}>{index + 1}</Text>
             <Text style={styles.description}>{item['Lineitem name']}</Text>
             <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
             <Text style={styles.rate}>{item['Lineitem price']}</Text>

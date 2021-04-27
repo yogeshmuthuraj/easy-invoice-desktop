@@ -11,18 +11,18 @@ const styles = StyleSheet.create({
     tableContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 24,
-        borderWidth: 1,
-        borderColor: '#bff0fd',
+        marginTop: 20,
+        borderWidth: 0.5,
+        borderColor: 'grey',
     },
 });
 
-  const InvoiceItemsTable = ({items}) => (
-    <View style={styles.tableContainer}>
-      <InvoiceTableHeader />
-      <InvoiceTableRow items={items} />
-      <InvoiceTableFooter items={items} />
-    </View>
-  );
+const InvoiceItemsTable = ({items}) => (
+  <View style={styles.tableContainer}>
+    <InvoiceTableHeader />
+    <InvoiceTableRow items={items} />
+    <InvoiceTableFooter items={items} />
+  </View>
+);
 
-  export default InvoiceItemsTable
+export default InvoiceItemsTable

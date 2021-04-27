@@ -191,14 +191,14 @@ function pdfReturn(orderRows, uniqueCarrier) {
               textAlign: 'right',
               }}
             >
-              <Text style={{ fontSize: 7 }}>
-              {gstText}<Text style={{ fontWeight: 200 }}>{gstin}</Text>
+              <Text style={{ fontSize: 7, fontStyle: 'bold' }}>
+              {gstText}<Text>{gstin}</Text>
               </Text>
-              <Text style={{ fontSize: 8, paddingTop: 5 }}>
+              <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold' }}>
                 {dateText}<Text style={{ fontWeight: 200 }}>{moment(orderRow.['Created at']).format('ll')}</Text>
               </Text>
 
-              <Text style={{ fontSize: 8, paddingTop: 5 }}>
+              <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold' }}>
                 {invoiceText}
               </Text>
 
@@ -222,7 +222,9 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text>{orderRow['Shipping Province']}</Text>
             </View>
 
-            <InvoiceItemsTable items={orderRow['More Details']} />
+            <View className="invoice-table" style={{ paddingRight: 10 }}>
+              <InvoiceItemsTable items={orderRow['More Details']} />
+            </View>
 
             <Text style={{
                 position: 'absolute',
