@@ -36,6 +36,72 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const borderColor = 'grey';
+const borderStyle = 'normal';
+const col1Width = 40;
+const COLN_WIDTH = (100 - col1Width) / 3;
+
+const styles = StyleSheet.create({
+  table: {
+    display: "table",
+    width: "auto",
+    borderStyle: borderStyle,
+    borderColor: borderColor,
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    marginTop: 15,
+    marginRight: 10,
+  },
+  tableRow: {
+    margin: "auto",
+    flexDirection: "row"
+  },
+  tableCol1Header: {
+    width: col1Width + '%',
+    borderStyle: borderStyle,
+    borderColor: borderColor,
+    borderBottomColor: 'grey',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableColHeader: {
+    width: COLN_WIDTH + "%",
+    borderStyle: borderStyle,
+    borderColor: borderColor,
+    borderBottomColor: '#000',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableCol1: {
+    width: col1Width + '%',
+    borderStyle: borderStyle,
+    borderColor: borderColor,
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableCol: {
+    width: COLN_WIDTH + "%",
+    borderStyle: borderStyle,
+    borderColor: borderColor,
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0
+  },
+  tableCellHeader: {
+    margin: 5,
+    fontSize: 5,
+    fontWeight: 500
+  },
+  tableCell: {
+    margin: 5,
+    fontSize: 5
+  }
+});
+
 function pdfReturn(orderRows, uniqueCarrier) {
   const taxInvoiceText = 'TAX INVOICE';
   const gstText = 'GST : ';
@@ -112,15 +178,15 @@ function pdfReturn(orderRows, uniqueCarrier) {
             <View className="invoice-details" style={{
               position: 'absolute',
               fontSize: 5,
-              top: 20,
+              top: 15,
               textAlign: 'right',
               }}
             >
               <Text style={{ fontSize: 7 }}>
-              {gstText}<Text style={{ fontWeight: 'normal' }}>{gstin}</Text>
+              {gstText}<Text style={{ fontWeight: 200 }}>{gstin}</Text>
               </Text>
               <Text style={{ fontSize: 8, paddingTop: 5 }}>
-                {dateText}<Text style={{ fontWeight: 'normal' }}>{moment(orderRow.['Created at']).format('ll')}</Text>
+                {dateText}<Text style={{ fontWeight: 200 }}>{moment(orderRow.['Created at']).format('ll')}</Text>
               </Text>
 
               <Text style={{ fontSize: 8, paddingTop: 5 }}>
@@ -131,11 +197,11 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
               <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow.Carrier}</Text>
 
-              <Text style={{ fontSize: 10 }}>{orderRow.AWB}</Text>
+              <Text style={{ fontSize: 10, paddingTop: 20 }}>{orderRow.AWB}</Text>
 
-              <Text style={{ fontSize: 19, paddingTop: 15 }}>{paymentMethod}</Text>
+              <Text style={{ fontSize: 19, paddingTop: 5 }}>{paymentMethod}</Text>
 
-              <Text style={{ fontSize: 8, paddingTop: 10 }}>{orderRow.Currency} <Text style={{ fontSize: 19, paddingTop: 15 }}>{orderRow.Total}</Text></Text>
+              <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow.Currency} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow.Total}</Text></Text>
             </View>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 15, width: 150 }} className="shipping-details">
@@ -145,6 +211,67 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text>{orderRow['Shipping Address2']}</Text>
               <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip']}</Text>
               <Text>{orderRow['Shipping Province']}</Text>
+            </View>
+
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <View style={styles.tableCol1Header}>
+                  <Text style={styles.tableCellHeader}>{serailNumberText}</Text>
+                </View>
+
+                <View style={styles.tableColHeader}>
+                  <Text style={styles.tableCellHeader}>{itemDescriptionText}</Text>
+                </View>
+
+                <View style={styles.tableColHeader}>
+                  <Text style={styles.tableCellHeader}>{skuText}</Text>
+                </View>
+
+                <View style={styles.tableColHeader}>
+                  <Text style={styles.tableCellHeader}>{quantityText}</Text>
+                </View>
+
+                <View style={styles.tableColHeader}>
+                  <Text style={styles.tableCellHeader}>{unitPriceText}</Text>
+                </View>
+              </View>
+
+              <View style={styles.tableRow}>
+                <View style={styles.tableCol1}>
+                  <Text style={styles.tableCell}>React-PDF</Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>3</Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>2019-02-20 - 2020-02-19</Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>5€</Text>
+                </View>
+              </View>
+
+              <View style={styles.tableRow}>
+                <View style={styles.tableCol1}>
+                  <Text style={styles.tableCell}>Another row</Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo D.
+              Quijote de la Mancha</Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>2019-05-20 - 2020-07-19</Text>
+                </View>
+
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>25€</Text>
+                </View>
+              </View>
             </View>
 
 

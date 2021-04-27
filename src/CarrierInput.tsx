@@ -137,8 +137,6 @@ export default function CarrierInput(props) {
       });
     });
 
-    console.log(groupedOrders);
-
     return groupedOrders;
   }
 
