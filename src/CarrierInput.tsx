@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CarrierInput(props) {
   const classes = useStyles();
+
+  const [fileState, setFileState] = useState(null);
+
   const uploadButton = (
     <div>
       <input
@@ -31,7 +34,7 @@ export default function CarrierInput(props) {
         id="contained-button-file"
         type="file"
         accept=".csv"
-        onChange={(e) => handleFileChosen(e.target.files[0])}
+        onChange={(event) => handleFileChosen(event.target.files[0])}
       />
       <label htmlFor="contained-button-file">
         <Button variant="contained" color="primary" component="span">
@@ -43,13 +46,25 @@ export default function CarrierInput(props) {
 
   let fileReader;
 
+  const displayFileName = (file) => {
+    console.log('file');
+    console.log(file);
+  }
+
   const handleFileChosen = (file) => {
-    fileReader = new FileReader();
-    fileReader.onloadend = handleFileRead;
-    fileReader.readAsText(file);
+    setFileState(file);
+    displayFileName(file);
   };
 
-  const handleFileRead = (e) => {
+  const passFileToRead = () => {
+    console.log('in passFileToRead')
+    console.log(fileState);
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(fileState);
+  }
+
+  const handleFileRead = () => {
     const content = fileReader.result;
 
     const csv = require('csvtojson');
@@ -175,10 +190,6 @@ export default function CarrierInput(props) {
     );
   }
 
-  function barcode(value) {
-    return <Barcode value={value} />;
-  }
-
   function handleCancel() {
     history.push('/');
   }
@@ -187,33 +198,63 @@ export default function CarrierInput(props) {
     history.push('/');
   }
 
+  function handleNext() {
+    passFileToRead();
+  }
+
+  function getFileDetails() {
+    const file = Object.assign(fileState);
+
+    return (
+      <div>
+        <div>Name: {file.name}</div>
+        <div>Path: {file.path}</div>
+        <div>Size: {Number.parseFloat(file.size / 10000).toFixed(2)} MB</div>
+        <div>Type: {file.type}</div>
+      </div>
+    );
+  }
+
+  const nextDisabled = (fileState == null) ? true : false;
+
+  const fileDetails = (fileState == null) ? <div></div> : getFileDetails();
+
   return (
     <div>
       <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Carriers</div>
       <div className={classes.root}>
+        <Button
+          style={{ marginTop: 20, float: 'left' }}
+          variant="outlined"
+          onClick={handleBack}
+          className="margin-top-20 pull-left"
+        >
+          Back
+        </Button>
+        <Button
+          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+          variant="outlined"
+          color="primary"
+          onClick={handleCancel}
+          className="margin-left-10 margin-top-20 pull-left"
+        >
+          Cancel
+        </Button>
+        <Button
+          style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+          disabled={nextDisabled}
+        >
+          Next
+        </Button>
         <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>{uploadButton}</Paper>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>{uploadButton} <div>{fileDetails}</div></Paper>
           </Grid>
         </Grid>
       </div>
-      <Button
-        style={{ marginTop: 20, float: 'left' }}
-        variant="outlined"
-        onClick={handleBack}
-        className="margin-top-20 pull-left"
-      >
-        Back
-      </Button>
-      <Button
-        style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-        variant="outlined"
-        color="primary"
-        onClick={handleCancel}
-        className="margin-left-10 margin-top-20 pull-left"
-      >
-        Cancel
-      </Button>
     </div>
   );
 }

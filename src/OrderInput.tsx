@@ -81,10 +81,22 @@ export default function OrderInput(props) {
     });
   }
 
+  function closeApp() {
+    window.close();
+  }
+
   return (
     <div>
       <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Orders</div>
       <div className={classes.root}>
+        <Button
+          style={{ marginTop: 20, float: 'right' }}
+          variant="outlined"
+          onClick={closeApp}
+          className="margin-top-20 pull-left"
+        >
+          Close
+        </Button>
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Paper className={classes.paper}>{uploadButton}</Paper>

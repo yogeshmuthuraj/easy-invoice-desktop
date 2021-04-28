@@ -242,7 +242,6 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.13.13",
-    "@createnextapp/react-barcode": "^1.1.1",
     "@material-ui/core": "^4.11.3",
     "@material-ui/data-grid": "^4.0.0-alpha.26",
     "@material-ui/icons": "^4.11.2",
@@ -260,12 +259,14 @@
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-barcodes": "^1.1.0",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-table": "^7.7.0",
     "react_ujs": "^2.6.1",
     "regenerator-runtime": "^0.13.5",
     "source-map-support": "^0.5.19",
+    "svg-to-pdfkit": "^0.1.8",
     "turbolinks": "^5.2.0"
   },
   "devEngines": {

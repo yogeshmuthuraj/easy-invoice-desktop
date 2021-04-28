@@ -19,14 +19,15 @@ import {
   Image
 } from '@react-pdf/renderer';
 
-import { useBarcode } from '@createnextapp/react-barcode';
+import Barcode from './Barcode';
+
+import SVGtoPDF from 'svg-to-pdfkit';
 
 import InvoiceItemsTable from './table/InvoiceItemsTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    paddingLeft: 20
   },
   paper: {
     padding: theme.spacing(2),
@@ -206,8 +207,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
               <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow.Carrier}</Text>
 
-              <Text style={{ fontSize: 10, paddingTop: 20 }}>{orderRow.AWB}</Text>
-
               <Text style={{ fontSize: 19, paddingTop: 5 }}>{paymentMethod}</Text>
 
               <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow.Currency} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow.Total}</Text></Text>
@@ -299,6 +298,10 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
 
+  // const svg = <Barcode value={'12345'} />;
+  //
+  // const pdf = SVGtoPDF(document, svg, 200, 200, { width: '100', height: '100' });
+
   return (
     <Grid container spacing={3} key={fileName}>
       <div style={{ paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
@@ -318,6 +321,19 @@ export default function PrintPreview() {
   const history = useHistory();
   const location = useLocation();
 
+  if (location.state == undefined) {
+    return (
+      <Button
+      style={{ marginTop: 20, float: 'left' }}
+      variant="outlined"
+      onClick={handleCancel}
+      className="margin-top-20 pull-left"
+      >
+      ET wants to go Home...
+      </Button>
+    );
+  }
+
   const { orderRows } = location.state;
 
   const uniqueCarriers = orderRows.filter(
@@ -336,29 +352,36 @@ export default function PrintPreview() {
     history.goBack();
   }
 
+  function closeApp() {
+    window.close();
+  }
+
   return (
     <div>
       <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
       <div className={classes.root}>
-        {pdfLinkList}
+        <Button
+          style={{ marginTop: 20, float: 'left' }}
+          variant="outlined"
+          color="primary"
+          onClick={handleCancel}
+        >
+          Start Again
+        </Button>
+        <Button
+          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+          variant="outlined"
+          onClick={closeApp}
+          className="margin-top-20 pull-left"
+        >
+          Close
+        </Button>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>{pdfLinkList}</Paper>
+          </Grid>
+        </Grid>
       </div>
-      <Button
-        style={{ marginTop: 20, float: 'left' }}
-        variant="outlined"
-        onClick={handleBack}
-        className="margin-top-20 pull-left"
-      >
-        Back
-      </Button>
-      <Button
-        style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-        variant="outlined"
-        color="primary"
-        onClick={handleCancel}
-        className="margin-left-10 margin-top-20 pull-left"
-      >
-        Cancel
-      </Button>
     </div>
   );
 }

@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { DataGrid } from '@material-ui/data-grid';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 import { useLocation, useHistory } from 'react-router-dom';
 
@@ -13,11 +16,39 @@ function toTitleCase(str) {
   });
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  input: {
+    display: 'none',
+  },
+}));
+
 export default function OrderDisplay(props) {
+  const classes = useStyles();
   const location = useLocation();
   const columns = [];
   let rows;
   let columnHeaders;
+
+  if (location.state == undefined) {
+    return (
+      <Button
+      style={{ marginTop: 20, float: 'left' }}
+      variant="outlined"
+      onClick={handleCancel}
+      className="margin-top-20 pull-left"
+      >
+        ET wants to go Home...
+      </Button>
+    );
+  }
 
   if (props.from == 'fetchOrders') {
     rows = props.rows;
@@ -84,20 +115,6 @@ export default function OrderDisplay(props) {
       <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">
         Select orders
       </div>
-      <div style={{ height: 500, width: '100%', fontSize: 30 }}>
-        <DataGrid
-          autoPageSize
-          className="font-size-14"
-          rows={rows}
-          columns={columns}
-          pageSize={10}
-          checkboxSelection
-          onSelectionModelChange={(newSelection) => {
-            setSelectionModel(newSelection.selectionModel);
-          }}
-          selectionModel={selectionModel}
-        />
-      </div>
       <Button
         style={{ marginTop: 20, float: 'left' }}
         variant="outlined"
@@ -116,15 +133,34 @@ export default function OrderDisplay(props) {
         Cancel
       </Button>
       <Button
-        style={{ marginTop: 20, float: 'right' }}
+        style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
         variant="contained"
         color="primary"
         onClick={handleNext}
-        className="margin-top-20 pull-right"
         disabled={nextDisabled}
       >
         Next
       </Button>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <div style={{ height: 500, width: '100%', fontSize: 30 }}>
+              <DataGrid
+                autoPageSize
+                className="font-size-14"
+                rows={rows}
+                columns={columns}
+                pageSize={10}
+                checkboxSelection
+                onSelectionModelChange={(newSelection) => {
+                  setSelectionModel(newSelection.selectionModel);
+                }}
+                selectionModel={selectionModel}
+              />
+            </div>
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
   );
 }
