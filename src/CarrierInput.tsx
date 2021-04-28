@@ -207,10 +207,10 @@ export default function CarrierInput(props) {
 
     return (
       <div>
-        <div>Name: {file.name}</div>
-        <div>Path: {file.path}</div>
-        <div>Size: {Number.parseFloat(file.size / 10000).toFixed(2)} MB</div>
-        <div>Type: {file.type}</div>
+        <div><strong>Name:</strong> {file.name}</div>
+        <div><strong>Path:</strong> {file.path}</div>
+        <div><strong>Size:</strong> {Number.parseFloat(file.size / 1000000).toFixed(2)} MB</div>
+        <div><strong>Type:</strong> {file.type}</div>
       </div>
     );
   }
@@ -220,7 +220,7 @@ export default function CarrierInput(props) {
   const fileDetails = (fileState == null) ? <div></div> : getFileDetails();
 
   return (
-    <div>
+    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
       <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Carriers</div>
       <div className={classes.root}>
         <Button
@@ -251,7 +251,7 @@ export default function CarrierInput(props) {
         </Button>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>{uploadButton} <div>{fileDetails}</div></Paper>
+            <Paper className={classes.paper}>{uploadButton} <div style={{ textAlign: 'left', paddingTop: 10 }}>{fileDetails}</div></Paper>
           </Grid>
         </Grid>
       </div>

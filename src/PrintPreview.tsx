@@ -304,7 +304,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   return (
     <Grid container spacing={3} key={fileName}>
-      <div style={{ paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
+      <div style={{ marginLeft: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
         <PDFDownloadLink document={document} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) =>
             loading ? <CircularProgress color="secondary" /> : fileName
@@ -357,7 +357,7 @@ export default function PrintPreview() {
   }
 
   return (
-    <div>
+    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
       <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
       <div className={classes.root}>
         <Button
