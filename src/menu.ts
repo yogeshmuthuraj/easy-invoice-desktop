@@ -11,7 +11,7 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   submenu?: DarwinMenuItemConstructorOptions[] | Menu;
 }
 
-app.commandLine.appendSwitch('js-flags', '--max-old-space-size=12288');
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=16000');
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;

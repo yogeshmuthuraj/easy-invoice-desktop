@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -111,6 +113,8 @@ const styles = StyleSheet.create({
 });
 
 function pdfReturn(orderRows, uniqueCarrier) {
+  const classes = useStyles();
+
   const taxInvoiceText = 'TAX INVOICE';
   const gstText = 'GST : ';
   const gstin = '33AAHCP7548N1ZT';
@@ -167,6 +171,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
       {filteredRows.map((orderRow, index) => {
         const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
 
+        console.log('in doc start: ', index);
+
         return (
           <Page key={index} size={paperSize}
             style={{
@@ -212,8 +218,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow.Currency} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow.Total}</Text></Text>
             </View>
 
-            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 15, width: 150 }} className="shipping-details">
-              <Text style={{ marginTop: 10 }}><strong>{shippingAddressText}</strong></Text>
+            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 10, width: 150 }} className="shipping-details">
+              <Text style={{ marginTop: 20 }}><strong>{shippingAddressText}</strong></Text>
               <Text>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
               <Text>{orderRow['Shipping Address2']}</Text>
@@ -288,17 +294,45 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
 
+  function handleCancel() {
+    history.push('/');
+  }
+
   // const svg = <Barcode value={'12345'} />;
   //
   // const pdf = SVGtoPDF(document, svg, 200, 200, { width: '100', height: '100' });
 
   return (
     <Grid container spacing={3} key={fileName}>
-      <div style={{ marginLeft: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
+      <div style={{ marginLeft: 20, marginRight: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
         <PDFDownloadLink document={document} fileName={fileName + '.pdf'}>
-          {({ blob, url, loading, error }) =>
-            loading ? <CircularProgress color="secondary" /> : fileName
+          {({ blob, url, loading, error }) => {
+            if (blob || url) {
+              console.log('in if pdf link');
+              return fileName;
+            } else if (error){
+              return (
+                <Alert severity="error" style={{ fontSize: '20px' }}>
+                  <AlertTitle style={{ fontSize: '20px' }}>
+                    Error
+                  </AlertTitle>
+                  <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
+                  <div className={classes.root}>
+                    <Button
+                      style={{ marginTop: 20, float: 'left' }}
+                      variant="outlined"
+                      color="primary"
+                      onClick={handleCancel}
+                    >
+                      Start Again
+                    </Button>
+                  </div>
+                </Alert>
+              );
+            } else {
+            return <CircularProgress color="secondary" />
           }
+        }}
         </PDFDownloadLink>
       </div>
     </Grid>

@@ -22,8 +22,8 @@ export default function App() {
         <div
           style={{
             paddingTop: 100,
-            paddingRight: 200,
-            paddingLeft: 200,
+            paddingRight: '20%',
+            paddingLeft: '20%',
             fontSize: 14,
             fontFamily: 'Roboto !important'
           }}

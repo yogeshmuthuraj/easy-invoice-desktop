@@ -30,10 +30,10 @@ const InvoiceTableFooter = ({items}) => {
     const total = items.map(item => item['Lineitem quantity'] * item['Lineitem price'])
         .reduce((accumulator, currentValue) => accumulator + currentValue , 0)
     return(
-        <View style={styles.row}>
-            <Text style={styles.description}>TOTAL </Text>
-            <Text style={styles.total}>{Number.parseFloat(total).toFixed(2)}</Text>
-        </View>
+      <View style={styles.row}>
+        <Text style={styles.description}>TOTAL </Text>
+        <Text style={styles.total}>{Number.parseFloat(total).toFixed(2)}</Text>
+      </View>
     )
 };
 
