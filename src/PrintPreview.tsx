@@ -146,7 +146,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const goodsText = 'Goods once sold cannot be Returned';
   const jurisdictionText = 'All disputes are Subject to Chennai Jurisdiction';
   const forSignatureText = 'For PASWAY CLOTHING PVT LTD';
-  const forSignaturePath = '';
+  const forSignaturePath = 'This is a computer generated invoice and does not require any stamp or signature';
   const authorisedSignatoryText = 'Authorized Signatory';
   const amountInWordsText = 'Amount in Words : ';
 
@@ -213,7 +213,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </View>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 15, width: 150 }} className="shipping-details">
-              <Text style={{ fontSize: 7 }}>{shippingAddressText}</Text>
+              <Text style={{ marginTop: 10 }}><strong>{shippingAddressText}</strong></Text>
               <Text>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
               <Text>{orderRow['Shipping Address2']}</Text>
@@ -228,21 +228,11 @@ function pdfReturn(orderRows, uniqueCarrier) {
             <Text style={{
                 position: 'absolute',
                 fontSize: 5,
-                bottom: 70,
+                bottom: 50,
                 textAlign: 'right',
               }}
             >
-              {forSignatureText}
-            </Text>
-
-            <Text style={{
-                position: 'absolute',
-                fontSize: 5,
-                bottom: 45,
-                textAlign: 'right',
-              }}
-            >
-              {authorisedSignatoryText}
+              {forSignaturePath}
             </Text>
 
             <Text style={{

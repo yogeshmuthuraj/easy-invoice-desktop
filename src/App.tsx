@@ -24,7 +24,8 @@ export default function App() {
             paddingTop: 100,
             paddingRight: 200,
             paddingLeft: 200,
-            fontSize: '14px',
+            fontSize: 14,
+            fontFamily: 'Roboto !important'
           }}
         >
           <Switch>
