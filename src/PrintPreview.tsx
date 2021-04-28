@@ -166,6 +166,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
     }
   });
 
+  const filteredRowsLength = filteredRows.length;
+
   const document = (
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
@@ -287,12 +289,15 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {jurisdictionText}
             </Text>
           </Page>
-        )
+        );
+
+        console.log('%cTEST');
       })}
     </Document>
   )
 
-  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
+
+  const history = useHistory();
 
   function handleCancel() {
     history.push('/');
@@ -301,6 +306,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   // const svg = <Barcode value={'12345'} />;
   //
   // const pdf = SVGtoPDF(document, svg, 200, 200, { width: '100', height: '100' });
+  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
 
   return (
     <Grid container spacing={3} key={fileName}>
@@ -311,6 +317,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               console.log('in if pdf link');
               return fileName;
             } else if (error){
+              console.log('else if');
               return (
                 <Alert severity="error" style={{ fontSize: '20px' }}>
                   <AlertTitle style={{ fontSize: '20px' }}>
@@ -330,6 +337,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
                 </Alert>
               );
             } else {
+              console.log('else');
             return <CircularProgress color="secondary" />
           }
         }}
@@ -347,14 +355,19 @@ export default function PrintPreview() {
 
   if (location.state == undefined) {
     return (
-      <Button
-      style={{ marginTop: 20, float: 'left' }}
-      variant="outlined"
-      onClick={handleCancel}
-      className="margin-top-20 pull-left"
-      >
-      ET wants to go Home...
-      </Button>
+      <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
+        <div className={classes.root}>
+          <Button
+            fullWidth
+            style={{ marginTop: 20 }}
+            variant="outlined"
+            onClick={handleCancel}
+            className="margin-top-20"
+          >
+            ET wants to go Home...
+          </Button>
+        </div>
+      </div>
     );
   }
 

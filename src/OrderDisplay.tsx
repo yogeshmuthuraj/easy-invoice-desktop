@@ -39,14 +39,19 @@ export default function OrderDisplay(props) {
 
   if (location.state == undefined) {
     return (
-      <Button
-      style={{ marginTop: 20, float: 'left' }}
-      variant="outlined"
-      onClick={handleCancel}
-      className="margin-top-20 pull-left"
-      >
-        ET wants to go Home...
-      </Button>
+      <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
+        <div className={classes.root}>
+          <Button
+            fullWidth
+            style={{ marginTop: 20, float: 'left' }}
+            variant="outlined"
+            onClick={handleCancel}
+            className="margin-top-20 pull-left"
+          >
+            ET wants to go Home...
+          </Button>
+        </div>
+      </div>
     );
   }
 
