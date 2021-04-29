@@ -45,16 +45,32 @@ const styles = StyleSheet.create({
 
 
 const InvoiceTableRow = ({items}) => {
-    const rows = items.map( (item, index) =>
-      <View style={styles.row} key={index}>
-        <Text style={styles.sno}>{index + 1}</Text>
-        <Text style={styles.lineItemName}>{item['Lineitem name']}</Text>
-        <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
-        <Text style={styles.lineItemPrice}>{item['Lineitem price']}</Text>
-        <Text style={styles.amount}>{(item['Lineitem quantity'] * item['Lineitem price']).toFixed(2)}</Text>
-      </View>
-    )
-    return (<Fragment>{rows}</Fragment> )
+  const rows = items.map((item, index) => {
+    // if (index > 3) {
+    //   console.log('in if');
+    //   return (
+    //     <View key={index} style={styles.row} break>
+    //       <Text style={styles.sno}>{index + 1}</Text>
+    //       <Text style={styles.lineItemName}>{item['Lineitem name']}</Text>
+    //       <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
+    //       <Text style={styles.lineItemPrice}>{item['Lineitem price']}</Text>
+    //       <Text style={styles.amount}>{(item['Lineitem quantity'] * item['Lineitem price']).toFixed(2)}</Text>
+    //     </View>
+    //   );
+    // } else {
+    //   console.log('Else');
+      return (
+        <View style={styles.row} key={index} wrap={false}>
+          <Text style={styles.sno}>{index + 1}</Text>
+          <Text style={styles.lineItemName}>{item['Lineitem name']}</Text>
+          <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
+          <Text style={styles.lineItemPrice}>{item['Lineitem price']}</Text>
+          <Text style={styles.amount}>{(item['Lineitem quantity'] * item['Lineitem price']).toFixed(2)}</Text>
+        </View>
+      )
+    // }
+  });
+  return (<Fragment>{rows}</Fragment> )
 };
 
 export default InvoiceTableRow

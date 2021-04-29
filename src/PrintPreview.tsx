@@ -229,8 +229,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </View>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 10, width: 150 }} className="shipping-details">
-              <Text style={{ marginTop: 20 }}><strong>{shippingAddressText}</strong></Text>
-              <Text>{orderRow['Shipping Name']}</Text>
+              <Text>{shippingAddressText}</Text>
+              <Text style={{ paddingTop: 5 }}>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
               <Text>{orderRow['Shipping Address2']}</Text>
               <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip'].replace(/'/g, '')}</Text>
@@ -253,7 +253,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {forSignaturePath}
             </Text>
 
-            <Text style={{
+            <Text fixed style={{
                 marginLeft: 30,
                 position: 'absolute',
                 fontSize: 5,
@@ -264,7 +264,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {declarationText1}
             </Text>
 
-            <Text style={{
+            <Text fixed style={{
                 marginLeft: 30,
                 position: 'absolute',
                 fontSize: 5,
@@ -275,7 +275,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {declarationText2}
             </Text>
 
-            <Text style={{
+            <Text fixed style={{
               marginLeft: 30,
               position: 'absolute',
               fontSize: 5,
@@ -287,7 +287,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {goodsText}
             </Text>
 
-            <Text style={{
+            <Text fixed style={{
               marginLeft: 30,
               position: 'absolute',
               fontSize: 5,
@@ -320,8 +320,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   return (
     <Grid container spacing={3} key={fileName}>
-      <div style={{ paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
-        <PDFDownloadLink document={document} style={{ marginLeft: 20, marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
+      <div style={{ marginLeft: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
+        <PDFDownloadLink document={document} style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) => {
             if (blob || url) {
               console.log('in if pdf link');
@@ -348,7 +348,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               );
             } else {
               console.log('else');
-            return <LoadingIndicator style={{ marginLeft: 20 }} />;
+            return <LoadingIndicator />;
           }
         }}
         </PDFDownloadLink>
