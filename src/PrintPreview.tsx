@@ -312,8 +312,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
   return (
     <Grid container spacing={3} key={fileName}>
-      <div style={{ marginLeft: 20, marginRight: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
-        <PDFDownloadLink document={document} style={{ textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
+      <div style={{ paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
+        <PDFDownloadLink document={document} style={{ marginLeft: 20, marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) => {
             if (blob || url) {
               console.log('in if pdf link');

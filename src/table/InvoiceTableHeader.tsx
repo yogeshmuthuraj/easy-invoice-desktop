@@ -15,33 +15,29 @@ const styles = StyleSheet.create({
     },
     sno: {
         width: '5%',
-        borderRightColor: borderColor,
-        borderRightWidth: 0.5,
         paddingLeft: 2,
         paddingRight: 2,
     },
     lineItemName: {
         width: '60%',
-        borderRightColor: borderColor,
-        borderRightWidth: 0.5,
+        textAlign: 'left',
         paddingLeft: 2,
         paddingRight: 2,
     },
     qty: {
         width: '5%',
-        borderRightColor: borderColor,
-        borderRightWidth: 0.5,
+        textAlign: 'right',
         paddingLeft: 2,
         paddingRight: 2,
     },
     lineItemPrice: {
         width: '15%',
-        borderRightColor: borderColor,
-        borderRightWidth: 0.5,
+        textAlign: 'right',
         paddingRight: 2,
     },
     amount: {
         width: '15%',
+        textAlign: 'right',
         paddingRight: 2,
     },
   });
