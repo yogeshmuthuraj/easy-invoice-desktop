@@ -129,14 +129,15 @@ export default function CarrierInput(props) {
             'Tax 2 Name': compareClonedRow['Tax 2 Name'],
             'Tax 2 Value': compareClonedRow['Tax 2 Value'],
             'Currency': compareClonedRow['Currency'],
+            'Subtotal': compareClonedRow['Subtotal'],
           });
         }
       });
 
       groupedOrders.push({
-        Name: selectedOrderRow.Name,
-        Taxes: selectedOrderRow.Taxes,
-        Total: selectedOrderRow.Total,
+        'Name': selectedOrderRow['Name'],
+        'Taxes': selectedOrderRow['Taxes'],
+        'Total': selectedOrderRow['Total'],
         'Outstanding Balance': selectedOrderRow['Outstanding Balance'],
         'Created at': selectedOrderRow['Created at'],
         'Shipping Name': selectedOrderRow['Shipping Name'],
@@ -147,6 +148,7 @@ export default function CarrierInput(props) {
         'Shipping Zip': selectedOrderRow['Shipping Zip'],
         'Shipping Province': selectedOrderRow['Shipping Province'],
         'Shipping Country': selectedOrderRow['Shipping Country'],
+        'Shipping': selectedOrderRow['Shipping'],
         'Payment Method': selectedOrderRow['Payment Method'],
         'Currency': selectedOrderRow['Currency'],
         'More Details': lineItemDetails,

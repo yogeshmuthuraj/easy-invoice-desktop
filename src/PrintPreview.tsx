@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import moment from 'moment';
 
@@ -211,13 +211,13 @@ function pdfReturn(orderRows, uniqueCarrier) {
                 {invoiceText}
               </Text>
 
-              <Text style={{ fontSize: 18 }}>{orderRow.Name}</Text>
+              <Text style={{ fontSize: 18 }}>{orderRow['Name']}</Text>
 
-              <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow.Carrier}</Text>
+              <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow['Carrier']}</Text>
 
               <Text style={{ fontSize: 19, paddingTop: 5 }}>{paymentMethod}</Text>
 
-              <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow.Currency} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow.Total}</Text></Text>
+              <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow['Currency']} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow['Outstanding Balance']}</Text></Text>
             </View>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 10, width: 150 }} className="shipping-details">
@@ -225,12 +225,12 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
               <Text>{orderRow['Shipping Address2']}</Text>
-              <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip']}</Text>
+              <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip'].replace(/'/g, '')}</Text>
               <Text>{orderRow['Shipping Province']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ paddingRight: 10 }}>
-              <InvoiceItemsTable items={orderRow['More Details']} />
+            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 10 }}>
+              <InvoiceItemsTable items={orderRow['More Details']} grandTotal={orderRow['Total']} shipping={orderRow['Shipping']} />
             </View>
 
             <Text style={{
@@ -338,7 +338,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               );
             } else {
               console.log('else');
-            return <CircularProgress color="secondary" />
+            return <LinearProgress color="secondary" />;
           }
         }}
         </PDFDownloadLink>

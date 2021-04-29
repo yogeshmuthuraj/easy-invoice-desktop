@@ -16,25 +16,29 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        paddingRight: 8,
+        paddingRight: 2,
     },
-    total: {
+    grandTotal: {
         width: '15%',
         textAlign: 'right',
-        paddingRight: 8,
+        paddingRight: 2,
     },
   });
 
 
-const InvoiceTableFooter = ({items}) => {
-    const total = items.map(item => item['Lineitem quantity'] * item['Lineitem price'])
-        .reduce((accumulator, currentValue) => accumulator + currentValue , 0)
-    return(
+const InvoiceTableFooter = ({items, grandTotal, shipping}) => {
+  return(
+    <View>
       <View style={styles.row}>
-        <Text style={styles.description}>TOTAL </Text>
-        <Text style={styles.total}>{Number.parseFloat(total).toFixed(2)}</Text>
+        <Text style={styles.description}>Shipping</Text>
+        <Text style={styles.grandTotal}>{shipping}</Text>
       </View>
-    )
+      <View style={styles.row}>
+        <Text style={styles.description}>TOTAL</Text>
+        <Text style={styles.grandTotal}>{grandTotal}</Text>
+      </View>
+    </View>
+  )
 };
 
   export default InvoiceTableFooter

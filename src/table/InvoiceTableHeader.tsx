@@ -17,33 +17,41 @@ const styles = StyleSheet.create({
         width: '5%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
+        paddingLeft: 2,
+        paddingRight: 2,
     },
-    description: {
+    lineItemName: {
         width: '60%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
+        paddingLeft: 2,
+        paddingRight: 2,
     },
     qty: {
         width: '5%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
+        paddingLeft: 2,
+        paddingRight: 2,
     },
-    rate: {
+    lineItemPrice: {
         width: '15%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
+        paddingRight: 2,
     },
     amount: {
-        width: '15%'
+        width: '15%',
+        paddingRight: 2,
     },
   });
 
   const InvoiceTableHeader = () => (
     <View style={styles.container}>
       <Text style={styles.sno}>S.No</Text>
-      <Text style={styles.description}>Item Description</Text>
+      <Text style={styles.lineItemName}>Item Description</Text>
       <Text style={styles.qty}>Qty</Text>
-      <Text style={styles.rate}>Unit Price</Text>
+      <Text style={styles.lineItemPrice}>Unit Price</Text>
       <Text style={styles.amount}>Amount</Text>
     </View>
   );

@@ -8,42 +8,46 @@ const styles = StyleSheet.create({
         borderBottomColor: 'grey',
         borderBottomWidth: 0.5,
         alignItems: 'center',
-        height: 15,
+        height: 30,
         fontStyle: 'bold',
     },
     sno: {
         width: '5%',
-        textAlign: 'left',
+        textAlign: 'center',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        paddingLeft: 8,
+        paddingLeft: 2,
+        paddingRight: 2,
     },
-    description: {
+    lineItemName: {
         width: '60%',
         textAlign: 'left',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingLeft: 2,
+        paddingRight: 2,
     },
     qty: {
         width: '5%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        textAlign: 'center',
-        paddingRight: 8,
+        textAlign: 'right',
+        paddingLeft: 2,
+        paddingRight: 2,
     },
-    rate: {
+    lineItemPrice: {
         width: '15%',
         borderRightColor: borderColor,
         borderRightWidth: 0.5,
-        textAlign: 'center',
-        paddingRight: 8,
+        textAlign: 'right',
+        paddingLeft: 2,
+        paddingRight: 2,
     },
     amount: {
         width: '15%',
         textAlign: 'right',
-        paddingRight: 8,
+        paddingLeft: 2,
+        paddingRight: 2,
     },
   });
 
@@ -52,9 +56,9 @@ const InvoiceTableRow = ({items}) => {
     const rows = items.map( (item, index) =>
       <View style={styles.row} key={index}>
         <Text style={styles.sno}>{index + 1}</Text>
-        <Text style={styles.description}>{item['Lineitem name']}</Text>
+        <Text style={styles.lineItemName}>{item['Lineitem name']}</Text>
         <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
-        <Text style={styles.rate}>{item['Lineitem price']}</Text>
+        <Text style={styles.lineItemPrice}>{item['Lineitem price']}</Text>
         <Text style={styles.amount}>{(item['Lineitem quantity'] * item['Lineitem price']).toFixed(2)}</Text>
       </View>
     )
