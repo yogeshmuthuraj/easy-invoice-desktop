@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'grey',
         borderBottomWidth: 0.5,
         alignItems: 'center',
-        height: 15,
+        height: 112,
         textAlign: 'center',
         fontStyle: 'bold',
         flexGrow: 1,

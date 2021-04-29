@@ -19,10 +19,36 @@ const styles = StyleSheet.create({
       height: 15,
       fontSize: 5,
       fontStyle: 'bold',
+      borderBottomWidth: 0.5
+  },
+  inWordsRow: {
+      flexDirection: 'row',
+      borderBottomColor: 'grey',
+      alignItems: 'center',
+      height: 15,
+      fontSize: 5,
+      fontStyle: 'bold',
   },
   totalDescription: {
       width: '85%',
       textAlign: 'right',
+      fontSize: 6
+  },
+  grandTotal: {
+      width: '15%',
+      textAlign: 'right',
+      paddingRight: 2,
+      fontSize: 6
+  },
+  inWordsDescription: {
+      width: '20%',
+      textAlign: 'left',
+      paddingLeft: 2,
+  },
+  inWords: {
+      width: '80%',
+      textAlign: 'left',
+      fontSize: 6
   },
   shippingDescription: {
       width: '85%',
@@ -33,15 +59,11 @@ const styles = StyleSheet.create({
       textAlign: 'right',
       paddingRight: 2,
   },
-  grandTotal: {
-      width: '15%',
-      textAlign: 'right',
-      paddingRight: 2,
-  },
+
 });
 
 
-const InvoiceTableFooter = ({items, grandTotal, shipping}) => {
+const InvoiceTableFooter = ({items, grandTotal, shipping, amountInWords}) => {
   return(
     <View>
       <View style={styles.shippingRow}>
@@ -49,8 +71,12 @@ const InvoiceTableFooter = ({items, grandTotal, shipping}) => {
         <Text style={styles.shippingRate}>{shipping}</Text>
       </View>
       <View style={styles.totalRow}>
-        <Text style={styles.totalDescription}>TOTAL</Text>
+        <Text style={styles.totalDescription}>Total</Text>
         <Text style={styles.grandTotal}>{grandTotal}</Text>
+      </View>
+      <View style={styles.inWordsRow}>
+        <Text style={styles.inWordsDescription}>Amount in Words :</Text>
+        <Text style={styles.inWords}>{amountInWords}</Text>
       </View>
     </View>
   )

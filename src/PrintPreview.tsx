@@ -11,6 +11,7 @@ import { LoadingIndicator } from "./LoadingIndicator";
 import Link from '@material-ui/core/Link';
 
 import moment from 'moment';
+import numberToWords from 'number-to-words';
 
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -114,6 +115,13 @@ const styles = StyleSheet.create({
   }
 });
 
+function toTitleCase(str) {
+  str = str.replace(/_/g, ' ');
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
 function pdfReturn(orderRows, uniqueCarrier) {
   const classes = useStyles();
 
@@ -154,7 +162,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const forSignatureText = 'For PASWAY CLOTHING PVT LTD';
   const forSignaturePath = 'This is a computer generated invoice and does not require any stamp or signature';
   const authorisedSignatoryText = 'Authorized Signatory';
-  const amountInWordsText = 'Amount in Words : ';
 
   const paperSize = 'A6';
 
@@ -174,8 +181,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
         const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
-
-        console.log('in doc start: ', index);
+        const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
 
         return (
           <Page key={index} size={paperSize}
@@ -232,7 +238,9 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </View>
 
             <View className="invoice-table" style={{ fontSize: 5, paddingRight: 10 }}>
-              <InvoiceItemsTable items={orderRow['More Details']} grandTotal={orderRow['Total']} shipping={orderRow['Shipping']} />
+              <InvoiceItemsTable items={orderRow['More Details']} grandTotal={orderRow['Total']} shipping={orderRow['Shipping']}
+                amountInWords={amountInWords}
+              />
             </View>
 
             <Text style={{
@@ -340,7 +348,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               );
             } else {
               console.log('else');
-            return <LoadingIndicator />;
+            return <LoadingIndicator style={{ marginLeft: 20 }} />;
           }
         }}
         </PDFDownloadLink>
