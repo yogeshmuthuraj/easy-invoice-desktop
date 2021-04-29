@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
+import CloudDownloadRoundedIcon from '@material-ui/icons/CloudDownloadRounded';
 
 import { useHistory } from 'react-router-dom';
 
@@ -34,14 +36,17 @@ export default function OrderInput(props) {
         onChange={(e) => handleFileChosen(e.target.files[0])}
       />
       <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
+        <Button variant="contained" color="primary" component="span"
+        startIcon={<CloudUploadRoundedIcon />}>
           Upload
         </Button>
       </label>
     </div>
   );
   const fetchButton = (
-    <Button variant="contained" color="primary" onClick={handleFetch} disabled>
+    <Button variant="contained" color="primary" onClick={handleFetch} disabled
+    startIcon={<CloudDownloadRoundedIcon />}>
+
       Fetch
     </Button>
   );
@@ -91,7 +96,7 @@ export default function OrderInput(props) {
       <div className={classes.root}>
         <Button
           style={{ marginTop: 20, float: 'right' }}
-          variant="outlined"
+          variant="contained"
           onClick={closeApp}
           className="margin-top-20 pull-left"
         >

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -37,7 +38,8 @@ export default function CarrierInput(props) {
         onChange={(event) => handleFileChosen(event.target.files[0])}
       />
       <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
+        <Button variant="contained" color="primary" component="span"
+        startIcon={<CloudUploadRoundedIcon />}>
           Upload
         </Button>
       </label>
@@ -227,7 +229,7 @@ export default function CarrierInput(props) {
       <div className={classes.root}>
         <Button
           style={{ marginTop: 20, float: 'left' }}
-          variant="outlined"
+          variant="contained"
           onClick={handleBack}
           className="margin-top-20 pull-left"
         >
@@ -235,8 +237,7 @@ export default function CarrierInput(props) {
         </Button>
         <Button
           style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-          variant="outlined"
-          color="primary"
+          variant="contained"
           onClick={handleCancel}
           className="margin-left-10 margin-top-20 pull-left"
         >

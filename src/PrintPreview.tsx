@@ -6,7 +6,9 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { LoadingIndicator } from "./LoadingIndicator";
+import Link from '@material-ui/core/Link';
 
 import moment from 'moment';
 
@@ -311,7 +313,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   return (
     <Grid container spacing={3} key={fileName}>
       <div style={{ marginLeft: 20, marginRight: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
-        <PDFDownloadLink document={document} fileName={fileName + '.pdf'}>
+        <PDFDownloadLink document={document} style={{ textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) => {
             if (blob || url) {
               console.log('in if pdf link');
@@ -327,7 +329,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
                   <div className={classes.root}>
                     <Button
                       style={{ marginTop: 20, float: 'left' }}
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
                       onClick={handleCancel}
                     >
@@ -338,7 +340,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               );
             } else {
               console.log('else');
-            return <LinearProgress color="secondary" />;
+            return <LoadingIndicator />;
           }
         }}
         </PDFDownloadLink>
@@ -360,7 +362,8 @@ export default function PrintPreview() {
           <Button
             fullWidth
             style={{ marginTop: 20 }}
-            variant="outlined"
+            variant="contained"
+            color="secondary"
             onClick={handleCancel}
             className="margin-top-20"
           >
@@ -399,7 +402,7 @@ export default function PrintPreview() {
       <div className={classes.root}>
         <Button
           style={{ marginTop: 20, float: 'left' }}
-          variant="outlined"
+          variant="contained"
           color="primary"
           onClick={handleCancel}
         >
@@ -407,7 +410,7 @@ export default function PrintPreview() {
         </Button>
         <Button
           style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-          variant="outlined"
+          variant="contained"
           onClick={closeApp}
           className="margin-top-20 pull-left"
         >

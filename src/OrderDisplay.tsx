@@ -44,7 +44,8 @@ export default function OrderDisplay(props) {
           <Button
             fullWidth
             style={{ marginTop: 20, float: 'left' }}
-            variant="outlined"
+            variant="contained"
+            color="secondary"
             onClick={handleCancel}
             className="margin-top-20 pull-left"
           >
@@ -122,7 +123,7 @@ export default function OrderDisplay(props) {
       </div>
       <Button
         style={{ marginTop: 20, float: 'left' }}
-        variant="outlined"
+        variant="contained"
         onClick={handleBack}
         className="margin-top-20 pull-left"
       >
@@ -130,8 +131,7 @@ export default function OrderDisplay(props) {
       </Button>
       <Button
         style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-        variant="outlined"
-        color="primary"
+        variant="contained"
         onClick={handleCancel}
         className="margin-left-10 margin-top-20 pull-left"
       >
