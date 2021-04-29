@@ -244,32 +244,32 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </View>
 
             <Text style={{
-                position: 'absolute',
-                fontSize: 5,
-                bottom: 50,
-                textAlign: 'right',
+              position: 'absolute',
+              fontSize: 5,
+              bottom: 50,
+              textAlign: 'right',
               }}
             >
               {forSignaturePath}
             </Text>
 
             <Text fixed style={{
-                marginLeft: 30,
-                position: 'absolute',
-                fontSize: 5,
-                bottom: 30,
-                textAlign: 'center',
+              marginLeft: 30,
+              position: 'absolute',
+              fontSize: 5,
+              bottom: 30,
+              textAlign: 'center',
               }}
             >
               {declarationText1}
             </Text>
 
             <Text fixed style={{
-                marginLeft: 30,
-                position: 'absolute',
-                fontSize: 5,
-                bottom: 25,
-                textAlign: 'center',
+              marginLeft: 30,
+              position: 'absolute',
+              fontSize: 5,
+              bottom: 25,
+              textAlign: 'center',
               }}
             >
               {declarationText2}
@@ -300,8 +300,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </Text>
           </Page>
         );
-
-        console.log('%cTEST');
       })}
     </Document>
   )
