@@ -195,7 +195,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
                 {dateText}<Text style={{ fontWeight: 200 }}>{moment(orderRow.['Created at']).format('ll')}</Text>
               </Text>
 
-              <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold' }}>
+              <Text style={{ fontSize: 8, paddingTop: 5 }}>
                 {invoiceText}
               </Text>
 
@@ -238,30 +238,32 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {forSignaturePath}
             </Text>
 
-            <Text fixed style={{
-              marginLeft: 30,
+            <Text style={{
+
               position: 'absolute',
               fontSize: 5,
               bottom: 21,
-              textAlign: 'center',
+              textAlign: 'left',
+              marginLeft: 5
               }}
             >
               {declarationText1}
             </Text>
 
-            <Text fixed style={{
-              marginLeft: 30,
+            <Text style={{
+
               position: 'absolute',
               fontSize: 5,
               bottom: 16,
-              textAlign: 'center',
+              textAlign: 'left',
+              marginLeft: 5
               }}
             >
               {declarationText2}
             </Text>
 
-            <Text fixed style={{
-              marginLeft: 30,
+            <Text style={{
+
               position: 'absolute',
               fontSize: 5,
               bottom: 8,
@@ -272,9 +274,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {goodsText}
             </Text>
 
-            <Text fixed style={{
-              marginLeft: 30,
-              marginLeft: 5,
+            <Text style={{
+
               position: 'absolute',
               fontSize: 5,
               bottom: 3,
@@ -318,7 +319,9 @@ function pdfReturn(orderRows, uniqueCarrier) {
                 </Alert>
               );
             } else {
-            return <LoadingIndicator />;
+            return (
+              <LoadingIndicator />
+            );
           }
         }}
         </PDFDownloadLink>

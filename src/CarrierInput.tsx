@@ -214,7 +214,7 @@ export default function CarrierInput(props) {
 
   const nextDisabled = (fileState == null) ? true : false;
 
-  const fileDetails = (fileState == null) ? <div style={{ display: 'none' }}></div> : getFileDetails();
+  const fileDetails = (fileState == null) ? <div></div> : getFileDetails();
 
   return (
     <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
@@ -247,7 +247,7 @@ export default function CarrierInput(props) {
         </Button>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>{uploadButton}<div style={{ textAlign: 'left', marginTop: 10 }}>{fileDetails}</div></Paper>
+            <Paper className={classes.paper}>{uploadButton}<div style={{ textAlign: 'left' }}>{fileDetails}</div></Paper>
           </Grid>
         </Grid>
       </div>
