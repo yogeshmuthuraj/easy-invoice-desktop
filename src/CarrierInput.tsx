@@ -48,19 +48,11 @@ export default function CarrierInput(props) {
 
   let fileReader;
 
-  const displayFileName = (file) => {
-    console.log('file');
-    console.log(file);
-  }
-
   const handleFileChosen = (file) => {
     setFileState(file);
-    displayFileName(file);
   };
 
   const passFileToRead = () => {
-    console.log('in passFileToRead')
-    console.log(fileState);
     fileReader = new FileReader();
     fileReader.onloadend = handleFileRead;
     fileReader.readAsText(fileState);
@@ -222,7 +214,7 @@ export default function CarrierInput(props) {
 
   const nextDisabled = (fileState == null) ? true : false;
 
-  const fileDetails = (fileState == null) ? <div></div> : getFileDetails();
+  const fileDetails = (fileState == null) ? <div style={{ display: 'none' }}></div> : getFileDetails();
 
   return (
     <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>

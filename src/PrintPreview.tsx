@@ -33,6 +33,11 @@ import Barcode from './Barcode';
 
 import SVGtoPDF from 'svg-to-pdfkit';
 
+// Fonts
+import RobotoRegular from '../assets/fonts/Roboto-Regular.ttf';
+import RobotoBold from '../assets/fonts/Roboto-Bold.ttf';
+import RobotoItalic from '../assets/fonts/Roboto-Italic.ttf';
+
 import InvoiceItemsTable from './table/InvoiceItemsTable';
 
 const useStyles = makeStyles((theme) => ({
@@ -53,20 +58,15 @@ Font.register({
   family: 'Roboto',
   fonts: [
     {
-      src: `../assets/fonts/Roboto-Regular.ttf`
+      src: RobotoRegular
     },
     {
-      src: `../assets/fonts/Roboto-Bold.ttf`,
+      src: RobotoBold,
       fontWeight: 'bold'
     },
     {
-      src: `../assets/fonts/Roboto-Italic.ttf`,
+      src: RobotoItalic,
       fontWeight: 'normal',
-      fontStyle: 'italic'
-    },
-    {
-      src: `../assets/fonts/Roboto-BoldItalic.ttf`,
-      fontWeight: 'bold',
       fontStyle: 'italic'
     }
   ]
@@ -140,21 +140,28 @@ function pdfReturn(orderRows, uniqueCarrier) {
         const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
         const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
 
+        // Tax
+        const items = orderRow['More Details'];
+
+        const totalItems = orderRow['Shipping'] == 0 ? items.length : items.length + 1;
+
+        const taxRate = orderRow['Taxes'] / totalItems;
+
         let cgst = 0;
         let sgst = 0;
         let igst = 0;
 
         if (orderRow['Tax 1 Name'] == 'CGST 2.5%') {
-          cgst = orderRow['Tax 1 Value'];
-          sgst = orderRow['Tax 2 Value'];
+          cgst = sgst = orderRow['Taxes'] / 2;
         } else if (orderRow['Tax 1 Name'] == 'IGST 5%') {
-          igst = orderRow['Tax 1 Value'];
+          igst = orderRow['Taxes'];
         }
 
         const taxes = {
           cgst,
           sgst,
           igst,
+          taxRate
         };
 
         return (
@@ -212,7 +219,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
             <View className="invoice-table" style={{ fontSize: 5 }}>
               <InvoiceItemsTable
-                items={orderRow['More Details']}
+                items={items}
                 grandTotal={orderRow['Total']}
                 shipping={orderRow['Shipping']}
                 amountInWords={amountInWords}

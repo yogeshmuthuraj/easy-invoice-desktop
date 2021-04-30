@@ -53,12 +53,14 @@ const styles = StyleSheet.create({
 });
 
 
-const InvoiceTableFooter = ({items, grandTotal, shipping, amountInWords, taxes}) => {
+const InvoiceTableFooter = ({items, grandTotal, taxRate, shipping, amountInWords, taxes}) => {
+  const shippingCharges = shipping > 0 ? shipping - taxes.taxRate : shipping;
+
   return(
     <View>
       <View style={styles.row}>
         <Text style={styles.description}>Shipping</Text>
-        <Text style={styles.value}>{shipping}</Text>
+        <Text style={styles.value}>{shippingCharges}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.description}>CGST 2.5%</Text>

@@ -16,34 +16,29 @@ const styles = StyleSheet.create({
   sno: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 2,
-    borderRightWidth: 0.5
+    paddingLeft: 2
   },
   itemName: {
     width: '35%',
     textAlign: 'left',
     paddingLeft: 3,
-    paddingRight: 4,
-    borderRightWidth: 0.5
+    paddingRight: 4
   },
   sku: {
     width: '35%',
     textAlign: 'left',
     paddingRight: 3,
-    paddingLeft: 3,
-    borderRightWidth: 0.5
+    paddingLeft: 3
   },
   qty: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 2,
-    borderRightWidth: 0.5
+    paddingLeft: 2
   },
   unitPrice: {
     width: '10%',
-    textAlign: 'left',
-    paddingLeft: 2,
-    borderRightWidth: 0.5
+    textAlign: 'right',
+    paddingLeft: 2
   },
   subTotal: {
     width: '10%',

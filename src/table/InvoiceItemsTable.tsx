@@ -17,12 +17,15 @@ const styles = StyleSheet.create({
     },
 });
 
-const InvoiceItemsTable = ({items, grandTotal, shipping, amountInWords, taxes}) => (
-  <View style={styles.tableContainer}>
-    <InvoiceTableHeader />
-    <InvoiceTableRow items={items} />
-    <InvoiceTableFooter items={items} grandTotal={grandTotal} shipping={shipping} amountInWords={amountInWords} taxes={taxes} />
-  </View>
+const InvoiceItemsTable = (({items, grandTotal, shipping, amountInWords, taxes}) => {
+    return (
+      <View style={styles.tableContainer}>
+        <InvoiceTableHeader />
+        <InvoiceTableRow items={items} taxRate={taxes.taxRate} />
+        <InvoiceTableFooter items={items} grandTotal={grandTotal} shipping={shipping} amountInWords={amountInWords} taxes={taxes} />
+      </View>
+    )
+  }
 );
 
 export default InvoiceItemsTable
