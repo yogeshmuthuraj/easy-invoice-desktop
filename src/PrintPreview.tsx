@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
@@ -21,8 +22,12 @@ import {
   Document,
   StyleSheet,
   PDFDownloadLink,
-  Image
+  Image,
+  Font,
+  PDFViewer
 } from '@react-pdf/renderer';
+
+import ReactPDF from '@react-pdf/renderer';
 
 import Barcode from './Barcode';
 
@@ -44,75 +49,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const borderColor = 'grey';
-const borderStyle = 'normal';
-const col1Width = 10;
-const COLN_WIDTH = (100 - col1Width) / 3;
-
-const styles = StyleSheet.create({
-  table: {
-    display: "table",
-    width: "auto",
-    borderStyle: borderStyle,
-    borderColor: borderColor,
-    borderTopWidth: 0.5,
-    borderLeftWidth: 0.5,
-    marginTop: 15,
-    marginRight: 10,
-  },
-  colSno: {
-    width: 10,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colItemDes: {
-    width: 70,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colSku: {
-    width: 50,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colQty: {
-    width: 10,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colUnitPrice: {
-    width: 15,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colNetPrice: {
-    width: 15,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colTaxType: {
-    width: 15,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colTaxAmount: {
-    width: 15,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  colTotalAmount: {
-    width: 30,
-    borderBottomWidth: 0.5,
-    borderRightWidth: 0.5,
-  },
-  tableRow: {
-    margin: "auto",
-    flexDirection: "row",
-  },
-  tableCell: {
-    // margin: 5,
-    fontSize: 7
-  }
+Font.register({
+  family: 'Roboto',
+  fonts: [
+    {
+      src: `../assets/fonts/Roboto-Regular.ttf`
+    },
+    {
+      src: `../assets/fonts/Roboto-Bold.ttf`,
+      fontWeight: 'bold'
+    },
+    {
+      src: `../assets/fonts/Roboto-Italic.ttf`,
+      fontWeight: 'normal',
+      fontStyle: 'italic'
+    },
+    {
+      src: `../assets/fonts/Roboto-BoldItalic.ttf`,
+      fontWeight: 'bold',
+      fontStyle: 'italic'
+    }
+  ]
 });
 
 function toTitleCase(str) {
@@ -183,12 +140,28 @@ function pdfReturn(orderRows, uniqueCarrier) {
         const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
         const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
 
+        let cgst = 0;
+        let sgst = 0;
+        let igst = 0;
+
+        if (orderRow['Tax 1 Name'] == 'CGST 2.5%') {
+          cgst = orderRow['Tax 1 Value'];
+          sgst = orderRow['Tax 2 Value'];
+        } else if (orderRow['Tax 1 Name'] == 'IGST 5%') {
+          igst = orderRow['Tax 1 Value'];
+        }
+
+        const taxes = {
+          cgst,
+          sgst,
+          igst,
+        };
+
         return (
           <Page key={index} size={paperSize}
-            style={{
-            paddingTop: 10, paddingLeft: 12, fontSize: 6 }}>
+            style={{ fontSize: 6, padding: 5 }}>
             <Text style={{ textAlign: 'center' }}>
-            {taxInvoiceText}
+              {taxInvoiceText}
             </Text>
 
             <View className="sender-details">
@@ -208,7 +181,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               textAlign: 'right',
               }}
             >
-              <Text style={{ fontSize: 7, fontStyle: 'bold' }}>
+              <Text style={{ fontSize: 7, fontFamily: 'Roboto', fontWeight: 'bold' }}>
               {gstText}<Text>{gstin}</Text>
               </Text>
               <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold' }}>
@@ -228,26 +201,31 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow['Currency']} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow['Outstanding Balance']}</Text></Text>
             </View>
 
-            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 10, width: 150 }} className="shipping-details">
+            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 150 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>
-              <Text style={{ paddingTop: 5 }}>{orderRow['Shipping Name']}</Text>
+              <Text style={{ paddingTop: 3 }}>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
               <Text>{orderRow['Shipping Address2']}</Text>
               <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip'].replace(/'/g, '')}</Text>
               <Text>{orderRow['Shipping Province']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 10 }}>
-              <InvoiceItemsTable items={orderRow['More Details']} grandTotal={orderRow['Total']} shipping={orderRow['Shipping']}
+            <View className="invoice-table" style={{ fontSize: 5 }}>
+              <InvoiceItemsTable
+                items={orderRow['More Details']}
+                grandTotal={orderRow['Total']}
+                shipping={orderRow['Shipping']}
                 amountInWords={amountInWords}
+                taxes={taxes}
               />
             </View>
 
             <Text style={{
               position: 'absolute',
               fontSize: 5,
-              bottom: 50,
-              textAlign: 'right',
+              bottom: 32,
+              textAlign: 'left',
+              marginLeft: 5
               }}
             >
               {forSignaturePath}
@@ -257,7 +235,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               marginLeft: 30,
               position: 'absolute',
               fontSize: 5,
-              bottom: 30,
+              bottom: 21,
               textAlign: 'center',
               }}
             >
@@ -268,7 +246,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               marginLeft: 30,
               position: 'absolute',
               fontSize: 5,
-              bottom: 25,
+              bottom: 16,
               textAlign: 'center',
               }}
             >
@@ -279,7 +257,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               marginLeft: 30,
               position: 'absolute',
               fontSize: 5,
-              bottom: 20,
+              bottom: 8,
               textAlign: 'center',
               color: 'grey'
               }}
@@ -289,9 +267,10 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
             <Text fixed style={{
               marginLeft: 30,
+              marginLeft: 5,
               position: 'absolute',
               fontSize: 5,
-              bottom: 15,
+              bottom: 0,
               textAlign: 'center',
               color: 'grey'
               }}
@@ -302,8 +281,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
         );
       })}
     </Document>
-  )
-
+  );
 
   const history = useHistory();
 

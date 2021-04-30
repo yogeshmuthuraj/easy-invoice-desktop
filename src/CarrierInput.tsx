@@ -126,12 +126,7 @@ export default function CarrierInput(props) {
             'Lineitem sku': compareClonedRow['Lineitem sku'],
             'Lineitem quantity': compareClonedRow['Lineitem quantity'],
             'Lineitem price': compareClonedRow['Lineitem price'],
-            'Tax 1 Name': compareClonedRow['Tax 1 Name'],
-            'Tax 1 Value': compareClonedRow['Tax 1 Value'],
-            'Tax 2 Name': compareClonedRow['Tax 2 Name'],
-            'Tax 2 Value': compareClonedRow['Tax 2 Value'],
             'Currency': compareClonedRow['Currency'],
-            'Subtotal': compareClonedRow['Subtotal'],
           });
         }
       });
@@ -153,6 +148,12 @@ export default function CarrierInput(props) {
         'Shipping': selectedOrderRow['Shipping'],
         'Payment Method': selectedOrderRow['Payment Method'],
         'Currency': selectedOrderRow['Currency'],
+        'Tax 1 Name': selectedOrderRow['Tax 1 Name'],
+        'Tax 1 Value': selectedOrderRow['Tax 1 Value'],
+        'Tax 2 Name': selectedOrderRow['Tax 2 Name'],
+        'Tax 2 Value': selectedOrderRow['Tax 2 Value'],
+        'Taxes': selectedOrderRow['Taxes'],
+        'Total': selectedOrderRow['Total'],
         'More Details': lineItemDetails,
       });
     });

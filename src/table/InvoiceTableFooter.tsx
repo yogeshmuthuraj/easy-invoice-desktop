@@ -3,23 +3,14 @@ import {Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const borderColor = 'grey'
 const styles = StyleSheet.create({
-  shippingRow: {
-      flexDirection: 'row',
-      borderBottomColor: 'grey',
-      alignItems: 'center',
-      height: 15,
-      fontSize: 5,
-      fontStyle: 'bold',
-      borderBottomWidth: 0.5
-  },
-  totalRow: {
-      flexDirection: 'row',
-      borderBottomColor: 'grey',
-      alignItems: 'center',
-      height: 15,
-      fontSize: 5,
-      fontStyle: 'bold',
-      borderBottomWidth: 0.5
+  row: {
+    flexDirection: 'row',
+    borderBottomColor: 'grey',
+    alignItems: 'center',
+    height: 15,
+    fontSize: 5,
+    fontStyle: 'bold',
+    borderBottomWidth: 0.5
   },
   inWordsRow: {
       flexDirection: 'row',
@@ -42,7 +33,7 @@ const styles = StyleSheet.create({
   },
   inWordsDescription: {
       width: '20%',
-      textAlign: 'left',
+      textAlign: 'right',
       paddingLeft: 2,
   },
   inWords: {
@@ -50,27 +41,38 @@ const styles = StyleSheet.create({
       textAlign: 'left',
       fontSize: 6
   },
-  shippingDescription: {
-      width: '85%',
-      textAlign: 'right',
+  description: {
+    width: '85%',
+    textAlign: 'right',
   },
-  shippingRate: {
-      width: '15%',
-      textAlign: 'right',
-      paddingRight: 2,
+  value: {
+    width: '15%',
+    textAlign: 'right',
+    paddingRight: 2,
   },
-
 });
 
 
-const InvoiceTableFooter = ({items, grandTotal, shipping, amountInWords}) => {
+const InvoiceTableFooter = ({items, grandTotal, shipping, amountInWords, taxes}) => {
   return(
     <View>
-      <View style={styles.shippingRow}>
-        <Text style={styles.shippingDescription}>Shipping</Text>
-        <Text style={styles.shippingRate}>{shipping}</Text>
+      <View style={styles.row}>
+        <Text style={styles.description}>Shipping</Text>
+        <Text style={styles.value}>{shipping}</Text>
       </View>
-      <View style={styles.totalRow}>
+      <View style={styles.row}>
+        <Text style={styles.description}>CGST 2.5%</Text>
+        <Text style={styles.value}>{taxes.cgst}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.description}>SGST 2.5%</Text>
+        <Text style={styles.value}>{taxes.sgst}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.description}>IGST 5%</Text>
+        <Text style={styles.value}>{taxes.igst}</Text>
+      </View>
+      <View style={styles.row}>
         <Text style={styles.totalDescription}>Total</Text>
         <Text style={styles.grandTotal}>{grandTotal}</Text>
       </View>
