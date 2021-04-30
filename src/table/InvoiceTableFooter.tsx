@@ -7,46 +7,46 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomColor: 'grey',
     alignItems: 'center',
-    height: 15,
+    height: 8,
     fontSize: 5,
     fontStyle: 'bold',
     borderBottomWidth: 0.5
   },
   inWordsRow: {
-      flexDirection: 'row',
-      borderBottomColor: 'grey',
-      alignItems: 'center',
-      height: 15,
-      fontSize: 5,
-      fontStyle: 'bold',
+    flexDirection: 'row',
+    borderBottomColor: 'grey',
+    alignItems: 'center',
+    height: 8,
+    fontSize: 5,
+    fontStyle: 'bold',
   },
   totalDescription: {
-      width: '85%',
-      textAlign: 'right',
-      fontSize: 6
+    width: '90%',
+    textAlign: 'right',
+    fontSize: 6
   },
   grandTotal: {
-      width: '15%',
-      textAlign: 'right',
-      paddingRight: 2,
-      fontSize: 6
+    width: '10%',
+    textAlign: 'right',
+    paddingRight: 2,
+    fontSize: 6
   },
   inWordsDescription: {
-      width: '20%',
-      textAlign: 'right',
-      paddingLeft: 2,
+    width: '18%',
+    textAlign: 'left',
+    paddingLeft: 2,
   },
   inWords: {
-      width: '80%',
-      textAlign: 'left',
-      fontSize: 6
+    width: '82%',
+    textAlign: 'left',
+    fontSize: 6
   },
   description: {
-    width: '85%',
+    width: '90%',
     textAlign: 'right',
   },
   value: {
-    width: '15%',
+    width: '10%',
     textAlign: 'right',
     paddingRight: 2,
   },

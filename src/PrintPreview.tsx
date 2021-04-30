@@ -175,10 +175,10 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </View>
 
             <View className="invoice-details" style={{
-              position: 'absolute',
-              fontSize: 5,
-              top: 15,
-              textAlign: 'right',
+                position: 'absolute',
+                fontSize: 5,
+                top: 15,
+                textAlign: 'right',
               }}
             >
               <Text style={{ fontSize: 7, fontFamily: 'Roboto', fontWeight: 'bold' }}>
@@ -270,7 +270,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               marginLeft: 5,
               position: 'absolute',
               fontSize: 5,
-              bottom: 0,
+              bottom: 3,
               textAlign: 'center',
               color: 'grey'
               }}
@@ -300,30 +300,17 @@ function pdfReturn(orderRows, uniqueCarrier) {
         <PDFDownloadLink document={document} style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
           {({ blob, url, loading, error }) => {
             if (blob || url) {
-              console.log('in if pdf link');
               return fileName;
             } else if (error){
-              console.log('else if');
               return (
-                <Alert severity="error" style={{ fontSize: '20px' }}>
+                <Alert severity="error" style={{ fontSize: '15px' }}>
                   <AlertTitle style={{ fontSize: '20px' }}>
                     Error
                   </AlertTitle>
-                  <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
-                  <div className={classes.root}>
-                    <Button
-                      style={{ marginTop: 20, float: 'left' }}
-                      variant="contained"
-                      color="primary"
-                      onClick={handleCancel}
-                    >
-                      Start Again
-                    </Button>
-                  </div>
+                  Click START AGAIN
                 </Alert>
               );
             } else {
-              console.log('else');
             return <LoadingIndicator />;
           }
         }}
