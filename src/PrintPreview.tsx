@@ -251,7 +251,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </Text>
 
             <Text style={{
-
               position: 'absolute',
               fontSize: 5,
               bottom: 16,
@@ -263,7 +262,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </Text>
 
             <Text style={{
-
               position: 'absolute',
               fontSize: 5,
               bottom: 8,
@@ -275,7 +273,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
             </Text>
 
             <Text style={{
-
               position: 'absolute',
               fontSize: 5,
               bottom: 3,
