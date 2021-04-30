@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Text, View, StyleSheet } from '@react-pdf/renderer';
+import React, { Fragment } from 'react';
+import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const borderColor = 'grey'
 const styles = StyleSheet.create({
@@ -10,6 +10,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 30,
     fontStyle: 'bold',
+  },
+  nextPageFirstRow: {
+    flexDirection: 'row',
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.5,
+    alignItems: 'center',
+    height: 30,
+    fontStyle: 'bold',
+    marginTop: 20
   },
   sno: {
     width: '5%',
@@ -49,8 +58,6 @@ const InvoiceTableRow = ({items, taxRate}) => {
   const rows = items.map((item, index) => {
     const unitPrice = (parseFloat(item['Lineitem price']) - taxRate);
 
-    const break = index == 4 ? true : false;
-
     return (
       <View style={styles.row} key={index} wrap={false}>
         <Text style={styles.sno}>{index + 1}.</Text>
@@ -62,6 +69,7 @@ const InvoiceTableRow = ({items, taxRate}) => {
       </View>
     )
   });
+
   return (<Fragment>{rows}</Fragment> )
 };
 

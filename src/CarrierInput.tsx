@@ -137,6 +137,7 @@ export default function CarrierInput(props) {
         'Shipping Zip': selectedOrderRow['Shipping Zip'],
         'Shipping Province': selectedOrderRow['Shipping Province'],
         'Shipping Country': selectedOrderRow['Shipping Country'],
+        'Shipping Phone': selectedOrderRow['Shipping Phone'],
         'Shipping': selectedOrderRow['Shipping'],
         'Payment Method': selectedOrderRow['Payment Method'],
         'Currency': selectedOrderRow['Currency'],

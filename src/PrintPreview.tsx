@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { LoadingIndicator } from "./LoadingIndicator";
+import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { LoadingIndicator } from "./LoadingIndicator";
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
 
 import moment from 'moment';
 import numberToWords from 'number-to-words';
@@ -23,7 +24,6 @@ import {
   StyleSheet,
   PDFDownloadLink,
   Image,
-  Font,
   PDFViewer
 } from '@react-pdf/renderer';
 
@@ -33,11 +33,6 @@ import Barcode from './Barcode';
 
 import SVGtoPDF from 'svg-to-pdfkit';
 
-// Fonts
-import RobotoRegular from '../assets/fonts/Roboto-Regular.ttf';
-import RobotoBold from '../assets/fonts/Roboto-Bold.ttf';
-import RobotoItalic from '../assets/fonts/Roboto-Italic.ttf';
-
 import InvoiceItemsTable from './table/InvoiceItemsTable';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,31 +41,13 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: 'left',
     color: theme.palette.text.secondary,
   },
   input: {
     display: 'none',
   },
 }));
-
-Font.register({
-  family: 'Roboto',
-  fonts: [
-    {
-      src: RobotoRegular
-    },
-    {
-      src: RobotoBold,
-      fontWeight: 'bold'
-    },
-    {
-      src: RobotoItalic,
-      fontWeight: 'normal',
-      fontStyle: 'italic'
-    }
-  ]
-});
 
 function toTitleCase(str) {
   str = str.replace(/_/g, ' ');
@@ -171,42 +148,38 @@ function pdfReturn(orderRows, uniqueCarrier) {
               {taxInvoiceText}
             </Text>
 
-            <View className="sender-details">
-              <Image src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
-              <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
-              <Text style={{ textAlign: 'left' }}>{senderEmail}</Text>
+
+            <View fixed>
+              <Image fixed src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
             </View>
+            <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
+            <Text style={{ textAlign: 'left' }}>{senderEmail}</Text>
 
-            <View className="invoice-details" style={{
-                position: 'absolute',
-                fontSize: 5,
-                top: 15,
-                textAlign: 'right',
-              }}
-            >
-              <Text style={{ fontSize: 7, fontFamily: 'Roboto', fontWeight: 'bold' }}>
-              {gstText}<Text>{gstin}</Text>
-              </Text>
-              <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold' }}>
-                {dateText}<Text style={{ fontWeight: 200 }}>{moment(orderRow.['Created at']).format('ll')}</Text>
-              </Text>
+            <Text style={{ fontSize: 6, fontWeight: 'bold', top: 8, textAlign: 'right', position: 'absolute' }}>
+            {gstText}<Text>{gstin}</Text>
+            </Text>
 
-              <Text style={{ fontSize: 8, paddingTop: 5 }}>
+            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 12, position: 'absolute' }}>
+              <Text>
                 {invoiceText}
               </Text>
-
-              <Text style={{ fontSize: 18 }}>{orderRow['Name']}</Text>
-
-              <Text style={{ fontSize: 11, paddingTop: 10 }}>{orderRow['Carrier']}</Text>
-
-              <Text style={{ fontSize: 19, paddingTop: 5 }}>{paymentMethod}</Text>
-
-              <Text style={{ fontSize: 8, paddingTop: 5 }}>{orderRow['Currency']} <Text style={{ fontSize: 19, paddingTop: 5 }}>{orderRow['Outstanding Balance']}</Text></Text>
+              <Text style={{ fontSize: 15 }}>{orderRow['Name']}</Text>
             </View>
+
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 45, position: 'absolute' }}>
+              {dateText}<Text>{moment(orderRow.['Created at']).format('ll')}</Text>
+            </Text>
+
+
+            <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
+
+            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 80,  position: 'absolute' }}>{paymentMethod}</Text>
+
+            <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 105, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 150 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>
@@ -215,9 +188,10 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text>{orderRow['Shipping Address2']}</Text>
               <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip'].replace(/'/g, '')}</Text>
               <Text>{orderRow['Shipping Province']}</Text>
+              <Text>Ph: {orderRow['Shipping Phone']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 5 }}>
+            <View className="invoice-table" style={{ fontSize: 6 }}>
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}
@@ -227,61 +201,42 @@ function pdfReturn(orderRows, uniqueCarrier) {
               />
             </View>
 
-            <Text style={{
-              position: 'absolute',
-              fontSize: 5,
-              bottom: 32,
-              textAlign: 'left',
-              marginLeft: 5
+            <View style={{
+                fontSize: 5,
+                textAlign: 'left',
+                position: 'absolute',
+                bottom: 10,
+                marginLeft: 5
               }}
-            >
-              {forSignaturePath}
-            </Text>
+              wrap={false}>
+              <Text>
+                {forSignaturePath}
+              </Text>
 
-            <Text style={{
+              <Text style={{ paddingTop: 4 }}>
+                {declarationText1}
+              </Text>
 
-              position: 'absolute',
-              fontSize: 5,
-              bottom: 21,
-              textAlign: 'left',
-              marginLeft: 5
-              }}
-            >
-              {declarationText1}
-            </Text>
+              <Text>
+                {declarationText2}
+              </Text>
 
-            <Text style={{
-              position: 'absolute',
-              fontSize: 5,
-              bottom: 16,
-              textAlign: 'left',
-              marginLeft: 5
-              }}
-            >
-              {declarationText2}
-            </Text>
+              <Text style={{
+                  color: 'grey',
+                  paddingTop: 4
+                }}
+              >
+                {goodsText}
+              </Text>
 
-            <Text style={{
-              position: 'absolute',
-              fontSize: 5,
-              bottom: 8,
-              textAlign: 'center',
-              color: 'grey'
-              }}
-            >
-              {goodsText}
-            </Text>
-
-            <Text style={{
-              position: 'absolute',
-              fontSize: 5,
-              bottom: 3,
-              textAlign: 'center',
-              color: 'grey'
-              }}
-            >
-              {jurisdictionText}
-            </Text>
+              <Text style={{
+                  color: 'grey',
+                  paddingTop: 4
+                }}
+              >
+                {jurisdictionText}
+              </Text>
+            </View>
           </Page>
         );
       })}
@@ -295,35 +250,33 @@ function pdfReturn(orderRows, uniqueCarrier) {
   }
 
   // const svg = <Barcode value={'12345'} />;
-  //
+  // //
   // const pdf = SVGtoPDF(document, svg, 200, 200, { width: '100', height: '100' });
-  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_');
+  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_');
 
   return (
-    <Grid container spacing={3} key={fileName}>
-      <div style={{ marginLeft: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
-        <PDFDownloadLink document={document} style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
-          {({ blob, url, loading, error }) => {
-            if (blob || url) {
-              return fileName;
-            } else if (error){
-              return (
-                <Alert severity="error" style={{ fontSize: '15px' }}>
-                  <AlertTitle style={{ fontSize: '20px' }}>
-                    Error
-                  </AlertTitle>
-                  Click START AGAIN
-                </Alert>
-              );
-            } else {
+    <div style={{ marginLeft: 20, marginRight: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
+      <PDFDownloadLink document={document} style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
+        {({ blob, url, loading, error }) => {
+          if (blob || url) {
+            return fileName;
+          } else if (error){
             return (
-              <LoadingIndicator />
+              <Alert severity="error" style={{ fontSize: 15 }}>
+                <AlertTitle style={{ fontSize: 20 }}>
+                  Error
+                </AlertTitle>
+                Click START AGAIN
+              </Alert>
             );
-          }
-        }}
-        </PDFDownloadLink>
-      </div>
-    </Grid>
+          } else {
+          return (
+            <LoadingIndicator />
+          );
+        }
+      }}
+      </PDFDownloadLink>
+    </div>
   );
 }
 

@@ -1,11 +1,13 @@
 import React from 'react';
-import {Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const borderColor = 'grey'
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderBottomColor: 'grey',
+    borderTopColor: 'grey',
+    borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     alignItems: 'center',
     height: 13,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
 });
 
 const InvoiceTableHeader = () => (
-  <View style={styles.container}>
+  <View fixed style={styles.container}>
     <Text style={styles.sno}>S.No</Text>
     <Text style={styles.itemName}>Item Description</Text>
     <Text style={styles.sku}>SKU</Text>
