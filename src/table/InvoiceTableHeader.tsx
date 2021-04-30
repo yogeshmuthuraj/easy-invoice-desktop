@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   sku: {
     width: '35%',
     textAlign: 'left',
-    paddingRight: 3,
-    paddingLeft: 3
+    paddingLeft: 3,
+    paddingRight: 4
   },
   qty: {
     width: '5%',

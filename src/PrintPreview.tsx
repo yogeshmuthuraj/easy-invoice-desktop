@@ -24,14 +24,13 @@ import {
   StyleSheet,
   PDFDownloadLink,
   Image,
-  PDFViewer
+  PDFViewer,
+  Svg
 } from '@react-pdf/renderer';
 
 import ReactPDF from '@react-pdf/renderer';
 
 import Barcode from './Barcode';
-
-import SVGtoPDF from 'svg-to-pdfkit';
 
 import InvoiceItemsTable from './table/InvoiceItemsTable';
 
@@ -141,6 +140,8 @@ function pdfReturn(orderRows, uniqueCarrier) {
           taxRate
         };
 
+        const Buffer = <Barcode value={'12345'} />
+
         return (
           <Page key={index} size={paperSize}
             style={{ fontSize: 6, padding: 5 }}>
@@ -249,9 +250,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
     history.push('/');
   }
 
-  // const svg = <Barcode value={'12345'} />;
-  // //
-  // const pdf = SVGtoPDF(document, svg, 200, 200, { width: '100', height: '100' });
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_');
 
   return (
