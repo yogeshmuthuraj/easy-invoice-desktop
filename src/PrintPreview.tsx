@@ -23,14 +23,12 @@ import {
   Document,
   StyleSheet,
   PDFDownloadLink,
-  Image,
-  PDFViewer,
-  Svg
+  Image
 } from '@react-pdf/renderer';
 
-import ReactPDF from '@react-pdf/renderer';
-
-import Barcode from './Barcode';
+// import SaveAsPng from 'save-svg-as-png';
+//
+// import Barcode from './Barcode';
 
 import InvoiceItemsTable from './table/InvoiceItemsTable';
 
@@ -108,8 +106,6 @@ function pdfReturn(orderRows, uniqueCarrier) {
     }
   });
 
-  const filteredRowsLength = filteredRows.length;
-
   const document = (
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
@@ -140,15 +136,12 @@ function pdfReturn(orderRows, uniqueCarrier) {
           taxRate
         };
 
-        const Buffer = <Barcode value={'12345'} />
-
         return (
           <Page key={index} size={paperSize}
             style={{ fontSize: 6, padding: 5 }}>
             <Text style={{ textAlign: 'center' }}>
               {taxInvoiceText}
             </Text>
-
 
             <View fixed>
               <Image fixed src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
@@ -177,12 +170,14 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
 
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
+            <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB: {orderRow['Name']}</Text>
 
-            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 80,  position: 'absolute' }}>{paymentMethod}</Text>
 
-            <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 105, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>
+            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100,  position: 'absolute' }}>{paymentMethod}</Text>
 
-            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 150 }} className="shipping-details">
+            <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 125, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>
+
+            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 170 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>
               <Text style={{ paddingTop: 3 }}>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
@@ -192,7 +187,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text>Ph: {orderRow['Shipping Phone']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 6 }}>
+            <View className="invoice-table" style={{ fontSize: 5 }}>
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}
@@ -253,7 +248,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_');
 
   return (
-    <div style={{ marginLeft: 20, marginRight: 20, paddingBottom: 30, paddingTop: 30, fontSize: 15 }} key={fileName} >
+    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 20, fontSize: 15 }} key={fileName} >
       <PDFDownloadLink document={document} style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
         {({ blob, url, loading, error }) => {
           if (blob || url) {
@@ -315,6 +310,8 @@ export default function PrintPreview() {
 
   function handleCancel() {
     history.push('/');
+
+    // console.log(Bartest());
   }
 
   function handleBack() {
@@ -323,6 +320,14 @@ export default function PrintPreview() {
 
   function closeApp() {
     window.close();
+  }
+
+  function Bartest() {
+    console.log('Bartest');
+    console.log('in test', document.getElementById('bardiv'))
+    return SaveAsPng.svgAsPngUri(document.getElementById('bardiv')).then((uri) => {
+      return uri;
+    });
   }
 
   return (

@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   grandTotal: {
     width: '10%',
     textAlign: 'right',
-    paddingRight: 2,
+    paddingRight: 3,
     fontSize: 7
   },
   inWordsDescription: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   value: {
     width: '10%',
     textAlign: 'right',
-    paddingRight: 2,
+    paddingRight: 3,
   },
 });
 

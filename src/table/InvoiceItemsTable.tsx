@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 15,
+    marginTop: 8,
     borderWidth: 0.5,
     borderTopWidth: 0,
     borderColor: 'grey',

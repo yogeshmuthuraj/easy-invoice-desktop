@@ -18,19 +18,18 @@ const styles = StyleSheet.create({
   sno: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 2
+    paddingLeft: 1
   },
   itemName: {
     width: '35%',
     textAlign: 'left',
-    paddingLeft: 3,
+    paddingLeft: 1,
     paddingRight: 4
   },
   sku: {
     width: '35%',
     textAlign: 'left',
-    paddingLeft: 3,
-    paddingRight: 4
+    paddingRight: 5
   },
   qty: {
     width: '5%',
@@ -45,13 +44,13 @@ const styles = StyleSheet.create({
   subTotal: {
     width: '10%',
     textAlign: 'right',
-    paddingRight: 2
+    paddingRight: 3
   },
 });
 
 const InvoiceTableHeader = () => (
   <View fixed style={styles.container}>
-    <Text style={styles.sno}>S.No</Text>
+    <Text style={styles.sno}>No.</Text>
     <Text style={styles.itemName}>Item Description</Text>
     <Text style={styles.sku}>SKU</Text>
     <Text style={styles.qty}>Qty</Text>

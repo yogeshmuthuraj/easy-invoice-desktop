@@ -267,6 +267,7 @@
     "react-table": "^7.7.0",
     "react_ujs": "^2.6.1",
     "regenerator-runtime": "^0.13.5",
+    "save-svg-as-png": "^1.4.17",
     "source-map-support": "^0.5.19",
     "svg-to-pdfkit": "^0.1.8",
     "turbolinks": "^5.2.0"

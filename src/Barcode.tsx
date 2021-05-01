@@ -12,9 +12,7 @@ function Barcode(value) {
     }
   });
 
-  console.log(<img ref={inputRef} />);
-
-  return <img ref={inputRef} />;
+  return <svg ref={inputRef} />;
 };
 
 export default Barcode;
