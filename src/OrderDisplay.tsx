@@ -118,7 +118,7 @@ export default function OrderDisplay(props) {
 
   return (
     <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20, fontFamily: 'Roboto' }} className="pad-bottom-20">
+      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">
         Select orders
       </div>
       <Button

@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 
 
 const InvoiceTableFooter = ({items, grandTotal, taxRate, shipping, amountInWords, taxes}) => {
-  const shippingCharges = shipping > 0 ? shipping - taxes.taxRate : shipping;
+  const shippingCharges = shipping > 0 ? (shipping - taxes.taxRate).toFixed(2) : shipping;
 
   return(
     <View wrap={false}>
@@ -72,19 +72,19 @@ const InvoiceTableFooter = ({items, grandTotal, taxRate, shipping, amountInWords
       </View>
       <View style={styles.row}>
         <Text style={styles.description}>CGST 2.5%</Text>
-        <Text style={styles.value}>{taxes.cgst}</Text>
+        <Text style={styles.value}>{parseFloat(taxes.cgst).toFixed(2)}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.description}>SGST 2.5%</Text>
-        <Text style={styles.value}>{taxes.sgst}</Text>
+        <Text style={styles.value}>{parseFloat(taxes.sgst).toFixed(2)}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.description}>IGST 5%</Text>
-        <Text style={styles.value}>{taxes.igst}</Text>
+        <Text style={styles.value}>{parseFloat(taxes.igst).toFixed(2)}</Text>
       </View>
       <View style={styles.totalRow}>
         <Text style={styles.totalDescription}>Total</Text>
-        <Text style={styles.grandTotal}>{grandTotal}</Text>
+        <Text wrap={false} style={styles.grandTotal}>{grandTotal}</Text>
       </View>
       <View style={styles.inWordsRow}>
         <Text style={styles.inWordsDescription}>Amount in Words :</Text>

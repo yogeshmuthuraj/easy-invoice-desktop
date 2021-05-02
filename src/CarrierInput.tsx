@@ -147,6 +147,7 @@ export default function CarrierInput(props) {
         'Tax 2 Value': selectedOrderRow['Tax 2 Value'],
         'Taxes': selectedOrderRow['Taxes'],
         'Total': selectedOrderRow['Total'],
+        'AWB': selectedOrderRow['AWB'],
         'More Details': lineItemDetails,
       });
     });

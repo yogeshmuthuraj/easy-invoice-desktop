@@ -170,12 +170,12 @@ function pdfReturn(orderRows, uniqueCarrier) {
 
 
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
-            <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB: {orderRow['Name']}</Text>
+            <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB: {orderRow['AWB']}</Text>
 
 
             <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100,  position: 'absolute' }}>{paymentMethod}</Text>
 
-            <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 125, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>
+            <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 170 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>

@@ -92,7 +92,7 @@ export default function OrderInput(props) {
 
   return (
     <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20, fontFamily: 'Roboto' }} className="pad-bottom-20">Orders</div>
+      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Orders</div>
       <div className={classes.root}>
         <Button
           style={{ marginTop: 20, float: 'right' }}
