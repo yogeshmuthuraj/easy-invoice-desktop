@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const handleFileChosen = (file) => {
+  setFileState(file);
+};
+
 export default function CarrierInput(props) {
   const classes = useStyles();
 
@@ -51,31 +55,6 @@ export default function CarrierInput(props) {
   );
 
   let fileReader;
-
-  const handleFileChosen = (file) => {
-    setFileState(file);
-  };
-
-  const passFileToRead = () => {
-    fileReader = new FileReader();
-    fileReader.onloadend = handleFileRead;
-    fileReader.readAsText(fileState);
-  };
-
-  const handleFileRead = () => {
-    const content = fileReader.result;
-
-    const csv = require('csvtojson');
-
-    (async () => {
-      const jsonObj = await csv().fromString(content);
-
-      handleUpload(jsonObj);
-    })();
-  };
-
-  const history = useHistory();
-  const location = useLocation();
 
   function handleUpload(carrierRows) {
     const orderRows = location.state.rows;
@@ -107,6 +86,27 @@ export default function CarrierInput(props) {
       },
     });
   }
+
+  const handleFileRead = () => {
+    const content = fileReader.result;
+
+    const csv = require('csvtojson');
+
+    (async () => {
+      const jsonObj = await csv().fromString(content);
+
+      handleUpload(jsonObj);
+    })();
+  };
+
+  const passFileToRead = () => {
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(fileState);
+  };
+
+  const history = useHistory();
+  const location = useLocation();
 
   function groupSameOrders(selectedOrderRows) {
     const compareClonedRows = Object.assign(selectedOrderRows);

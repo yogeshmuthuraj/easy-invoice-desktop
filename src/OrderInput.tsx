@@ -10,6 +10,8 @@ import CloudDownloadRoundedIcon from '@material-ui/icons/CloudDownloadRounded';
 
 import { useHistory } from 'react-router-dom';
 
+const history = useHistory();
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -33,7 +35,7 @@ function handleUpload(csvJson) {
   });
 }
 
-const handleFileRead = (e) => {
+const handleFileRead = () => {
   const content = fileReader.result;
 
   const csv = require('csvtojson');
@@ -91,8 +93,6 @@ export default function OrderInput(props) {
   );
 
   let fileReader;
-
-  const history = useHistory();
 
   function closeApp() {
     window.close();

@@ -60,14 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoiceTableFooter = ({
-  items,
-  grandTotal,
-  taxRate,
-  shipping,
-  amountInWords,
-  taxes,
-}) => {
+const InvoiceTableFooter = ({ grandTotal, shipping, amountInWords, taxes }) => {
   const shippingCharges =
     shipping > 0 ? (shipping - taxes.taxRate).toFixed(2) : shipping;
 
