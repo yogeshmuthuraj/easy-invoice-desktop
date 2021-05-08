@@ -24,6 +24,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleUpload(csvJson) {
+  history.push({
+    pathname: '/orderDisplay',
+    state: {
+      rows: csvJson,
+    },
+  });
+}
+
+const handleFileRead = (e) => {
+  const content = fileReader.result;
+
+  const csv = require('csvtojson');
+
+  (async () => {
+    const jsonObj = await csv().fromString(content);
+
+    handleUpload(jsonObj);
+  })();
+};
+
+const handleFileChosen = (file) => {
+  fileReader = new FileReader();
+  fileReader.onloadend = handleFileRead;
+  fileReader.readAsText(file);
+};
+
+function handleFetch() {
+  history.push('/fetchOrders');
+}
+
 export default function OrderInput(props) {
   const classes = useStyles();
   const uploadButton = (
@@ -36,63 +67,55 @@ export default function OrderInput(props) {
         onChange={(e) => handleFileChosen(e.target.files[0])}
       />
       <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span"
-        startIcon={<CloudUploadRoundedIcon />}>
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          startIcon={<CloudUploadRoundedIcon />}
+        >
           Upload
         </Button>
       </label>
     </div>
   );
   const fetchButton = (
-    <Button variant="contained" color="primary" onClick={handleFetch} disabled
-    startIcon={<CloudDownloadRoundedIcon />}>
-
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleFetch}
+      disabled
+      startIcon={<CloudDownloadRoundedIcon />}
+    >
       Fetch
     </Button>
   );
 
   let fileReader;
 
-  const handleFileChosen = (file) => {
-    fileReader = new FileReader();
-    fileReader.onloadend = handleFileRead;
-    fileReader.readAsText(file);
-  };
-
-  const handleFileRead = (e) => {
-    const content = fileReader.result;
-
-    const csv = require('csvtojson');
-
-    (async () => {
-      const jsonObj = await csv().fromString(content);
-
-      handleUpload(jsonObj);
-    })();
-  };
-
   const history = useHistory();
-
-  function handleFetch() {
-    history.push('/fetchOrders');
-  }
-
-  function handleUpload(csvJson) {
-    history.push({
-      pathname: '/orderDisplay',
-      state: {
-        rows: csvJson,
-      },
-    });
-  }
 
   function closeApp() {
     window.close();
   }
 
   return (
-    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Orders</div>
+    <div
+      style={{
+        padding: 10,
+        backgroundColor: 'gainsboro',
+        borderWidth: 0,
+        borderColor: 'grey',
+        borderStyle: 'solid',
+        borderRadius: '10px',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{ paddingBottom: 20, fontSize: 20 }}
+        className="pad-bottom-20"
+      >
+        Orders
+      </div>
       <div className={classes.root}>
         <Button
           style={{ marginTop: 20, float: 'right' }}

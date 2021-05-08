@@ -9,9 +9,9 @@ import Grid from '@material-ui/core/Grid';
 
 import { useLocation, useHistory } from 'react-router-dom';
 
-function toTitleCase(str) {
-  str = str.replace(/_/g, ' ');
-  return str.replace(/\w\S*/g, function (txt) {
+function toTitleCase(inputString) {
+  modifiedString = inputString.replace(/_/g, ' ');
+  return modifiedString.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleCancel() {
+  history.push('/');
+}
+
 export default function OrderDisplay(props) {
   const classes = useStyles();
   const location = useLocation();
@@ -39,7 +43,17 @@ export default function OrderDisplay(props) {
 
   if (location.state == undefined) {
     return (
-      <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
+      <div
+        style={{
+          padding: 10,
+          backgroundColor: 'gainsboro',
+          borderWidth: 0,
+          borderColor: 'grey',
+          borderStyle: 'solid',
+          borderRadius: '10px',
+          overflow: 'hidden',
+        }}
+      >
         <div className={classes.root}>
           <Button
             fullWidth
@@ -108,17 +122,26 @@ export default function OrderDisplay(props) {
     });
   }
 
-  function handleCancel() {
-    history.push('/');
-  }
-
   function handleBack() {
     history.goBack();
   }
 
   return (
-    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">
+    <div
+      style={{
+        padding: 10,
+        backgroundColor: 'gainsboro',
+        borderWidth: 0,
+        borderColor: 'grey',
+        borderStyle: 'solid',
+        borderRadius: '10px',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{ paddingBottom: 20, fontSize: 20 }}
+        className="pad-bottom-20"
+      >
         Select orders
       </div>
       <Button

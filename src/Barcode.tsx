@@ -6,13 +6,13 @@ function Barcode(value) {
   console.log(value);
 
   const { inputRef } = useBarcode({
-    value: value,
+    value,
     options: {
       background: '#ffff00',
-    }
+    },
   });
 
   return <svg ref={inputRef} />;
-};
+}
 
 export default Barcode;

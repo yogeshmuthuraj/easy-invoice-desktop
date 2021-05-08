@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
-const borderColor = 'grey'
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -18,33 +17,33 @@ const styles = StyleSheet.create({
   sno: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 1
+    paddingLeft: 1,
   },
   itemName: {
     width: '35%',
     textAlign: 'left',
     paddingLeft: 1,
-    paddingRight: 4
+    paddingRight: 4,
   },
   sku: {
     width: '35%',
     textAlign: 'left',
-    paddingRight: 5
+    paddingRight: 5,
   },
   qty: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 2
+    paddingLeft: 2,
   },
   unitPrice: {
     width: '10%',
     textAlign: 'right',
-    paddingLeft: 2
+    paddingLeft: 2,
   },
   subTotal: {
     width: '10%',
     textAlign: 'right',
-    paddingRight: 3
+    paddingRight: 3,
   },
 });
 
@@ -59,4 +58,4 @@ const InvoiceTableHeader = () => (
   </View>
 );
 
-export default InvoiceTableHeader
+export default InvoiceTableHeader;

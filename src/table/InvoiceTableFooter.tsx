@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     height: 8,
     fontSize: 6,
     fontStyle: 'bold',
-    borderBottomWidth: 0.5
+    borderBottomWidth: 0.5,
   },
   totalRow: {
     flexDirection: 'row',
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     height: 10,
     fontSize: 6,
     fontStyle: 'bold',
-    borderBottomWidth: 0.5
+    borderBottomWidth: 0.5,
   },
   inWordsRow: {
     flexDirection: 'row',
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
   totalDescription: {
     width: '90%',
     textAlign: 'right',
-    fontSize: 7
+    fontSize: 7,
   },
   grandTotal: {
     width: '10%',
     textAlign: 'right',
     paddingRight: 3,
-    fontSize: 7
+    fontSize: 7,
   },
   inWordsDescription: {
     width: '18%',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   inWords: {
     width: '82%',
     textAlign: 'left',
-    fontSize: 6
+    fontSize: 6,
   },
   description: {
     width: '90%',
@@ -60,11 +60,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const InvoiceTableFooter = ({
+  items,
+  grandTotal,
+  taxRate,
+  shipping,
+  amountInWords,
+  taxes,
+}) => {
+  const shippingCharges =
+    shipping > 0 ? (shipping - taxes.taxRate).toFixed(2) : shipping;
 
-const InvoiceTableFooter = ({items, grandTotal, taxRate, shipping, amountInWords, taxes}) => {
-  const shippingCharges = shipping > 0 ? (shipping - taxes.taxRate).toFixed(2) : shipping;
-
-  return(
+  return (
     <View wrap={false}>
       <View style={styles.row}>
         <Text style={styles.description}>Shipping</Text>
@@ -84,14 +91,16 @@ const InvoiceTableFooter = ({items, grandTotal, taxRate, shipping, amountInWords
       </View>
       <View style={styles.totalRow}>
         <Text style={styles.totalDescription}>Total</Text>
-        <Text wrap={false} style={styles.grandTotal}>{grandTotal}</Text>
+        <Text wrap={false} style={styles.grandTotal}>
+          {grandTotal}
+        </Text>
       </View>
       <View style={styles.inWordsRow}>
         <Text style={styles.inWordsDescription}>Amount in Words :</Text>
         <Text style={styles.inWords}>{amountInWords}</Text>
       </View>
     </View>
-  )
+  );
 };
 
-  export default InvoiceTableFooter
+export default InvoiceTableFooter;

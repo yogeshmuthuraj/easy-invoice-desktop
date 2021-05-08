@@ -38,8 +38,12 @@ export default function CarrierInput(props) {
         onChange={(event) => handleFileChosen(event.target.files[0])}
       />
       <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span"
-        startIcon={<CloudUploadRoundedIcon />}>
+        <Button
+          variant="contained"
+          color="primary"
+          component="span"
+          startIcon={<CloudUploadRoundedIcon />}
+        >
           Upload
         </Button>
       </label>
@@ -56,7 +60,7 @@ export default function CarrierInput(props) {
     fileReader = new FileReader();
     fileReader.onloadend = handleFileRead;
     fileReader.readAsText(fileState);
-  }
+  };
 
   const handleFileRead = () => {
     const content = fileReader.result;
@@ -118,15 +122,15 @@ export default function CarrierInput(props) {
             'Lineitem sku': compareClonedRow['Lineitem sku'],
             'Lineitem quantity': compareClonedRow['Lineitem quantity'],
             'Lineitem price': compareClonedRow['Lineitem price'],
-            'Currency': compareClonedRow['Currency'],
+            Currency: compareClonedRow.Currency,
           });
         }
       });
 
       groupedOrders.push({
-        'Name': selectedOrderRow['Name'],
-        'Taxes': selectedOrderRow['Taxes'],
-        'Total': selectedOrderRow['Total'],
+        Name: selectedOrderRow.Name,
+        Taxes: selectedOrderRow.Taxes,
+        Total: selectedOrderRow.Total,
         'Outstanding Balance': selectedOrderRow['Outstanding Balance'],
         'Created at': selectedOrderRow['Created at'],
         'Shipping Name': selectedOrderRow['Shipping Name'],
@@ -138,16 +142,16 @@ export default function CarrierInput(props) {
         'Shipping Province': selectedOrderRow['Shipping Province'],
         'Shipping Country': selectedOrderRow['Shipping Country'],
         'Shipping Phone': selectedOrderRow['Shipping Phone'],
-        'Shipping': selectedOrderRow['Shipping'],
+        Shipping: selectedOrderRow.Shipping,
         'Payment Method': selectedOrderRow['Payment Method'],
-        'Currency': selectedOrderRow['Currency'],
+        Currency: selectedOrderRow.Currency,
         'Tax 1 Name': selectedOrderRow['Tax 1 Name'],
         'Tax 1 Value': selectedOrderRow['Tax 1 Value'],
         'Tax 2 Name': selectedOrderRow['Tax 2 Name'],
         'Tax 2 Value': selectedOrderRow['Tax 2 Value'],
-        'Taxes': selectedOrderRow['Taxes'],
-        'Total': selectedOrderRow['Total'],
-        'AWB': selectedOrderRow['AWB'],
+        Taxes: selectedOrderRow.Taxes,
+        Total: selectedOrderRow.Total,
+        AWB: selectedOrderRow.AWB,
         'More Details': lineItemDetails,
       });
     });
@@ -206,21 +210,45 @@ export default function CarrierInput(props) {
 
     return (
       <div>
-        <div><strong>Name:</strong> {file.name}</div>
-        <div><strong>Path:</strong> {file.path}</div>
-        <div><strong>Size:</strong> {Number.parseFloat(file.size / 1000000).toFixed(2)} MB</div>
-        <div><strong>Type:</strong> {file.type}</div>
+        <div>
+          <strong>Name:</strong> {file.name}
+        </div>
+        <div>
+          <strong>Path:</strong> {file.path}
+        </div>
+        <div>
+          <strong>Size:</strong>{' '}
+          {Number.parseFloat(file.size / 1000000).toFixed(2)} MB
+        </div>
+        <div>
+          <strong>Type:</strong> {file.type}
+        </div>
       </div>
     );
   }
 
-  const nextDisabled = (fileState == null) ? true : false;
+  const nextDisabled = fileState == null;
 
-  const fileDetails = (fileState == null) ? <div></div> : getFileDetails();
+  const fileDetails = fileState == null ? <div /> : getFileDetails();
 
   return (
-    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">Carriers</div>
+    <div
+      style={{
+        padding: 10,
+        backgroundColor: 'gainsboro',
+        borderWidth: 0,
+        borderColor: 'grey',
+        borderStyle: 'solid',
+        borderRadius: '10px',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{ paddingBottom: 20, fontSize: 20 }}
+        className="pad-bottom-20"
+      >
+        Carriers
+      </div>
       <div className={classes.root}>
         <Button
           style={{ marginTop: 20, float: 'left' }}
@@ -249,7 +277,10 @@ export default function CarrierInput(props) {
         </Button>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>{uploadButton}<div style={{ textAlign: 'left' }}>{fileDetails}</div></Paper>
+            <Paper className={classes.paper}>
+              {uploadButton}
+              <div style={{ textAlign: 'left' }}>{fileDetails}</div>
+            </Paper>
           </Grid>
         </Grid>
       </div>

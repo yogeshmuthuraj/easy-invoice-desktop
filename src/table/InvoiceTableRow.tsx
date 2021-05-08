@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
-const borderColor = 'grey'
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
@@ -18,44 +17,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 30,
     fontStyle: 'bold',
-    marginTop: 20
+    marginTop: 20,
   },
   sno: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 1
+    paddingLeft: 1,
   },
   itemName: {
     width: '35%',
     textAlign: 'left',
     paddingLeft: 1,
-    paddingRight: 4
+    paddingRight: 4,
   },
   sku: {
     width: '35%',
     textAlign: 'left',
-    paddingRight: 5
+    paddingRight: 5,
   },
   qty: {
     width: '5%',
     textAlign: 'center',
-    paddingLeft: 2
+    paddingLeft: 2,
   },
   unitPrice: {
     width: '10%',
     textAlign: 'right',
-    paddingLeft: 2
+    paddingLeft: 2,
   },
   subTotal: {
     width: '10%',
     textAlign: 'right',
-    paddingRight: 2
+    paddingRight: 2,
   },
 });
 
-const InvoiceTableRow = ({items, taxRate}) => {
+const InvoiceTableRow = ({ items, taxRate }) => {
   const rows = items.map((item, index) => {
-    const unitPrice = (parseFloat(item['Lineitem price']) - taxRate);
+    const unitPrice = parseFloat(item['Lineitem price']) - taxRate;
 
     return (
       <View style={styles.row} key={index} wrap={false}>
@@ -64,12 +63,14 @@ const InvoiceTableRow = ({items, taxRate}) => {
         <Text style={styles.sku}>{item['Lineitem sku']}</Text>
         <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
         <Text style={styles.unitPrice}>{unitPrice.toFixed(2)}</Text>
-        <Text style={styles.subTotal}>{(item['Lineitem quantity'] * unitPrice).toFixed(2)}</Text>
+        <Text style={styles.subTotal}>
+          {(item['Lineitem quantity'] * unitPrice).toFixed(2)}
+        </Text>
       </View>
-    )
+    );
   });
 
-  return (<Fragment>{rows}</Fragment> )
+  return <>{rows}</>;
 };
 
-export default InvoiceTableRow
+export default InvoiceTableRow;

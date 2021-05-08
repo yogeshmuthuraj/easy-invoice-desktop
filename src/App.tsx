@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { AppProvider, Card, Layout } from '@shopify/polaris';
+import { AppProvider } from '@shopify/polaris';
 import enTranslations from '@shopify/polaris/locales/en.json';
 
 import Orders from './OrderInput';
 import OrderDisplay from './OrderDisplay';
 import FetchOrders from './FetchOrders';
-import Carrier from './CarrierInput';
 import CarrierInput from './CarrierInput';
 import PrintPreview from './PrintPreview';
 
@@ -28,9 +27,6 @@ export default function App() {
           }}
         >
           <Switch>
-            <Route path="/carrier">
-              <Carrier />
-            </Route>
             <Route exact path="/fetchOrders">
               <FetchOrders />
             </Route>

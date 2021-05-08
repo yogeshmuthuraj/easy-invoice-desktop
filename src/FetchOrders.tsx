@@ -5,10 +5,8 @@ import '@shopify/polaris/dist/styles.css';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 import OrderDisplay from './OrderDisplay';
 import SkeletonPageTemplate from './SkeletonPageTemplate';
@@ -69,7 +67,6 @@ class FetchOrders extends React.PureComponent {
   }
 
   render() {
-    const { shopOrigin } = this.props;
     const { error, isLoaded, items } = this.state;
 
     let content;
@@ -98,9 +95,5 @@ class FetchOrders extends React.PureComponent {
     return <div>{content}</div>;
   }
 }
-
-FetchOrders.propTypes = {
-  shopOrigin: PropTypes.string,
-};
 
 export default FetchOrders;

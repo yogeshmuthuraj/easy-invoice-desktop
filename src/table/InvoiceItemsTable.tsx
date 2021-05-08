@@ -1,11 +1,8 @@
 import React from 'react';
 import { View, StyleSheet } from '@react-pdf/renderer';
-import InvoiceTableHeader from './InvoiceTableHeader'
-import InvoiceTableRow from './InvoiceTableRow'
-import InvoiceTableBlankSpace from './InvoiceTableBlankSpace'
-import InvoiceTableFooter from './InvoiceTableFooter'
-
-const tableRowsCount = 11;
+import InvoiceTableHeader from './InvoiceTableHeader';
+import InvoiceTableRow from './InvoiceTableRow';
+import InvoiceTableFooter from './InvoiceTableFooter';
 
 const styles = StyleSheet.create({
   tableContainer: {
@@ -18,15 +15,26 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoiceItemsTable = (({items, grandTotal, shipping, amountInWords, taxes}) => {
-    return (
-      <View style={styles.tableContainer}>
-        <InvoiceTableHeader />
-        <InvoiceTableRow items={items} taxRate={taxes.taxRate} />
-        <InvoiceTableFooter items={items} grandTotal={grandTotal} shipping={shipping} amountInWords={amountInWords} taxes={taxes} />
-      </View>
-    )
-  }
-);
+const InvoiceItemsTable = ({
+  items,
+  grandTotal,
+  shipping,
+  amountInWords,
+  taxes,
+}) => {
+  return (
+    <View style={styles.tableContainer}>
+      <InvoiceTableHeader />
+      <InvoiceTableRow items={items} taxRate={taxes.taxRate} />
+      <InvoiceTableFooter
+        items={items}
+        grandTotal={grandTotal}
+        shipping={shipping}
+        amountInWords={amountInWords}
+        taxes={taxes}
+      />
+    </View>
+  );
+};
 
-export default InvoiceItemsTable
+export default InvoiceItemsTable;
