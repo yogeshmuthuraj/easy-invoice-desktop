@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const handleFileChosen = (file) => {
-  setFileState(file);
-};
-
 export default function CarrierInput(props) {
   const classes = useStyles();
 
   const [fileState, setFileState] = useState(null);
+
+  const handleFileChosen = (file) => {
+    setFileState(file);
+  };
 
   const uploadButton = (
     <div>

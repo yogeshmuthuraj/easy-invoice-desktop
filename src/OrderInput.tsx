@@ -10,8 +10,6 @@ import CloudDownloadRoundedIcon from '@material-ui/icons/CloudDownloadRounded';
 
 import { useHistory } from 'react-router-dom';
 
-const history = useHistory();
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -26,39 +24,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleUpload(csvJson) {
-  history.push({
-    pathname: '/orderDisplay',
-    state: {
-      rows: csvJson,
-    },
-  });
-}
-
-const handleFileRead = () => {
-  const content = fileReader.result;
-
-  const csv = require('csvtojson');
-
-  (async () => {
-    const jsonObj = await csv().fromString(content);
-
-    handleUpload(jsonObj);
-  })();
-};
-
-const handleFileChosen = (file) => {
-  fileReader = new FileReader();
-  fileReader.onloadend = handleFileRead;
-  fileReader.readAsText(file);
-};
-
-function handleFetch() {
-  history.push('/fetchOrders');
-}
 
 export default function OrderInput(props) {
+  const history = useHistory();
   const classes = useStyles();
+
+  function handleFetch() {
+    history.push('/fetchOrders');
+  }
+
+  function handleUpload(csvJson) {
+    history.push({
+      pathname: '/orderDisplay',
+      state: {
+        rows: csvJson,
+      },
+    });
+  }
+
+  let fileReader;
+
+  const handleFileRead = () => {
+    const content = fileReader.result;
+
+    const csv = require('csvtojson');
+
+    (async () => {
+      const jsonObj = await csv().fromString(content);
+
+      handleUpload(jsonObj);
+    })();
+  };
+
+  const handleFileChosen = (file) => {
+    fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(file);
+  };
+
   const uploadButton = (
     <div>
       <input
@@ -91,8 +94,6 @@ export default function OrderInput(props) {
       Fetch
     </Button>
   );
-
-  let fileReader;
 
   function closeApp() {
     window.close();

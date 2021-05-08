@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import { useLocation, useHistory } from 'react-router-dom';
 
 function toTitleCase(inputString) {
-  modifiedString = inputString.replace(/_/g, ' ');
+  let modifiedString = inputString.replace(/_/g, ' ');
   return modifiedString.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
@@ -30,16 +30,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleCancel() {
-  history.push('/');
-}
-
 export default function OrderDisplay(props) {
   const classes = useStyles();
   const location = useLocation();
   const columns = [];
   let rows;
   let columnHeaders;
+
+  const history = useHistory();
+
+  function handleCancel() {
+    history.push('/');
+  }
 
   if (location.state == undefined) {
     return (
@@ -109,8 +111,6 @@ export default function OrderDisplay(props) {
   const [selectionModel, setSelectionModel] = React.useState([]);
 
   const nextDisabled = !(selectionModel.length > 0);
-
-  const history = useHistory();
 
   function handleNext() {
     history.push({
