@@ -53,7 +53,7 @@ function toTitleCase(str) {
   });
 }
 
-function pdfReturn(orderRows, uniqueCarrier) {
+function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const classes = useStyles();
 
   const taxInvoiceText = 'TAX INVOICE';
@@ -106,10 +106,16 @@ function pdfReturn(orderRows, uniqueCarrier) {
     }
   });
 
+  if (filteredRows.length == 0) {
+    return;
+  }
+
   const document = (
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
+        const orderNumber = orderRow['Name'];
         const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
+
         const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
 
         // Tax
@@ -137,7 +143,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
         };
 
         return (
-          <Page key={index} size={paperSize}
+          <Page key={index + orderNumber} size={paperSize}
             style={{ fontSize: 6, padding: 5 }}>
             <Text style={{ textAlign: 'center' }}>
               {taxInvoiceText}
@@ -161,7 +167,7 @@ function pdfReturn(orderRows, uniqueCarrier) {
               <Text>
                 {invoiceText}
               </Text>
-              <Text style={{ fontSize: 15 }}>{orderRow['Name']}</Text>
+              <Text style={{ fontSize: 15 }}>{orderNumber}</Text>
             </View>
 
             <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 45, position: 'absolute' }}>
@@ -245,11 +251,14 @@ function pdfReturn(orderRows, uniqueCarrier) {
     history.push('/');
   }
 
-  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_');
+  const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_') + '_' + pdfDocumentCount + '.pdf';
 
   return (
     <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 20, fontSize: 15 }} key={fileName} >
-      <PDFDownloadLink document={document} style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }} fileName={fileName + '.pdf'}>
+      <PDFDownloadLink
+        document={document}
+        style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }}
+        fileName={fileName}>
         {({ blob, url, loading, error }) => {
           if (blob || url) {
             return fileName;
@@ -304,14 +313,18 @@ export default function PrintPreview() {
     (v, i, a) => a.findIndex((t) => t.Carrier === v.Carrier) === i
   ).map(orderRow => orderRow.Carrier);
 
+  const arraySplitValue = 200;
+
+  const chunkedArrayofOrderRows = new Array(Math.ceil(orderRows.length / arraySplitValue)).fill().map(_ => orderRows.splice(0, arraySplitValue));
+
   let pdfLinkList = uniqueCarriers.map((uniqueCarrier) => {
-    return pdfReturn(orderRows, uniqueCarrier)
+    return chunkedArrayofOrderRows.map((orderRows, index) => {
+      return pdfReturn(orderRows, uniqueCarrier, (index + 1));
+    });
   });
 
   function handleCancel() {
     history.push('/');
-
-    // console.log(Bartest());
   }
 
   function handleBack() {
@@ -323,8 +336,6 @@ export default function PrintPreview() {
   }
 
   function Bartest() {
-    console.log('Bartest');
-    console.log('in test', document.getElementById('bardiv'))
     return SaveAsPng.svgAsPngUri(document.getElementById('bardiv')).then((uri) => {
       return uri;
     });
