@@ -60,7 +60,8 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const gstText = 'GST: ';
   const gstin = '33AAHCP7548N1ZT';
   const invoiceNoText = 'Invoice No: ';
-  const invoiceDateText = 'Invoice Date: '
+  const invoiceDateText = 'Invoice Date: ';
+  const orderDateText = 'Order Date: ';
   const senderLogoPath = '../assets/crazy_punch_logo.png';
 
   const serailNumberText = 'S.No';
@@ -85,9 +86,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
 
   const shippingAddressText = 'Shipping Address :'
 
-  const declarationText1 = 'Declaration: We Declare that this Invoice shows the actual price of the goods described';
-  const declarationText2 = 'and that all particulars are true and correct';
-  const goodsText = 'Goods once sold cannot be Returned';
+  const declarationText1 = 'We Declare that this Invoice shows the actual price of the goods described and that all particulars are true and correct';
   const jurisdictionText = 'All disputes are Subject to Chennai Jurisdiction';
   const forSignatureText = 'For PASWAY CLOTHING PVT LTD';
   const forSignaturePath = 'This is a computer generated invoice and does not require any stamp or signature';
@@ -183,8 +182,8 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               <Text style={{ fontSize: 15 }}>{orderNumber}</Text>
             </View>
 
-            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 45, position: 'absolute' }}>
-              {invoiceDateText}<Text>{moment(orderRow.['Created at']).format('DD-MMM-YYYY')}</Text>
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 50, position: 'absolute' }}>
+              {invoiceDateText}<Text>{moment().format('DD-MMM-YYYY')}</Text>
             </Text>
 
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
@@ -193,9 +192,13 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100, position: 'absolute' }}>
               {paymentMethodDisplay['value']}
             </Text>
-            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 118, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
+            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 120, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
 
             {outstandingAmount}
+
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 160, position: 'absolute' }}>
+              {orderDateText}<Text>{moment(orderRow.['Created at']).format('DD-MMM-YYYY')}</Text>
+            </Text>
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 130 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>
@@ -221,7 +224,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
                 fontSize: 5,
                 textAlign: 'left',
                 position: 'absolute',
-                bottom: 10,
+                bottom: 2,
                 marginLeft: 5
               }}
               wrap={false}>
@@ -229,27 +232,11 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
                 {forSignaturePath}
               </Text>
 
-              <Text style={{ paddingTop: 4 }}>
+              <Text>
                 {declarationText1}
               </Text>
 
               <Text>
-                {declarationText2}
-              </Text>
-
-              <Text style={{
-                  color: 'grey',
-                  paddingTop: 4
-                }}
-              >
-                {goodsText}
-              </Text>
-
-              <Text style={{
-                  color: 'grey',
-                  paddingTop: 4
-                }}
-              >
                 {jurisdictionText}
               </Text>
             </View>

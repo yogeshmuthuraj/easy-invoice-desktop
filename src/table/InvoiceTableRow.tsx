@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoiceTableRow = ({ items, taxRate }) => {
+const InvoiceTableRow = ({ items }) => {
   const rows = items.map((item, index) => {
-    const unitPrice = parseFloat(item['Lineitem price']) - taxRate;
+    const unitPrice = parseFloat(item['Lineitem price']);
 
     return (
       <View style={styles.row} key={index} wrap={false}>
