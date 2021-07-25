@@ -57,10 +57,10 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const classes = useStyles();
 
   const taxInvoiceText = 'TAX INVOICE';
-  const gstText = 'GST : ';
+  const gstText = 'GST: ';
   const gstin = '33AAHCP7548N1ZT';
-  const invoiceText = 'Invoice : ';
-  const dateText = 'Date : '
+  const invoiceNoText = 'Invoice No: ';
+  const invoiceDateText = 'Invoice Date: '
   const senderLogoPath = '../assets/crazy_punch_logo.png';
 
   const serailNumberText = 'S.No';
@@ -82,7 +82,6 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const senderZip = '600097';
   const senderProvince = 'TN';
   const senderCountry = 'IN';
-  const senderEmail = 'email: warehouse@pasway.in';
 
   const shippingAddressText = 'Shipping Address :'
 
@@ -114,7 +113,22 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
     <Document author={developer} creator={developer} producer={developer}>
       {filteredRows.map((orderRow, index) => {
         const orderNumber = orderRow['Name'];
-        const paymentMethod = orderRow['Payment Method'] == 'Cash on Delivery' ? 'COD' : 'Prepaid';
+        let paymentMethodDisplay;
+        let outstandingAmount;
+        const paymentMethod = orderRow['Payment Method'];
+
+        if (paymentMethod == 'Cash on Delivery') {
+          outstandingAmount = <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>;
+          paymentMethodDisplay = {
+            value: 'COD',
+            metaValue: paymentMethod
+          }
+        } else {
+          paymentMethodDisplay = {
+            value: 'Prepaid',
+            metaValue: paymentMethod
+          }
+        }
 
         const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
 
@@ -157,7 +171,6 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ textAlign: 'left' }}>{senderAddress2}</Text>
             <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
             <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
-            <Text style={{ textAlign: 'left' }}>{senderEmail}</Text>
 
             <Text style={{ fontSize: 6, fontWeight: 'bold', top: 8, textAlign: 'right', position: 'absolute' }}>
             {gstText}<Text>{gstin}</Text>
@@ -165,23 +178,23 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
 
             <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 12, position: 'absolute' }}>
               <Text>
-                {invoiceText}
+                {invoiceNoText}
               </Text>
               <Text style={{ fontSize: 15 }}>{orderNumber}</Text>
             </View>
 
             <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 45, position: 'absolute' }}>
-              {dateText}<Text>{moment(orderRow.['Created at']).format('ll')}</Text>
+              {invoiceDateText}<Text>{moment(orderRow.['Created at']).format('DD-MMM-YYYY')}</Text>
             </Text>
 
-
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
-            <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB: {orderRow['AWB']}</Text>
+            <Text style={{ fontSize: 6, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB No: {orderRow['AWB']}</Text>
 
 
-            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100,  position: 'absolute' }}>{paymentMethod}</Text>
+            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 90,  position: 'absolute' }}>{paymentMethodDisplay['value']}</Text>
+            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 120,  position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
 
-            <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>
+            {outstandingAmount}
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 170 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>

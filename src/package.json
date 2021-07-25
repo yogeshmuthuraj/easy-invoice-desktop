@@ -1,8 +1,8 @@
 {
   "name": "Easy-Invoice-Label",
   "productName": "EasyInvoiceLabel",
-  "version": "2.8.0",
-  "description": "Easy Invoice Label for CSV files and Shopify. 2.8.0 has the split, thsplit of 200",
+  "version": "2.9.0",
+  "description": "Easy Invoice Label for CSV files and Shopify. 2.9.0 has Style changes.",
   "main": "./main.prod.js",
   "author": {
     "name": "Yogesh Kumar Muthuraj",

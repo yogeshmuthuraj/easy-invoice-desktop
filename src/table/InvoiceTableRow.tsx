@@ -31,9 +31,11 @@ const styles = StyleSheet.create({
     paddingRight: 4,
   },
   sku: {
-    width: '35%',
-    textAlign: 'left',
+    fontSize: 8,
     paddingRight: 5,
+    textAlign: 'left',
+    wordBreak: 'break-all',
+    width: '35%',
   },
   qty: {
     width: '5%',
