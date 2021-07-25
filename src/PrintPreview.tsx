@@ -176,7 +176,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             {gstText}<Text>{gstin}</Text>
             </Text>
 
-            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 12, position: 'absolute' }}>
+            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 16, position: 'absolute' }}>
               <Text>
                 {invoiceNoText}
               </Text>
@@ -190,13 +190,14 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
             <Text style={{ fontSize: 6, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB No: {orderRow['AWB']}</Text>
 
-
-            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 90,  position: 'absolute' }}>{paymentMethodDisplay['value']}</Text>
-            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 120,  position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
+            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100, position: 'absolute' }}>
+              {paymentMethodDisplay['value']}
+            </Text>
+            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 118, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
 
             {outstandingAmount}
 
-            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 170 }} className="shipping-details">
+            <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 130 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>
               <Text style={{ paddingTop: 3 }}>{orderRow['Shipping Name']}</Text>
               <Text>{orderRow['Shipping Address1']}</Text>
