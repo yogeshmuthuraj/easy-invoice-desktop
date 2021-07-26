@@ -21,6 +21,7 @@ const InvoiceItemsTable = ({
   shipping,
   amountInWords,
   taxes,
+  currency
 }) => {
   return (
     <View style={styles.tableContainer}>
@@ -32,6 +33,7 @@ const InvoiceItemsTable = ({
         shipping={shipping}
         amountInWords={amountInWords}
         taxes={taxes}
+        currency={currency}
       />
     </View>
   );

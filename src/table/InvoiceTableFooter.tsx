@@ -1,24 +1,34 @@
 import React from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
+// 'Courier',
+// 'Courier-Bold',
+// 'Courier-Oblique',
+// 'Helvetica',
+// 'Helvetica-Bold',
+// 'Helvetica-Oblique',
+// 'Times-Roman',
+// 'Times-Bold',
+// 'Times-Italic',
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     borderBottomColor: 'grey',
     alignItems: 'center',
-    height: 8,
+    height: 10,
     fontSize: 6,
-    fontStyle: 'bold',
     borderBottomWidth: 0.5,
   },
   totalRow: {
-    flexDirection: 'row',
-    borderBottomColor: 'grey',
     alignItems: 'center',
-    height: 10,
-    fontSize: 6,
-    fontStyle: 'bold',
+    borderBottomColor: 'grey',
     borderBottomWidth: 0.5,
+    flexDirection: 'row',
+    height: 15,
+    paddingRight: 3,
+    textAlign: 'right',
+    fontSize: 8,
   },
   inWordsRow: {
     flexDirection: 'row',
@@ -26,18 +36,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 8,
     fontSize: 6,
-    fontStyle: 'bold',
   },
-  totalDescription: {
-    width: '90%',
-    textAlign: 'right',
-    fontSize: 7,
+  taxIncludedText: {
+    fontFamily: 'Times-Italic',
+    fontSize: 6,
   },
   grandTotal: {
-    width: '10%',
-    textAlign: 'right',
-    paddingRight: 3,
-    fontSize: 7,
+    fontFamily: 'Helvetica-Bold',
   },
   inWordsDescription: {
     width: '18%',
@@ -60,7 +65,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoiceTableFooter = ({ grandTotal, shipping, amountInWords, taxes }) => {
+const InvoiceTableFooter = ({ grandTotal, shipping, amountInWords, taxes, currency }) => {
 
   return (
     <View wrap={false}>
@@ -81,9 +86,11 @@ const InvoiceTableFooter = ({ grandTotal, shipping, amountInWords, taxes }) => {
         <Text style={styles.value}>{parseFloat(taxes.igst).toFixed(2)}</Text>
       </View>
       <View style={styles.totalRow}>
-        <Text style={styles.totalDescription}>(Inclusive of all Taxes) Total</Text>
-        <Text wrap={false} style={styles.grandTotal}>
-          {grandTotal}
+        <Text wrap={false}>
+          <Text style={styles.taxIncludedText}>(Inclusive of all Taxes) </Text>
+          <Text style={styles.grandTotal}>Total </Text>
+          <Text style={styles.grandTotal}>{currency} </Text>
+          <Text style={styles.grandTotal}>{grandTotal}</Text>
         </Text>
       </View>
       <View style={styles.inWordsRow}>

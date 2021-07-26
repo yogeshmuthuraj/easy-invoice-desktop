@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingLeft: 1,
   },
   itemName: {
-    width: '35%',
+    width: '30%',
     textAlign: 'left',
     paddingLeft: 1,
     paddingRight: 4,
@@ -34,13 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 8,
     paddingRight: 5,
     textAlign: 'left',
-    wordBreak: 'break-all',
-    width: '35%',
+    width: '40%',
   },
   qty: {
     width: '5%',
-    textAlign: 'center',
-    paddingLeft: 2,
+    textAlign: 'right',
+    paddingLeft: 3,
   },
   unitPrice: {
     width: '10%',

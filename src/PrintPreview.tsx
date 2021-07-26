@@ -115,9 +115,10 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
         let paymentMethodDisplay;
         let outstandingAmount;
         const paymentMethod = orderRow['Payment Method'];
+        const currency = orderRow['Currency'] == 'INR' ? 'Rs.' : orderRow['Currency'];
 
         if (paymentMethod == 'Cash on Delivery') {
-          outstandingAmount = <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>;
+          outstandingAmount = <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${currency}`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 140, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>;
           paymentMethodDisplay = {
             value: 'COD',
             metaValue: paymentMethod
@@ -189,14 +190,14 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
             <Text style={{ fontSize: 6, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB No: {orderRow['AWB']}</Text>
 
-            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100, position: 'absolute' }}>
+            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 95, position: 'absolute' }}>
               {paymentMethodDisplay['value']}
             </Text>
-            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 120, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
+            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
 
             {outstandingAmount}
 
-            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 160, position: 'absolute' }}>
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 158, position: 'absolute' }}>
               {orderDateText}<Text>{moment(orderRow.['Created at']).format('DD-MMM-YYYY')}</Text>
             </Text>
 
@@ -217,6 +218,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
                 shipping={orderRow['Shipping']}
                 amountInWords={amountInWords}
                 taxes={taxes}
+                currency={currency}
               />
             </View>
 
