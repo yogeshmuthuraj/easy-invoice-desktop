@@ -13,22 +13,24 @@ import { Text, View, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    borderBottomColor: 'grey',
     alignItems: 'center',
-    height: 10,
-    fontSize: 6,
+    borderBottomColor: 'grey',
     borderBottomWidth: 0.5,
+    flexDirection: 'row',
+    fontSize: 6,
+    height: 10,
+    paddingRight: 3,
+    textAlign: 'right',
   },
   totalRow: {
     alignItems: 'center',
     borderBottomColor: 'grey',
     borderBottomWidth: 0.5,
     flexDirection: 'row',
+    fontSize: 8,
     height: 15,
     paddingRight: 3,
     textAlign: 'right',
-    fontSize: 8,
   },
   inWordsRow: {
     flexDirection: 'row',
@@ -54,36 +56,23 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 6,
   },
-  description: {
-    width: '90%',
-    textAlign: 'right',
-  },
-  value: {
-    width: '10%',
-    textAlign: 'right',
-    paddingRight: 3,
-  },
 });
 
-const InvoiceTableFooter = ({ grandTotal, shipping, amountInWords, taxes, currency }) => {
+const InvoiceTableFooter = ({ grandTotal, discount , shipping, amountInWords, currency }) => {
 
   return (
     <View wrap={false}>
       <View style={styles.row}>
-        <Text style={styles.description}>Shipping</Text>
-        <Text style={styles.value}>{shipping}</Text>
+        <Text wrap={false}>
+          <Text>Shipping   </Text>
+          <Text>{shipping}</Text>
+        </Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.description}>CGST 2.5%</Text>
-        <Text style={styles.value}>{parseFloat(taxes.cgst).toFixed(2)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.description}>SGST 2.5%</Text>
-        <Text style={styles.value}>{parseFloat(taxes.sgst).toFixed(2)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.description}>IGST 5%</Text>
-        <Text style={styles.value}>{parseFloat(taxes.igst).toFixed(2)}</Text>
+        <Text wrap={false}>
+          <Text>Discount Code: {discount['code']}    </Text>
+          <Text>Discount:   {discount['value']}</Text>
+        </Text>
       </View>
       <View style={styles.totalRow}>
         <Text wrap={false}>

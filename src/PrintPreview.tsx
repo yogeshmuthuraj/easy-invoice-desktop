@@ -130,31 +130,14 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
           }
         }
 
-        const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
-
-        // Tax
-        const items = orderRow['More Details'];
-
-        const totalItems = orderRow['Shipping'] == 0 ? items.length : items.length + 1;
-
-        const taxRate = orderRow['Taxes'] / totalItems;
-
-        let cgst = 0;
-        let sgst = 0;
-        let igst = 0;
-
-        if (orderRow['Tax 1 Name'] == 'CGST 2.5%') {
-          cgst = sgst = orderRow['Taxes'] / 2;
-        } else if (orderRow['Tax 1 Name'] == 'IGST 5%') {
-          igst = orderRow['Taxes'];
+        const discount = {
+          code: orderRow['Discount Code'],
+          value: orderRow['Discount Amount']
         }
 
-        const taxes = {
-          cgst,
-          sgst,
-          igst,
-          taxRate
-        };
+        const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
+
+        const items = orderRow['More Details'];
 
         return (
           <Page key={index + orderNumber} size={paperSize}
@@ -215,9 +198,9 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}
+                discount={discount}
                 shipping={orderRow['Shipping']}
                 amountInWords={amountInWords}
-                taxes={taxes}
                 currency={currency}
               />
             </View>

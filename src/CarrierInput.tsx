@@ -149,8 +149,12 @@ export default function CarrierInput(props) {
         'Tax 1 Value': selectedOrderRow['Tax 1 Value'],
         'Tax 2 Name': selectedOrderRow['Tax 2 Name'],
         'Tax 2 Value': selectedOrderRow['Tax 2 Value'],
+        'Tax 3 Name': selectedOrderRow['Tax 3 Name'],
+        'Tax 3 Value': selectedOrderRow['Tax 3 Value'],
         Taxes: selectedOrderRow.Taxes,
         Total: selectedOrderRow.Total,
+        'Discount Code': selectedOrderRow['Discount Code'],
+        'Discount Amount': selectedOrderRow['Discount Amount'],
         AWB: selectedOrderRow.AWB,
         'More Details': lineItemDetails,
       });
