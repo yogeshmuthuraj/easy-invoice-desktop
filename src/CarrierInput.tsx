@@ -220,9 +220,9 @@ export default function CarrierInput(props) {
     return (
       <>
         <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Name:</strong> {file.name}</Typography>
-        <Typography style={{ fontSize: 20 }} className={classes.materialText}><strong>Path:</strong> {file.path}</Typography>
-        <Typography style={{ fontSize: 20 }} className={classes.materialText}><strong>Size:</strong>{' '}{Number.parseFloat(file.size / 1000000).toFixed(2)} MB</Typography>
-        <Typography style={{ fontSize: 20 }} className={classes.materialText}><strong>Type:</strong> {file.type}</Typography>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Path:</strong> {file.path}</Typography>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Size:</strong>{' '}{Number.parseFloat(file.size / 1000000).toFixed(2)} MB</Typography>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Type:</strong> {file.type}</Typography>
       </>
     );
   }
