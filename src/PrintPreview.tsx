@@ -33,6 +33,8 @@ import {
 import InvoiceItemsTable from './tables/itemsInvoice/InvoiceItemsTable';
 import TaxItemsTable from './tables/itemsTax/TaxItemsTable';
 
+import Header from './Header';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -171,18 +173,18 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
             <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
 
-            <Text style={{ fontSize: 6, fontWeight: 'bold', top: 8, textAlign: 'right', position: 'absolute' }}>
+            <Text style={{ fontSize: 6, fontWeight: 'bold', top: 8, alignSelf: 'flex-end', position: 'absolute' }}>
             {gstText}<Text>{gstin}</Text>
             </Text>
 
-            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 16, position: 'absolute' }}>
+            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 14, position: 'absolute' }}>
               <Text>
                 {invoiceNoText}
               </Text>
               <Text style={{ fontSize: 15 }}>{orderNumber}</Text>
             </View>
 
-            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 50, position: 'absolute' }}>
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 48, position: 'absolute' }}>
               {invoiceDateText}<Text>{moment().format('DD-MMM-YYYY')}</Text>
             </Text>
 
@@ -192,7 +194,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 95, position: 'absolute' }}>
               {paymentMethodDisplay['value']}
             </Text>
-            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
+            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 116, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
 
             {outstandingAmount}
 
@@ -210,7 +212,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               <Text>Ph: {orderRow['Shipping Phone']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 19 }}>
+            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 20 }}>
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}
@@ -221,7 +223,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               />
             </View>
 
-            <View className="tax-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 1 }}>
+            <View className="tax-table" style={{ alignItems: 'flex-end', fontSize: 5, paddingRight: 2, paddingTop: 1 }}>
               <TaxItemsTable
                 items={taxes}
                 grandTotal={orderRow['Taxes']}
@@ -352,31 +354,34 @@ export default function PrintPreview() {
   }
 
   return (
-    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
-      <div className={classes.root}>
-        <Button
-          style={{ marginTop: 20, float: 'left' }}
-          variant="contained"
-          color="primary"
-          onClick={handleCancel}
-        >
-          Start Again
-        </Button>
-        <Button
-          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-          variant="contained"
-          onClick={closeApp}
-          className="margin-top-20 pull-left"
-        >
-          Close
-        </Button>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>{pdfLinkList}</Paper>
+    <>
+      <Header />
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
+        <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
+        <div className={classes.root}>
+          <Button
+            style={{ marginTop: 20, float: 'left' }}
+            variant="contained"
+            color="primary"
+            onClick={handleCancel}
+          >
+            Start Again
+          </Button>
+          <Button
+            style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+            variant="contained"
+            onClick={closeApp}
+            className="margin-top-20 pull-left"
+          >
+            Close
+          </Button>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>{pdfLinkList}</Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

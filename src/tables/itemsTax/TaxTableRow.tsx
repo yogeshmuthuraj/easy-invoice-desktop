@@ -18,11 +18,13 @@ const styles = StyleSheet.create({
 const TaxTableRow = ({ items }) => {
   const rows = items.map((item, index) => {
 
-    return (
-      <View style={styles.row} key={index} wrap={false}>
-        <Text style={styles.value}>{item['name']}  {item['value']}</Text>
-      </View>
-    );
+    if (item['name'].length != 0) {
+      return (
+        <View style={styles.row} key={index} wrap={false}>
+        <Text style={styles.value}>{item['name']}    {item['value']}</Text>
+        </View>
+      );
+    }
   });
 
   return <>{rows}</>;

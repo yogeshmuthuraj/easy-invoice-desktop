@@ -31,7 +31,7 @@ const TaxTableFooter = ({ grandTotal, discount , shipping, amountInWords, curren
     <View wrap={false}>
       <View style={styles.totalRow}>
         <Text wrap={false}>
-          <Text style={styles.grandTotal}>Total </Text>
+          <Text style={styles.grandTotal}>Total   </Text>
           <Text style={styles.grandTotal}>{currency}</Text>
           <Text style={styles.grandTotal}>{grandTotal}</Text>
         </Text>

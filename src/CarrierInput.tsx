@@ -7,6 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 
+import Header from './Header';
+
 import { useHistory, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -236,58 +238,62 @@ export default function CarrierInput(props) {
   const fileDetails = fileState == null ? <div /> : getFileDetails();
 
   return (
-    <div
-      style={{
-        padding: 10,
-        backgroundColor: 'gainsboro',
-        borderWidth: 0,
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      <Header />
       <div
-        style={{ paddingBottom: 20, fontSize: 20 }}
-        className="pad-bottom-20"
+        style={{
+          marginTop: 20,
+          padding: 10,
+          backgroundColor: 'gainsboro',
+          borderWidth: 0,
+          borderColor: 'grey',
+          borderStyle: 'solid',
+          borderRadius: '10px',
+          overflow: 'hidden',
+        }}
       >
-        Carriers
-      </div>
-      <div className={classes.root}>
-        <Button
-          style={{ marginTop: 20, float: 'left' }}
-          variant="contained"
-          onClick={handleBack}
-          className="margin-top-20 pull-left"
+        <div
+          style={{ paddingBottom: 20, fontSize: 20 }}
+          className="pad-bottom-20"
         >
-          Back
-        </Button>
-        <Button
-          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-          variant="contained"
-          onClick={handleCancel}
-          className="margin-left-10 margin-top-20 pull-left"
-        >
-          Cancel
-        </Button>
-        <Button
-          style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
-          variant="contained"
-          color="primary"
-          onClick={handleNext}
-          disabled={nextDisabled}
-        >
-          Next
-        </Button>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              {uploadButton}
-              <div style={{ textAlign: 'left' }}>{fileDetails}</div>
-            </Paper>
+          Carriers
+        </div>
+        <div className={classes.root}>
+          <Button
+            style={{ marginTop: 20, float: 'left' }}
+            variant="contained"
+            onClick={handleBack}
+            className="margin-top-20 pull-left"
+          >
+            Back
+          </Button>
+          <Button
+            style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+            variant="contained"
+            onClick={handleCancel}
+            className="margin-left-10 margin-top-20 pull-left"
+          >
+            Cancel
+          </Button>
+          <Button
+            style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            disabled={nextDisabled}
+          >
+            Next
+          </Button>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                {uploadButton}
+                <div style={{ textAlign: 'left' }}>{fileDetails}</div>
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

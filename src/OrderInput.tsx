@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 import CloudDownloadRoundedIcon from '@material-ui/icons/CloudDownloadRounded';
 
+import Header from './Header';
+
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -100,41 +102,45 @@ export default function OrderInput(props) {
   }
 
   return (
-    <div
-      style={{
-        padding: 10,
-        backgroundColor: 'gainsboro',
-        borderWidth: 0,
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      <Header />
       <div
-        style={{ paddingBottom: 20, fontSize: 20 }}
-        className="pad-bottom-20"
+        style={{
+          marginTop: 20,
+          padding: 10,
+          backgroundColor: 'gainsboro',
+          borderWidth: 0,
+          borderColor: 'grey',
+          borderStyle: 'solid',
+          borderRadius: '10px',
+          overflow: 'hidden',
+        }}
       >
-        Orders
-      </div>
-      <div className={classes.root}>
-        <Button
-          style={{ marginTop: 20, float: 'right' }}
-          variant="contained"
-          onClick={closeApp}
-          className="margin-top-20 pull-left"
+        <div
+          style={{ paddingBottom: 20, fontSize: 20 }}
+          className="pad-bottom-20"
         >
-          Close
-        </Button>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>{uploadButton}</Paper>
+          Orders
+        </div>
+        <div className={classes.root}>
+          <Button
+            style={{ marginTop: 20, float: 'right' }}
+            variant="contained"
+            onClick={closeApp}
+            className="margin-top-20 pull-left"
+          >
+            Close
+          </Button>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Paper className={classes.paper}>{uploadButton}</Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper className={classes.paper}>{fetchButton}</Paper>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>{fetchButton}</Paper>
-          </Grid>
-        </Grid>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
