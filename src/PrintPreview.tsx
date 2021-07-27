@@ -233,11 +233,11 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             </View>
 
             <View style={{
-                fontSize: 5,
+                fontSize: 4.5,
                 textAlign: 'left',
                 position: 'absolute',
                 bottom: 2,
-                marginLeft: 5
+                marginLeft: 4
               }}
               wrap={false}>
               <Text>

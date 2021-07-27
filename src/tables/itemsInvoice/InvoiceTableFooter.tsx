@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
 
 const InvoiceTableFooter = ({ grandTotal, discount , shipping, amountInWords, currency }) => {
 
+  const displayDiscount = discount['code'].length > 0;
+
   return (
     <View wrap={false}>
       <View style={styles.row}>
@@ -68,12 +70,14 @@ const InvoiceTableFooter = ({ grandTotal, discount , shipping, amountInWords, cu
           <Text>{shipping}</Text>
         </Text>
       </View>
-      <View style={styles.row}>
-        <Text wrap={false}>
-          <Text>Discount Code: {discount['code']}    </Text>
-          <Text>Discount   {discount['value']}</Text>
-        </Text>
-      </View>
+      {displayDiscount ? (
+        <View style={styles.row}>
+          <Text wrap={false}>
+            <Text>Discount Code: {discount['code']}    </Text>
+            <Text>Discount   {discount['value']}</Text>
+          </Text>
+        </View>
+      ): null}
       <View style={styles.totalRow}>
         <Text wrap={false}>
           <Text style={styles.taxIncludedText}>(Inclusive of all Taxes) </Text>

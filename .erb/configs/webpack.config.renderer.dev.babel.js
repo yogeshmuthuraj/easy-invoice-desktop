@@ -203,6 +203,7 @@ export default merge(baseConfig, {
           },
         },
       },
+      { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader', options: {limit: 10000} },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,

@@ -256,7 +256,7 @@ export default function CarrierInput(props) {
         <TabStepper activeStep={2} />
         <div className={classes.root}>
           <Button
-            style={{ float: 'left' }}
+            style={{ marginTop: 20, float: 'left' }}
             variant="contained"
             onClick={handleBack}
             className="margin-top-20 pull-left"

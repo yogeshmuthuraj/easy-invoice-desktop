@@ -146,7 +146,7 @@ export default function OrderDisplay(props) {
       >
       <TabStepper activeStep={1} />
         <Button
-          style={{ float: 'left' }}
+          style={{ marginTop: 20, float: 'left' }}
           variant="contained"
           onClick={handleBack}
           className="margin-top-20 pull-left"
