@@ -71,7 +71,7 @@ const InvoiceTableFooter = ({ grandTotal, discount , shipping, amountInWords, cu
       <View style={styles.row}>
         <Text wrap={false}>
           <Text>Discount Code: {discount['code']}    </Text>
-          <Text>Discount:   {discount['value']}</Text>
+          <Text>Discount   {discount['value']}</Text>
         </Text>
       </View>
       <View style={styles.totalRow}>

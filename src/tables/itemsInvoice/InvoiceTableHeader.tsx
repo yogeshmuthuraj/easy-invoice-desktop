@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   itemName: {
     width: '40%',
-    textAlign: 'left',
+    textAlign: 'center',
     paddingLeft: 1,
     paddingRight: 4,
   },

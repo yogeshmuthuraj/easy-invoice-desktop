@@ -30,7 +30,7 @@ import {
 //
 // import Barcode from './Barcode';
 
-import InvoiceItemsTable from './table/InvoiceItemsTable';
+import InvoiceItemsTable from './tables/itemsInvoice/InvoiceItemsTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,7 +141,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
 
         return (
           <Page key={index + orderNumber} size={paperSize}
-            style={{ fontSize: 6, padding: 5 }}>
+            style={{ fontSize: 6, paddingTop: 1, paddingLeft: 3 }}>
             <Text style={{ textAlign: 'center' }}>
               {taxInvoiceText}
             </Text>
@@ -194,7 +194,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               <Text>Ph: {orderRow['Shipping Phone']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 5 }}>
+            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 18 }}>
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}

@@ -1,5 +1,10 @@
 import React, { Fragment } from 'react';
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Font, Text, View, StyleSheet } from '@react-pdf/renderer';
+
+Font.registerHyphenationCallback(word => {
+  // Return entire word as unique part
+  return [word];
+});
 
 const styles = StyleSheet.create({
   row: {
@@ -37,9 +42,10 @@ const styles = StyleSheet.create({
     width: '40%',
   },
   qty: {
-    width: '5%',
-    textAlign: 'right',
+    fontSize: 8,
     paddingLeft: 3,
+    textAlign: 'right',
+    width: '5%',
   },
   unitPrice: {
     width: '10%',
@@ -57,11 +63,21 @@ const InvoiceTableRow = ({ items }) => {
   const rows = items.map((item, index) => {
     const unitPrice = parseFloat(item['Lineitem price']);
 
+    let sku = item['Lineitem sku'];
+
+    if (sku.length > 26) {
+      // Split by 26 characters
+      // filter(O=>O) for speed
+      var splitWords = sku.split(/(.{26})/).filter(O=>O);
+      sku = splitWords.join('\n');
+    }
+    console.log('sku', sku);
+
     return (
       <View style={styles.row} key={index} wrap={false}>
         <Text style={styles.sno}>{index + 1}.</Text>
         <Text style={styles.itemName}>{item['Lineitem name']}</Text>
-        <Text style={styles.sku}>{item['Lineitem sku']}</Text>
+        <Text wrap={false} style={styles.sku}>{sku}</Text>
         <Text style={styles.qty}>{item['Lineitem quantity']}</Text>
         <Text style={styles.unitPrice}>{unitPrice.toFixed(2)}</Text>
         <Text style={styles.subTotal}>
