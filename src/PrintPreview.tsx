@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 
+import Typography from '@material-ui/core/Typography';
+
 import moment from 'moment';
 import numberToWords from 'number-to-words';
 
@@ -47,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     display: 'none',
+  },
+  materialText: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -267,14 +273,14 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_') + '_' + pdfDocumentCount + '.pdf';
 
   return (
-    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 20, fontSize: 15 }} key={fileName} >
+    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 20, fontSize: 15 }} key={fileName}>
       <PDFDownloadLink
         document={document}
         style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }}
         fileName={fileName}>
         {({ blob, url, loading, error }) => {
           if (blob || url) {
-            return fileName;
+            return <Typography style={{ fontSize: 20 }} className={classes.materialText}>{fileName}</Typography>;
           } else if (error){
             return (
               <Alert severity="error" style={{ fontSize: 15 }}>

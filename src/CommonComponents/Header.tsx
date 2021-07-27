@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: '100%',
     },
-    instructions: {
+    materialText: {
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1),
     },
@@ -19,6 +19,6 @@ export default function Header(props) {
   const title = 'Easy Invoice';
 
   return (
-    <Typography style={{ fontSize: 30 }} className={classes.instructions}>{title}</Typography>
+    <Typography style={{ fontSize: 30 }} className={classes.materialText}>{title}</Typography>
   );
 }

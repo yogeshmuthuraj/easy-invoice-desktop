@@ -12,6 +12,8 @@ import TabStepper from './CommonComponents/TabStepper';
 
 import { useHistory, useLocation } from 'react-router-dom';
 
+import Typography from '@material-ui/core/Typography';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -216,21 +218,12 @@ export default function CarrierInput(props) {
     const file = Object.assign(fileState);
 
     return (
-      <div>
-        <div>
-          <strong>Name:</strong> {file.name}
-        </div>
-        <div>
-          <strong>Path:</strong> {file.path}
-        </div>
-        <div>
-          <strong>Size:</strong>{' '}
-          {Number.parseFloat(file.size / 1000000).toFixed(2)} MB
-        </div>
-        <div>
-          <strong>Type:</strong> {file.type}
-        </div>
-      </div>
+      <>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Name:</strong> {file.name}</Typography>
+        <Typography style={{ fontSize: 20 }} className={classes.materialText}><strong>Path:</strong> {file.path}</Typography>
+        <Typography style={{ fontSize: 20 }} className={classes.materialText}><strong>Size:</strong>{' '}{Number.parseFloat(file.size / 1000000).toFixed(2)} MB</Typography>
+        <Typography style={{ fontSize: 20 }} className={classes.materialText}><strong>Type:</strong> {file.type}</Typography>
+      </>
     );
   }
 
