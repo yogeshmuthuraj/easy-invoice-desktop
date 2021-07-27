@@ -33,7 +33,8 @@ import {
 import InvoiceItemsTable from './tables/itemsInvoice/InvoiceItemsTable';
 import TaxItemsTable from './tables/itemsTax/TaxItemsTable';
 
-import Header from './Header';
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -173,7 +174,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             <Text style={{ textAlign: 'left' }}>{senderStreet}</Text>
             <Text style={{ textAlign: 'left' }}>{senderCity} - {senderZip}</Text>
 
-            <Text style={{ fontSize: 6, fontWeight: 'bold', top: 8, alignSelf: 'flex-end', position: 'absolute' }}>
+            <Text style={{ fontSize: 6, fontWeight: 'bold', top: 8, textAlign: 'right', position: 'absolute' }}>
             {gstText}<Text>{gstin}</Text>
             </Text>
 
@@ -357,7 +358,7 @@ export default function PrintPreview() {
     <>
       <Header />
       <div style={{ marginTop: 20, padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-        <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
+        <TabStepper activeStep={3} />
         <div className={classes.root}>
           <Button
             style={{ marginTop: 20, float: 'left' }}

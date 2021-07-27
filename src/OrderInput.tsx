@@ -8,7 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 import CloudDownloadRoundedIcon from '@material-ui/icons/CloudDownloadRounded';
 
-import Header from './Header';
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
 
 import { useHistory } from 'react-router-dom';
 
@@ -116,15 +117,10 @@ export default function OrderInput(props) {
           overflow: 'hidden',
         }}
       >
-        <div
-          style={{ paddingBottom: 20, fontSize: 20 }}
-          className="pad-bottom-20"
-        >
-          Orders
-        </div>
+        <TabStepper activeStep={0} />
         <div className={classes.root}>
           <Button
-            style={{ marginTop: 20, float: 'right' }}
+            style={{ float: 'right' }}
             variant="contained"
             onClick={closeApp}
             className="margin-top-20 pull-left"

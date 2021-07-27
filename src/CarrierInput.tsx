@@ -7,7 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 
-import Header from './Header';
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
 
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -252,15 +253,10 @@ export default function CarrierInput(props) {
           overflow: 'hidden',
         }}
       >
-        <div
-          style={{ paddingBottom: 20, fontSize: 20 }}
-          className="pad-bottom-20"
-        >
-          Carriers
-        </div>
+        <TabStepper activeStep={2} />
         <div className={classes.root}>
           <Button
-            style={{ marginTop: 20, float: 'left' }}
+            style={{ float: 'left' }}
             variant="contained"
             onClick={handleBack}
             className="margin-top-20 pull-left"

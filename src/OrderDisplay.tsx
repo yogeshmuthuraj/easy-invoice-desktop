@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import Header from './Header';
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
 
 import { useLocation, useHistory } from 'react-router-dom';
 
@@ -143,14 +144,9 @@ export default function OrderDisplay(props) {
           overflow: 'hidden',
         }}
       >
-        <div
-          style={{ paddingBottom: 20, fontSize: 20 }}
-          className="pad-bottom-20"
-        >
-          Select orders
-        </div>
+      <TabStepper activeStep={1} />
         <Button
-          style={{ marginTop: 20, float: 'left' }}
+          style={{ float: 'left' }}
           variant="contained"
           onClick={handleBack}
           className="margin-top-20 pull-left"
