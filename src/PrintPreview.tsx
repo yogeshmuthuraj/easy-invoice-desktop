@@ -31,6 +31,7 @@ import {
 // import Barcode from './Barcode';
 
 import InvoiceItemsTable from './tables/itemsInvoice/InvoiceItemsTable';
+import TaxItemsTable from './tables/itemsTax/TaxItemsTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -139,6 +140,21 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
 
         const items = orderRow['More Details'];
 
+        const taxes = [
+          {
+            name: orderRow['Tax 1 Name'],
+            value: orderRow['Tax 1 Value'],
+          },
+          {
+            name: orderRow['Tax 2 Name'],
+            value: orderRow['Tax 2 Value'],
+          },
+          {
+            name: orderRow['Tax 3 Name'],
+            value: orderRow['Tax 3 Value'],
+          },
+        ];
+
         return (
           <Page key={index + orderNumber} size={paperSize}
             style={{ fontSize: 6, paddingTop: 1, paddingLeft: 3 }}>
@@ -194,13 +210,21 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               <Text>Ph: {orderRow['Shipping Phone']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 18 }}>
+            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 19 }}>
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}
                 discount={discount}
                 shipping={orderRow['Shipping']}
                 amountInWords={amountInWords}
+                currency={currency}
+              />
+            </View>
+
+            <View className="tax-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 1 }}>
+              <TaxItemsTable
+                items={taxes}
+                grandTotal={orderRow['Taxes']}
                 currency={currency}
               />
             </View>

@@ -71,7 +71,6 @@ const InvoiceTableRow = ({ items }) => {
       var splitWords = sku.split(/(.{26})/).filter(O=>O);
       sku = splitWords.join('\n');
     }
-    console.log('sku', sku);
 
     return (
       <View style={styles.row} key={index} wrap={false}>
