@@ -8,8 +8,16 @@ import Grid from '@material-ui/core/Grid';
 import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 import CloudDownloadRoundedIcon from '@material-ui/icons/CloudDownloadRounded';
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import Header from './CommonComponents/Header';
 import TabStepper from './CommonComponents/TabStepper';
+import LogoSelector from './logo/LogoSelector';
+import Typography from '@material-ui/core/Typography';
 
 import { useHistory } from 'react-router-dom';
 
@@ -25,6 +33,13 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  logo: {
+    objectFit: 'contain',
+    maxWidth: 120,
+    maxHeight: 120,
+    width: 'auto',
+    height: 'auto',
+  }
 }));
 
 
@@ -41,6 +56,7 @@ export default function OrderInput(props) {
       pathname: '/orderDisplay',
       state: {
         rows: csvJson,
+        logoPath: logoPathState,
       },
     });
   }
@@ -102,6 +118,12 @@ export default function OrderInput(props) {
     window.close();
   }
 
+  const [logoPathState, setLogoPathState] = React.useState('../assets/logo/crazy_punch_logo.png');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLogoPathState((event.target as HTMLInputElement).value);
+  };
+
   return (
     <>
       <Header />
@@ -127,6 +149,24 @@ export default function OrderInput(props) {
           >
             Close
           </Button>
+          <br />
+          <Paper className={classes.paper} style={{ marginTop: 50, textAlign: 'left' }}>
+            <FormControl component="fieldset">
+              <FormLabel component="legend">
+                <Typography style={{ fontSize: 18, textAlign: 'left' }}>Logo</Typography>
+              </FormLabel>
+              <br />
+              <RadioGroup aria-label="gender" name="gender1" value={logoPathState} onChange={handleChange}>
+                <FormControlLabel value="../assets/logo/crazy_punch_logo.png" control={<Radio />} label={<img className={classes.logo} src="../assets/logo/crazy_punch_logo.png" />} />
+                <br />
+                <br />
+                <br />
+                <br />
+                <FormControlLabel value="../assets/logo/drunken_monk.jpeg" control={<Radio />} label={<img className={classes.logo} src="../assets/logo/drunken_monk.jpeg" />} />
+              </RadioGroup>
+            </FormControl>
+          </Paper>
+          <br />
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Paper className={classes.paper}>{uploadButton}</Paper>

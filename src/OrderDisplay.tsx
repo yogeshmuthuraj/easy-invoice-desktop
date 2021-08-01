@@ -121,6 +121,7 @@ export default function OrderDisplay(props) {
       state: {
         selectedRowIds: selectionModel,
         rows,
+        logoPath: location.state.logoPath,
       },
     });
   }

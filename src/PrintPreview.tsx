@@ -65,6 +65,7 @@ function toTitleCase(str) {
 
 function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const classes = useStyles();
+  const location = useLocation();
 
   const taxInvoiceText = 'TAX INVOICE';
   const gstText = 'GST: ';
@@ -72,7 +73,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const invoiceNoText = 'Invoice No: ';
   const invoiceDateText = 'Invoice Date: ';
   const orderDateText = 'Order Date: ';
-  const senderLogoPath = '../assets/crazy_punch_logo.png';
+  const senderLogoPath = location.state.logoPath;
 
   const serailNumberText = 'S.No';
   const itemDescriptionText = 'Item Description';
@@ -172,7 +173,16 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             </Text>
 
             <View fixed>
-              <Image fixed src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
+              <Image fixed src={senderLogoPath}
+                style={{
+                  objectFit: 'contain',
+                  maxWidth: 55,
+                  maxHeight: 55,
+                  width: 'auto',
+                  height: 'auto',
+                  textAlign: 'left'
+                }}
+              />
             </View>
             <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
             <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
@@ -273,7 +283,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_') + '_' + pdfDocumentCount + '.pdf';
 
   return (
-    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 20, fontSize: 15 }} key={fileName}>
+    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 15, fontSize: 15 }} key={fileName}>
       <PDFDownloadLink
         document={document}
         style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }}

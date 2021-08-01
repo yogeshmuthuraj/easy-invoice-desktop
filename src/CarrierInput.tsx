@@ -88,6 +88,7 @@ export default function CarrierInput(props) {
       pathname: '/printPreview',
       state: {
         orderRows: sortedOrders,
+        logoPath: location.state.logoPath,
       },
     });
   }
