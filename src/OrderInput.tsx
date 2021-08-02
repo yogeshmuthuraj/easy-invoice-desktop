@@ -160,8 +160,6 @@ export default function OrderInput(props) {
                 <FormControlLabel value="../assets/logo/crazy_punch_logo.png" control={<Radio />} label={<img className={classes.logo} src="../assets/logo/crazy_punch_logo.png" />} />
                 <br />
                 <br />
-                <br />
-                <br />
                 <FormControlLabel value="../assets/logo/drunken_monk.jpeg" control={<Radio />} label={<img className={classes.logo} src="../assets/logo/drunken_monk.jpeg" />} />
               </RadioGroup>
             </FormControl>

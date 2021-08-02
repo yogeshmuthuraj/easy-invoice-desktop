@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
     paddingRight: 4,
   },
   sku: {
-    fontSize: 8,
+    fontSize: 6.5,
     paddingRight: 5,
     textAlign: 'left',
     width: '40%',
   },
   qty: {
-    fontSize: 8,
+    fontSize: 6.5,
     paddingLeft: 3,
     textAlign: 'right',
     width: '5%',

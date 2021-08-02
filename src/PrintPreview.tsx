@@ -261,10 +261,6 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               </Text>
 
               <Text>
-                {declarationText1}
-              </Text>
-
-              <Text>
                 {jurisdictionText}
               </Text>
             </View>
