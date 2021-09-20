@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
+
 import { useLocation, useHistory } from 'react-router-dom';
 
 function toTitleCase(inputString) {
@@ -118,6 +121,7 @@ export default function OrderDisplay(props) {
       state: {
         selectedRowIds: selectionModel,
         rows,
+        logoPath: location.state.logoPath,
       },
     });
   }
@@ -127,68 +131,67 @@ export default function OrderDisplay(props) {
   }
 
   return (
-    <div
-      style={{
-        padding: 10,
-        backgroundColor: 'gainsboro',
-        borderWidth: 0,
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      <Header />
       <div
-        style={{ paddingBottom: 20, fontSize: 20 }}
-        className="pad-bottom-20"
+        style={{
+          marginTop: 20,
+          padding: 10,
+          backgroundColor: 'gainsboro',
+          borderWidth: 0,
+          borderColor: 'grey',
+          borderStyle: 'solid',
+          borderRadius: '10px',
+          overflow: 'hidden',
+        }}
       >
-        Select orders
-      </div>
-      <Button
-        style={{ marginTop: 20, float: 'left' }}
-        variant="contained"
-        onClick={handleBack}
-        className="margin-top-20 pull-left"
-      >
-        Back
-      </Button>
-      <Button
-        style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-        variant="contained"
-        onClick={handleCancel}
-        className="margin-left-10 margin-top-20 pull-left"
-      >
-        Cancel
-      </Button>
-      <Button
-        style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
-        variant="contained"
-        color="primary"
-        onClick={handleNext}
-        disabled={nextDisabled}
-      >
-        Next
-      </Button>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <div style={{ height: 500, width: '100%', fontSize: 30 }}>
-              <DataGrid
-                autoPageSize
-                className="font-size-14"
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                checkboxSelection
-                onSelectionModelChange={(newSelection) => {
-                  setSelectionModel(newSelection.selectionModel);
-                }}
-                selectionModel={selectionModel}
-              />
-            </div>
-          </Paper>
+      <TabStepper activeStep={1} />
+        <Button
+          style={{ marginTop: 20, float: 'left' }}
+          variant="contained"
+          onClick={handleBack}
+          className="margin-top-20 pull-left"
+        >
+          Back
+        </Button>
+        <Button
+          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+          variant="contained"
+          onClick={handleCancel}
+          className="margin-left-10 margin-top-20 pull-left"
+        >
+          Cancel
+        </Button>
+        <Button
+          style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+          disabled={nextDisabled}
+        >
+          Next
+        </Button>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <div style={{ height: 500, width: '100%', fontSize: 30 }}>
+                <DataGrid
+                  autoPageSize
+                  className="font-size-14"
+                  rows={rows}
+                  columns={columns}
+                  pageSize={10}
+                  checkboxSelection
+                  onSelectionModelChange={(newSelection) => {
+                    setSelectionModel(newSelection.selectionModel);
+                  }}
+                  selectionModel={selectionModel}
+                />
+              </div>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 }

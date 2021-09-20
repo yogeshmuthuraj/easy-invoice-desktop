@@ -55,6 +55,11 @@ export default merge(baseConfig, {
           'sass-loader'
         ],
       },
+      { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader', options: {limit: 10000} },
+      {
+        test: /\.(woff|woff2|ttf|eot)$/,
+        use: 'file-loader?name=fonts/[name].[ext]!static'
+      },
       // WOFF Font
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,

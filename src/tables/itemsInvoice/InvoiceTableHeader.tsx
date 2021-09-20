@@ -20,19 +20,19 @@ const styles = StyleSheet.create({
     paddingLeft: 1,
   },
   itemName: {
-    width: '35%',
-    textAlign: 'left',
+    width: '40%',
+    textAlign: 'center',
     paddingLeft: 1,
     paddingRight: 4,
   },
   sku: {
-    width: '35%',
+    width: '40%',
     textAlign: 'left',
     paddingRight: 5,
   },
   qty: {
     width: '5%',
-    textAlign: 'center',
+    textAlign: 'left',
     paddingLeft: 2,
   },
   unitPrice: {

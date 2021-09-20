@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 
+import Typography from '@material-ui/core/Typography';
+
 import moment from 'moment';
 import numberToWords from 'number-to-words';
 
@@ -30,7 +32,11 @@ import {
 //
 // import Barcode from './Barcode';
 
-import InvoiceItemsTable from './table/InvoiceItemsTable';
+import InvoiceItemsTable from './tables/itemsInvoice/InvoiceItemsTable';
+import TaxItemsTable from './tables/itemsTax/TaxItemsTable';
+
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  materialText: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 function toTitleCase(str) {
@@ -55,6 +65,7 @@ function toTitleCase(str) {
 
 function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const classes = useStyles();
+  const location = useLocation();
 
   const taxInvoiceText = 'TAX INVOICE';
   const gstText = 'GST: ';
@@ -62,7 +73,7 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const invoiceNoText = 'Invoice No: ';
   const invoiceDateText = 'Invoice Date: ';
   const orderDateText = 'Order Date: ';
-  const senderLogoPath = '../assets/crazy_punch_logo.png';
+  const senderLogoPath = location.state.logoPath;
 
   const serailNumberText = 'S.No';
   const itemDescriptionText = 'Item Description';
@@ -115,9 +126,10 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
         let paymentMethodDisplay;
         let outstandingAmount;
         const paymentMethod = orderRow['Payment Method'];
+        const currency = orderRow['Currency'] == 'INR' ? 'Rs.' : orderRow['Currency'];
 
         if (paymentMethod == 'Cash on Delivery') {
-          outstandingAmount = <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${orderRow['Currency'] }`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 115, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>;
+          outstandingAmount = <Text style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 130, position: 'absolute' }}>{`${currency}`} <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 140, position: 'absolute' }}>{orderRow['Outstanding Balance']}</Text></Text>;
           paymentMethodDisplay = {
             value: 'COD',
             metaValue: paymentMethod
@@ -129,41 +141,48 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
           }
         }
 
-        const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
-
-        // Tax
-        const items = orderRow['More Details'];
-
-        const totalItems = orderRow['Shipping'] == 0 ? items.length : items.length + 1;
-
-        const taxRate = orderRow['Taxes'] / totalItems;
-
-        let cgst = 0;
-        let sgst = 0;
-        let igst = 0;
-
-        if (orderRow['Tax 1 Name'] == 'CGST 2.5%') {
-          cgst = sgst = orderRow['Taxes'] / 2;
-        } else if (orderRow['Tax 1 Name'] == 'IGST 5%') {
-          igst = orderRow['Taxes'];
+        const discount = {
+          code: orderRow['Discount Code'],
+          value: orderRow['Discount Amount']
         }
 
-        const taxes = {
-          cgst,
-          sgst,
-          igst,
-          taxRate
-        };
+        const amountInWords = toTitleCase(numberToWords.toWords(orderRow['Total'])) + ' only';
+
+        const items = orderRow['More Details'];
+
+        const taxes = [
+          {
+            name: orderRow['Tax 1 Name'],
+            value: orderRow['Tax 1 Value'],
+          },
+          {
+            name: orderRow['Tax 2 Name'],
+            value: orderRow['Tax 2 Value'],
+          },
+          {
+            name: orderRow['Tax 3 Name'],
+            value: orderRow['Tax 3 Value'],
+          },
+        ];
 
         return (
           <Page key={index + orderNumber} size={paperSize}
-            style={{ fontSize: 6, padding: 5 }}>
+            style={{ fontSize: 6, paddingTop: 1, paddingLeft: 3 }}>
             <Text style={{ textAlign: 'center' }}>
               {taxInvoiceText}
             </Text>
 
             <View fixed>
-              <Image fixed src={senderLogoPath} style={{ height: 40, width: 45.5, textAlign: 'left' }} />
+              <Image fixed src={senderLogoPath}
+                style={{
+                  objectFit: 'contain',
+                  maxWidth: 55,
+                  maxHeight: 55,
+                  width: 'auto',
+                  height: 'auto',
+                  textAlign: 'left'
+                }}
+              />
             </View>
             <Text style={{ textAlign: 'left', paddingTop: 5 }}>{senderName}</Text>
             <Text style={{ textAlign: 'left' }}>{senderAddress1}</Text>
@@ -175,28 +194,28 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
             {gstText}<Text>{gstin}</Text>
             </Text>
 
-            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 16, position: 'absolute' }}>
+            <View fixed style={{ fontSize: 8, paddingTop: 5, textAlign: 'right', top: 14, position: 'absolute' }}>
               <Text>
                 {invoiceNoText}
               </Text>
               <Text style={{ fontSize: 15 }}>{orderNumber}</Text>
             </View>
 
-            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 50, position: 'absolute' }}>
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 48, position: 'absolute' }}>
               {invoiceDateText}<Text>{moment().format('DD-MMM-YYYY')}</Text>
             </Text>
 
             <Text style={{ fontSize: 11, paddingTop: 10, textAlign: 'right', top: 60,  position: 'absolute' }}>{orderRow['Carrier']}</Text>
             <Text style={{ fontSize: 6, paddingTop: 10, textAlign: 'right', top: 75,  position: 'absolute' }}>AWB No: {orderRow['AWB']}</Text>
 
-            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 100, position: 'absolute' }}>
+            <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'right', top: 95, position: 'absolute' }}>
               {paymentMethodDisplay['value']}
             </Text>
-            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 120, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
+            <Text style={{ fontSize: 6, paddingTop: 5, textAlign: 'right', top: 116, position: 'absolute' }}>({paymentMethodDisplay['metaValue']})</Text>
 
             {outstandingAmount}
 
-            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 160, position: 'absolute' }}>
+            <Text style={{ fontSize: 8, paddingTop: 5, fontStyle: 'bold', textAlign: 'right', top: 158, position: 'absolute' }}>
               {orderDateText}<Text>{moment(orderRow.['Created at']).format('DD-MMM-YYYY')}</Text>
             </Text>
 
@@ -210,30 +229,35 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
               <Text>Ph: {orderRow['Shipping Phone']}</Text>
             </View>
 
-            <View className="invoice-table" style={{ fontSize: 5 }}>
+            <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 20 }}>
               <InvoiceItemsTable
                 items={items}
                 grandTotal={orderRow['Total']}
+                discount={discount}
                 shipping={orderRow['Shipping']}
                 amountInWords={amountInWords}
-                taxes={taxes}
+                currency={currency}
+              />
+            </View>
+
+            <View className="tax-table" style={{ alignItems: 'flex-end', fontSize: 5, paddingRight: 2, paddingTop: 1 }}>
+              <TaxItemsTable
+                items={taxes}
+                grandTotal={orderRow['Taxes']}
+                currency={currency}
               />
             </View>
 
             <View style={{
-                fontSize: 5,
+                fontSize: 4.5,
                 textAlign: 'left',
                 position: 'absolute',
                 bottom: 2,
-                marginLeft: 5
+                marginLeft: 4
               }}
               wrap={false}>
               <Text>
                 {forSignaturePath}
-              </Text>
-
-              <Text>
-                {declarationText1}
               </Text>
 
               <Text>
@@ -255,14 +279,14 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
   const fileName = uniqueCarrier + '_' + (moment().format('llll')).replace(/ /g, '_').replace(/,/g, '_') + '_' + pdfDocumentCount + '.pdf';
 
   return (
-    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 20, fontSize: 15 }} key={fileName} >
+    <div style={{ marginLeft: 20, marginRight: 20, paddingTop: 20, paddingBottom: 15, fontSize: 15 }} key={fileName}>
       <PDFDownloadLink
         document={document}
         style={{ marginRight: 30, textDecoration: 'none', color: '#4159AF'  }}
         fileName={fileName}>
         {({ blob, url, loading, error }) => {
           if (blob || url) {
-            return fileName;
+            return <Typography style={{ fontSize: 20 }} className={classes.materialText}>{fileName}</Typography>;
           } else if (error){
             return (
               <Alert severity="error" style={{ fontSize: 15 }}>
@@ -343,31 +367,34 @@ export default function PrintPreview() {
   }
 
   return (
-    <div style={{ padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
-      <div style={{ paddingBottom: 20, fontSize: 20 }} className="pad-bottom-20">PDF</div>
-      <div className={classes.root}>
-        <Button
-          style={{ marginTop: 20, float: 'left' }}
-          variant="contained"
-          color="primary"
-          onClick={handleCancel}
-        >
-          Start Again
-        </Button>
-        <Button
-          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-          variant="contained"
-          onClick={closeApp}
-          className="margin-top-20 pull-left"
-        >
-          Close
-        </Button>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>{pdfLinkList}</Paper>
+    <>
+      <Header />
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: 'gainsboro', borderWidth: 0, borderColor: 'grey', borderStyle: 'solid', borderRadius: '10px', overflow: 'hidden' }}>
+        <TabStepper activeStep={3} />
+        <div className={classes.root}>
+          <Button
+            style={{ marginTop: 20, float: 'left' }}
+            variant="contained"
+            color="primary"
+            onClick={handleCancel}
+          >
+            Start Again
+          </Button>
+          <Button
+            style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+            variant="contained"
+            onClick={closeApp}
+            className="margin-top-20 pull-left"
+          >
+            Close
+          </Button>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>{pdfLinkList}</Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

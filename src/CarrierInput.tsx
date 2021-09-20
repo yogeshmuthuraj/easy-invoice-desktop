@@ -7,7 +7,12 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import CloudUploadRoundedIcon from '@material-ui/icons/CloudUploadRounded';
 
+import Header from './CommonComponents/Header';
+import TabStepper from './CommonComponents/TabStepper';
+
 import { useHistory, useLocation } from 'react-router-dom';
+
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +88,7 @@ export default function CarrierInput(props) {
       pathname: '/printPreview',
       state: {
         orderRows: sortedOrders,
+        logoPath: location.state.logoPath,
       },
     });
   }
@@ -149,8 +155,12 @@ export default function CarrierInput(props) {
         'Tax 1 Value': selectedOrderRow['Tax 1 Value'],
         'Tax 2 Name': selectedOrderRow['Tax 2 Name'],
         'Tax 2 Value': selectedOrderRow['Tax 2 Value'],
+        'Tax 3 Name': selectedOrderRow['Tax 3 Name'],
+        'Tax 3 Value': selectedOrderRow['Tax 3 Value'],
         Taxes: selectedOrderRow.Taxes,
         Total: selectedOrderRow.Total,
+        'Discount Code': selectedOrderRow['Discount Code'],
+        'Discount Amount': selectedOrderRow['Discount Amount'],
         AWB: selectedOrderRow.AWB,
         'More Details': lineItemDetails,
       });
@@ -209,21 +219,12 @@ export default function CarrierInput(props) {
     const file = Object.assign(fileState);
 
     return (
-      <div>
-        <div>
-          <strong>Name:</strong> {file.name}
-        </div>
-        <div>
-          <strong>Path:</strong> {file.path}
-        </div>
-        <div>
-          <strong>Size:</strong>{' '}
-          {Number.parseFloat(file.size / 1000000).toFixed(2)} MB
-        </div>
-        <div>
-          <strong>Type:</strong> {file.type}
-        </div>
-      </div>
+      <>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Name:</strong> {file.name}</Typography>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Path:</strong> {file.path}</Typography>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Size:</strong>{' '}{Number.parseFloat(file.size / 1000000).toFixed(2)} MB</Typography>
+        <Typography style={{ fontSize: 15 }} className={classes.materialText}><strong>Type:</strong> {file.type}</Typography>
+      </>
     );
   }
 
@@ -232,58 +233,57 @@ export default function CarrierInput(props) {
   const fileDetails = fileState == null ? <div /> : getFileDetails();
 
   return (
-    <div
-      style={{
-        padding: 10,
-        backgroundColor: 'gainsboro',
-        borderWidth: 0,
-        borderColor: 'grey',
-        borderStyle: 'solid',
-        borderRadius: '10px',
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      <Header />
       <div
-        style={{ paddingBottom: 20, fontSize: 20 }}
-        className="pad-bottom-20"
+        style={{
+          marginTop: 20,
+          padding: 10,
+          backgroundColor: 'gainsboro',
+          borderWidth: 0,
+          borderColor: 'grey',
+          borderStyle: 'solid',
+          borderRadius: '10px',
+          overflow: 'hidden',
+        }}
       >
-        Carriers
-      </div>
-      <div className={classes.root}>
-        <Button
-          style={{ marginTop: 20, float: 'left' }}
-          variant="contained"
-          onClick={handleBack}
-          className="margin-top-20 pull-left"
-        >
-          Back
-        </Button>
-        <Button
-          style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
-          variant="contained"
-          onClick={handleCancel}
-          className="margin-left-10 margin-top-20 pull-left"
-        >
-          Cancel
-        </Button>
-        <Button
-          style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
-          variant="contained"
-          color="primary"
-          onClick={handleNext}
-          disabled={nextDisabled}
-        >
-          Next
-        </Button>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              {uploadButton}
-              <div style={{ textAlign: 'left' }}>{fileDetails}</div>
-            </Paper>
+        <TabStepper activeStep={2} />
+        <div className={classes.root}>
+          <Button
+            style={{ marginTop: 20, float: 'left' }}
+            variant="contained"
+            onClick={handleBack}
+            className="margin-top-20 pull-left"
+          >
+            Back
+          </Button>
+          <Button
+            style={{ marginLeft: 20, marginTop: 20, float: 'left' }}
+            variant="contained"
+            onClick={handleCancel}
+            className="margin-left-10 margin-top-20 pull-left"
+          >
+            Cancel
+          </Button>
+          <Button
+            style={{ marginLeft: 20, marginTop: 20, float: 'right' }}
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            disabled={nextDisabled}
+          >
+            Next
+          </Button>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                {uploadButton}
+                <div style={{ textAlign: 'left' }}>{fileDetails}</div>
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

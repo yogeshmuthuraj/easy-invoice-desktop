@@ -18,20 +18,22 @@ const styles = StyleSheet.create({
 const InvoiceItemsTable = ({
   items,
   grandTotal,
+  discount,
   shipping,
   amountInWords,
-  taxes,
+  currency,
 }) => {
   return (
     <View style={styles.tableContainer}>
       <InvoiceTableHeader />
-      <InvoiceTableRow items={items} taxRate={taxes.taxRate} />
+      <InvoiceTableRow items={items} />
       <InvoiceTableFooter
-        items={items}
         grandTotal={grandTotal}
+        discount={discount}
+        totalQty={items.length}
         shipping={shipping}
         amountInWords={amountInWords}
-        taxes={taxes}
+        currency={currency}
       />
     </View>
   );
