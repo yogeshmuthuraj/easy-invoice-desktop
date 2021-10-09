@@ -221,12 +221,12 @@ function pdfReturn(orderRows, uniqueCarrier, pdfDocumentCount) {
 
             <View style={{ textAlign: 'left', fontSize: 8, paddingTop: 12, width: 130 }} className="shipping-details">
               <Text>{shippingAddressText}</Text>
-              <Text style={{ paddingTop: 3 }}>{orderRow['Shipping Name']}</Text>
-              <Text>{orderRow['Shipping Address1']}</Text>
-              <Text>{orderRow['Shipping Address2']}</Text>
+              <Text style={{ paddingTop: 3 }}>{orderRow['Shipping Name'].length > 0 ? orderRow['Shipping Name'] : '          '}</Text>
+              <Text>{orderRow['Shipping Address1'].length > 0 ? orderRow['Shipping Address1'] : '            '}</Text>
+              <Text>{orderRow['Shipping Address2'].length > 0 ? orderRow['Shipping Address2'] : '            '}</Text>
               <Text>{orderRow['Shipping City']} - {orderRow['Shipping Zip'].replace(/'/g, '')}</Text>
-              <Text>{orderRow['Shipping Province']}</Text>
-              <Text>Ph: {orderRow['Shipping Phone']}</Text>
+              <Text>{orderRow['Shipping Province'].length > 0 ? orderRow['Shipping Province'] : '            '}</Text>
+              <Text>Ph: {orderRow['Shipping Phone'].length > 0 ? orderRow['Shipping Phone'] : '              '}</Text>
             </View>
 
             <View className="invoice-table" style={{ fontSize: 5, paddingRight: 2, paddingTop: 20 }}>
